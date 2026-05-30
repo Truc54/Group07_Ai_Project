@@ -1,0 +1,3 @@
+manim
+edge-tts
+pydub

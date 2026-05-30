@@ -1,0 +1,39 @@
+# Python virtual environment
+.venv/
+venv/
+ENV/
+__pycache__/
+*.pyc
+
+# Manim media output & generated audio
+media/
+output/
+voiceover/
+*.mp4
+*.mp3
+*.wav
+*.mov
+*.avi
+*.mkv
+
+# Environment & Secrets (Không commit key/token)
+.env
+.env.*
+*.pem
+*.key
+credentials*
+secrets*
+
+# Logs & Temporary files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# IDE / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+

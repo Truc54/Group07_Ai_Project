@@ -1,0 +1,906 @@
+# KẾ HOẠCH HOÀN THÀNH ĐỒ ÁN MANIM — VIDEO KIẾN THỨC AI
+## Chủ đề: Từ Tạo Video đến Mô hình Thế giới
+
+> **Deadline:** 10/06/2026 (còn 11 ngày)  
+> **Thành viên:** Trực & Tuấn (2 người)  
+> **Sản phẩm cuối:** Video Manim lồng tiếng Việt (AI) ≥ 30 phút → Upload YouTube
+> **Video style:** Cung cấp kiến thức thuần túy — KHÔNG đề cập CVPR/Tutorial/Diễn giả  
+> **Git Workflow:** Nhánh phụ `feature/` hoặc `bugfix/` cá nhân, bắt buộc tạo PR trước khi merge vào `main`
+
+---
+
+## THỜI LƯỢNG ƯỚC TÍNH: ~32-35 PHÚT
+
+| Phần | Số scene | Thời lượng | Chi tiết |
+|------|----------|------------|----------|
+| Mở đầu | 3 scene | ~3 phút | Giới thiệu + roadmap |
+| **Phần 1:** Tạo Video AI | 14 scene | ~10 phút | 3D VAE, Attention, Kiến trúc thống nhất |
+| **Phần 2:** Nhận thức 3D | 14 scene | ~10 phút | CUT3R, ST4rtrack, so sánh |
+| **Phần 3:** Mô hình Thế giới | 13 scene | ~10 phút | Dataset, VLP, Self-Improve |
+| Kết thúc | 2 scene | ~2 phút | Tổng kết + Credits |
+| **TỔNG** | **46 scene** | **~35 phút** | |
+
+> [!NOTE]
+> Mỗi scene trung bình **40-50 giây** (lời thoại ~25-35 giây + animation + wait).
+> Tổng cộng: 46 × 45s ≈ 34.5 phút ✅
+
+---
+
+## CẤU TRÚC THƯ MỤC DỰ ÁN
+
+```
+csai_project/
+│
+├── 📁 scenes/                          # Mã nguồn Manim
+│   ├── config.py                       # ⭐ FILE CHUNG — màu, font, helper
+│   ├── part0_intro.py                  # Tuấn: Mở đầu (Sc01-03)
+│   ├── part1_video_generation.py       # Trực: Phần 1 (Sc04-17)
+│   ├── part2_3d_perception.py          # Tuấn: Phần 2 (Sc18-31)
+│   ├── part3_world_models.py           # Trực: Phần 3 (Sc32-44)
+│   └── part4_credits.py                # Tuấn: Kết (Sc45-46)
+│
+├── 📁 scripts/
+│   ├── generate_voiceover.py           # Tạo giọng nói AI
+│   ├── check_duration.py              # Đo thời lượng audio
+│   ├── merge_audio_video.py            # Ghép audio+video
+│   └── concat_final.py                # Nối thành 1 file
+│
+├── 📁 voiceover/                       # Audio AI (auto-generated)
+├── 📁 output/merged/                   # Video ghép xong
+├── 📁 assets/                          # Hình ảnh nếu cần
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## PHÂN TÍCH XUNG ĐỘT: ✅ KHÔNG CÓ
+
+| Trực code (file riêng) | Tuấn code (file riêng) |
+|---|---|
+| `scenes/config.py` (tạo trước 31/05) | Chỉ import, không sửa |
+| `scenes/part1_video_generation.py` | `scenes/part0_intro.py` |
+| `scenes/part3_world_models.py` | `scenes/part2_3d_perception.py` |
+| | `scenes/part4_credits.py` |
+| Upload YouTube | Push GitHub + ghép video |
+
+---
+
+## QUY TẮC ĐẶT TÊN NHÁNH & QUY TRÌNH PULL REQUEST (PR)
+
+Để đảm bảo code của hai người không bị chồng chéo, dễ quản lý lịch sử commit và kiểm soát chất lượng video trước khi ghép, hai thành viên cần tuân thủ nghiêm ngặt quy trình Git dưới đây.
+
+### 1. Quy tắc đặt tên nhánh (Branch Naming)
+Không làm việc trực tiếp trên nhánh `main`. Mọi tính năng, scene hoặc phần sửa lỗi phải được thực hiện trên các nhánh phụ (feature branch) theo định dạng:
+`feature/<tên-thành-viên>/<tác-vụ-viết-thường-không-dấu-ngăn-cach-bang-gach-ngang>`
+hoặc
+`bugfix/<tên-thành-viên>/<tên-loi>`
+
+**Ví dụ cụ thể:**
+- Trực làm cấu hình chung & scripts: `feature/truc/config-and-scripts`
+- Trực code Phần 1 (tạo video): `feature/truc/part1-video-gen`
+- Tuấn code Mở đầu: `feature/tuan/part0-intro`
+- Tuấn code Phần 2 (nhận thức 3D): `feature/tuan/part2-3d-perception`
+- Tuấn sửa lỗi lệch hình ở Scene 05: `bugfix/tuan/fix-scene05-alignment`
+
+---
+
+### 2. Quy trình Pull Request (PR) đàng hoàng
+Tất cả các thay đổi khi đưa vào nhánh `main` phải thông qua Pull Request trên GitHub. **Tuyệt đối không force push hoặc merge trực tiếp vào main.**
+
+Khi code xong một phần nhiệm vụ (hoặc một số scene đã chạy thử ổn định), thực hiện push nhánh lên GitHub, mở PR trỏ vào nhánh `main` và tự kiểm tra kỹ lưỡng trước khi merge.
+* Tiêu đề PR rõ ràng: `[Feature] Code Part 1 - Scenes 04-10` hoặc `[Bugfix] Sửa lệch font chữ tiêu đề`.
+* **Nội dung mô tả PR bắt buộc điền theo mẫu sau:**
+  ```markdown
+  ### 📝 Tóm tắt thay đổi
+  - Viết code Manim cho các scene từ Sc... đến Sc...
+  - Đã thêm lời thoại tiếng Việt cho file voiceover tương ứng.
+  
+  ### 🎥 Kết quả chạy thử (Đã test local)
+  - Đã render thử chất lượng thấp (`manim -pql ...`) thành công không lỗi.
+  - [Đính kèm ảnh chụp màn hình scene hoặc log chạy thành công]
+  
+  ### 🔍 Checklist tự kiểm tra
+  - [ ] Không chỉnh sửa file `scenes/config.py` (nếu không phải việc chung được thống nhất).
+  - [ ] Import và sử dụng đúng các helper, biến màu trong `config.py`.
+  - [ ] Đã kiểm tra chính tả lời thoại trong kịch bản.
+  - [ ] Không có file thừa hoặc file kết quả render (`.mp4`, `.png` local) bị commit nhầm lên Git (đã cấu hình `.gitignore`).
+  ```
+
+---
+
+## PHASE 0: CÀI ĐẶT (30/05 — tối nay) — CẢ HAI
+
+```powershell
+# 1. Cài FFmpeg
+winget install Gyan.FFmpeg
+ffmpeg -version   # kiểm tra
+
+# 2. Cài MiKTeX (cho LaTeX) — https://miktex.org/download
+
+# 3. Tạo venv + cài thư viện
+cd c:\Users\truct\source\csai_project
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install manim edge-tts pydub
+
+# 4. Test Manim
+manim -pql test_manim.py HelloWorld
+
+# 5. Test TTS
+python test_tts.py
+```
+
+---
+
+## PHASE 1: CONFIG + KỊCH BẢN (31/05)
+
+### 👤 Trực: Tạo `scenes/config.py`
+
+```python
+# scenes/config.py — DÙNG CHUNG CHO TẤT CẢ FILE
+from manim import *
+
+# === MÀU SẮC ===
+BG       = "#0f0f1a"
+C_TITLE  = "#00d4ff"
+C_SUB    = "#a0a0c0"
+C_RED    = "#ff6b6b"
+C_GREEN  = "#51cf66"
+C_YELLOW = "#ffd43b"
+C_PURPLE = "#e599f7"
+C_BLUE   = "#74c0fc"
+C_BOX    = "#1a1a2e"
+
+FONT = "Arial"
+
+def make_title(text, sub=""):
+    t = Text(text, font=FONT, font_size=42, color=C_TITLE).to_edge(UP, buff=0.5)
+    if sub:
+        s = Text(sub, font=FONT, font_size=28, color=C_SUB).next_to(t, DOWN, buff=0.3)
+        return VGroup(t, s)
+    return t
+
+def make_box(text, w=4, h=1.5, color=C_BOX):
+    box = RoundedRectangle(width=w, height=h, corner_radius=0.2,
+                           color=color, fill_opacity=0.3, stroke_color=color)
+    label = Text(text, font=FONT, font_size=22, color=WHITE).move_to(box)
+    return VGroup(box, label)
+
+def make_bullets(items):
+    lines = VGroup()
+    for item in items:
+        dot = Dot(radius=0.06, color=C_RED)
+        txt = Text(item, font=FONT, font_size=22, color=WHITE)
+        lines.add(VGroup(dot, txt).arrange(RIGHT, buff=0.3))
+    lines.arrange(DOWN, aligned_edge=LEFT, buff=0.35)
+    return lines
+```
+
+### 👤 Trực: Viết kịch bản đầy đủ 46 scene (~32-35 phút)
+
+> [!IMPORTANT]
+> **Nguyên tắc:** Video dạng giáo dục thuần túy. KHÔNG đề cập CVPR, Tutorial, hay tên diễn giả nào.
+
+---
+
+### ═══ MỞ ĐẦU (3 phút — 3 scene) ═══
+
+**Scene 01 — Tiêu đề (~60s)**
+```
+Lời: "Xin chào các bạn. Chào mừng đến với video kiến thức 
+về trí tuệ nhân tạo. Trong video hôm nay, chúng ta sẽ cùng 
+khám phá một trong những xu hướng nghiên cứu đang được quan 
+tâm nhất hiện nay trong lĩnh vực AI — đó là hành trình từ 
+tạo video bằng trí tuệ nhân tạo đến xây dựng các mô hình 
+thế giới thông minh. Đây là một chủ đề nằm ở giao điểm của 
+nhiều lĩnh vực: Computer Vision, Deep Learning, và Robotics."
+
+[MANIM: Tiêu đề "Từ Tạo Video AI đến Mô hình Thế giới" 
+xuất hiện với hiệu ứng Write + particle nền]
+```
+
+**Scene 02 — Tại sao chủ đề này quan trọng? (~50s)**
+```
+Lời: "Tại sao chủ đề này lại quan trọng? Hãy tưởng tượng 
+một ngày nào đó, bạn chỉ cần gõ một câu mô tả, và AI sẽ 
+tạo ra một đoạn video chân thực đến mức không thể phân biệt 
+với thực tế. Nhưng câu hỏi sâu hơn là: Liệu AI có thực sự 
+hiểu thế giới khi tạo ra video đó? Hay nó chỉ đang sao chép 
+các mẫu pixel? Đây chính là câu hỏi mà các nhà nghiên cứu 
+hàng đầu đang cố gắng trả lời."
+
+[MANIM: Câu hỏi "AI hiểu thế giới?" xuất hiện + 
+2 hình minh họa: video đẹp vs cấu trúc 3D rỗng]
+```
+
+**Scene 03 — Lộ trình video (~50s)**
+```
+Lời: "Video sẽ được chia thành 3 phần chính. Phần thứ nhất: Kiến trúc tạo video AI thế hệ mới, chúng ta sẽ tìm hiểu 3D VAE, Spatiotemporal Attention, và kiến trúc MVL. Phần thứ hai: Streaming Perception, với hai phương pháp đột phá là CUT3R và ST4rtrack. Và phần thứ ba: Mở rộng mô hình thế giới cho robot, bao gồm dữ liệu lớn, Action Conditioning, và vòng lặp tự cải tiến. Nào, bắt đầu thôi!"
+
+[MANIM: 3 card/hộp xuất hiện lần lượt với icon + thanh tiến trình]
+```
+
+---
+
+### ═══ PHẦN 1: KIẾN TRÚC TẠO VIDEO AI THẾ HỆ MỚI (10 phút — 14 scene) ═══
+
+**Scene 04 — Giới thiệu phần 1 (~40s)**
+```
+Lời: "Phần 1: Kiến trúc tạo video AI thế hệ mới. Trong 
+những năm gần đây, các mô hình tạo video bằng AI đã đạt 
+được những bước tiến đáng kinh ngạc. Từ những đoạn video 
+ngắn, nhòe mờ, đến các video dài tới 2 phút ở chất lượng 
+1080p với 30 khung hình mỗi giây. Vậy đằng sau sự tiến bộ 
+này là những đột phá kỹ thuật nào? Hãy cùng tìm hiểu."
+
+[MANIM: Tiêu đề Phần 1 + timeline tiến bộ từ 2022 → 2025]
+```
+
+**Scene 05 — Vấn đề: Video được tạo từ khung hình đơn lẻ (~50s)**
+```
+Lời: "Để hiểu tại sao kiến trúc mới lại cần thiết, trước 
+tiên chúng ta cần biết phương pháp cũ gặp vấn đề gì. 
+Các mô hình tạo video thế hệ đầu sử dụng 2D VAE. 2D VAE nén và giải nén 
+từng khung hình một cách hoàn toàn độc lập với nhau. 
+Nó coi mỗi khung hình như một bức ảnh riêng lẻ, không hề 
+biết khung hình trước và sau trông như thế nào."
+
+[MANIM: Vẽ 5 khung hình 2D → mũi tên xuống riêng biệt 
+→ 5 encoder độc lập → 5 khung hình output]
+```
+
+**Scene 06 — Hậu quả: Nhấp nháy, biến dạng (~50s)**
+```
+Lời: "Hệ quả của việc nén từng khung hình độc lập là gì? 
+Đầu tiên là hiện tượng flickering, khi ánh sáng và màu sắc thay đổi đột ngột giữa hai khung 
+hình liên tiếp. Tiếp theo là biến dạng cấu trúc khi vật 
+thể chuyển động — ví dụ, khuôn mặt người bị méo khi quay 
+đầu. Và nghiêm trọng nhất là hiện tượng temporal inconsistency, khi một vật thể có thể tự thay đổi hình dạng hoặc biến 
+mất rồi xuất hiện lại giữa các khung hình."
+
+[MANIM: 3 ví dụ lỗi minh họa lần lượt + dấu ✗ đỏ:
+ 1. Hai ô màu nhấp nháy 2. Hình méo 3. Vật thể biến mất]
+```
+
+**Scene 07 — Giải pháp: 3D VAE — Ý tưởng (~50s)**
+```
+Lời: "Giải pháp cho vấn đề này là 3D VAE. Ý tưởng cốt lõi rất trực quan: Thay vì nén 
+từng khung hình riêng lẻ, hãy nén toàn bộ video cùng một 
+lúc. 3D VAE xem video không phải là tập hợp các ảnh 2D rời 
+rạc, mà là một khối dữ liệu 3D liên tục — bao gồm chiều 
+ngang, chiều dọc, và chiều thời gian. Bằng cách nén đồng 
+thời cả 3 chiều, mô hình giữ lại được mối liên hệ mượt 
+mà giữa các khung hình liên tiếp."
+
+[MANIM: So sánh song song — 
+Trái: 5 ảnh 2D rời rạc (2D VAE)
+Phải: 1 khối 3D liên tục (3D VAE) → co lại thành khối ẩn nhỏ]
+```
+
+**Scene 08 — 3D VAE: Công thức toán học (~60s)**
+```
+Lời: "Hãy nhìn vào biểu diễn toán học. Video đầu vào V 
+là một tensor 4 chiều: T khung hình, C kênh màu — thường 
+là 3 kênh RGB, chiều cao H, và chiều rộng W. Khi đưa qua 
+Encoder của 3D VAE, video được ánh xạ vào latent space z. 
+Kết quả z có kích thước T mũ nhân C mũ nhân H mũ nhân W mũ. 
+Trong đó, T mũ nhỏ hơn T thể hiện tỷ lệ nén thời gian, còn H mũ nhỏ hơn H và W mũ nhỏ hơn W thể hiện tỷ lệ nén không gian. Nhờ nén đồng thời không-thời 
+gian, chi phí tính toán giảm đáng kể trong khi vẫn giữ 
+được chuyển động mịn màng."
+
+[MANIM: 
+ Dòng 1: V ∈ ℝ^{T × C × H × W} xuất hiện
+ Dòng 2: Mũi tên → Encoder_3D 
+ Dòng 3: z ∈ ℝ^{T̂ × Ĉ × Ĥ × Ŵ} xuất hiện
+ Highlight T̂ < T, Ĥ < H, Ŵ < W bằng màu]
+```
+
+**Scene 09 — 3D VAE: Minh họa trực quan nén (~50s)**
+```
+Lời: "Để hình dung rõ hơn, hãy tưởng tượng video gốc có 
+16 khung hình, mỗi khung 256 nhân 256 pixel. Sau khi đi 
+qua 3D VAE với tỷ lệ nén thời gian 4 lần và tỷ lệ nén 
+không gian 8 lần, ta thu được chỉ 4 token thời gian, mỗi 
+token có kích thước 32 nhân 32. Lượng dữ liệu giảm đi 
+256 lần, nhưng thông tin quan trọng — đặc biệt là sự liên 
+tục giữa các chuyển động — vẫn được bảo toàn."
+
+[MANIM: Animation: khối 16×256×256 → co lại thành 4×32×32
+với số liệu hiển thị → "Giảm 256×" highlight]
+```
+
+**Scene 10 — Spatiotemporal Attention: Ý tưởng (~50s)**
+```
+Lời: "Bên cạnh 3D VAE, một cơ chế quan trọng khác giúp mô 
+hình xử lý chuyển động phức tạp là Full Spatiotemporal 
+Attention. Trong cơ chế Self-Attention thông thường, mỗi 
+token chỉ tính attention với các token trong cùng một khung hình. 
+Nhưng với Spatiotemporal Attention, mỗi latent token ở tọa độ 
+x, y và t bất kỳ có thể tính attention với tất cả các token khác, 
+bất kể ở khung hình hay vị trí nào."
+
+[MANIM: 
+ Trái: Lưới 1 frame — attention chỉ trong frame
+ Phải: 3 frame — đường nối attention xuyên frame + vị trí]
+```
+
+**Scene 11 — Spatiotemporal Attention: Ứng dụng thực tế (~50s)**
+```
+Lời: "Nhờ cơ chế này, mô hình có thể xử lý hoàn hảo nhiều 
+tình huống khó. Ví dụ: Vật thể chuyển động tốc độ cực nhanh 
+mà không bị nhòe hình hay biến mất đột ngột. Các pha chuyển 
+cảnh và thay đổi góc quay camera biên độ lớn mà không bị 
+rách hình. Và đặc biệt, giữ được cấu trúc vật thể phức tạp 
+— chẳng hạn các ngón tay khi múa, hay lông chim khi vỗ 
+cánh — điều mà các mô hình cũ thường xuyên thất bại."
+
+[MANIM: 3 ví dụ minh họa lần lượt:
+ 1. Vật di chuyển nhanh ✓  2. Camera xoay ✓  3. Cấu trúc phức tạp ✓]
+```
+
+**Scene 12 — Diffusion Transformer (DiT) (~50s)**
+```
+Lời: "Lõi xử lý trung tâm của các mô hình tạo video hiện 
+đại là Diffusion Transformer, viết tắt là DiT. DiT kết hợp 
+hai ý tưởng mạnh mẽ: quá trình Diffusion để sinh ra dữ liệu mới từ noise, và kiến trúc Transformer 
+để mô hình hóa mối quan hệ giữa các token. Quá trình hoạt 
+động như sau: bắt đầu từ random noise trong latent space, 
+DiT lặp đi lặp lại việc denoising, mỗi bước 
+tạo ra hình ảnh rõ nét hơn một chút, cho đến khi thu được 
+video sạch hoàn chỉnh."
+
+[MANIM: Sơ đồ: Nhiễu → DiT step 1 → ... → DiT step T → Video sạch
+ Với animation nhiễu dần biến thành hình rõ nét]
+```
+
+**Scene 13 — Kiến trúc thống nhất: Vấn đề riêng lẻ (~45s)**
+```
+Lời: "Trước đây, mỗi tác vụ thị giác đều cần một mô hình 
+riêng biệt. Muốn tạo video từ chữ? Dùng mô hình A. Muốn 
+chỉnh sửa video? Dùng mô hình B. Muốn AI hiểu nội dung 
+video? Dùng mô hình C. Ba mô hình độc lập, ba bộ trọng số 
+riêng, không chia sẻ kiến thức với nhau. Điều này gây lãng 
+phí tài nguyên và hạn chế khả năng tổng quát hóa."
+
+[MANIM: 3 hộp riêng biệt: T2V, Editing, Understanding 
+ → mỗi hộp có encoder riêng → dấu ✗]
+```
+
+**Scene 14 — Kiến trúc thống nhất: MVL (~60s)**
+```
+Lời: "Xu hướng hiện nay là xây dựng một kiến trúc thống nhất 
+duy nhất cho tất cả các tác vụ. Ý tưởng là sử dụng Multimodal 
+Visual Language, viết tắt là MVL. Tất cả dữ liệu đầu vào như văn bản, hình ảnh, hay video đều được chuyển đổi thành chuỗi token chung thông qua các bộ tokenizer chuyên biệt. Chuỗi token thống nhất này sau đó được đưa vào lõi Diffusion Transformer để xử lý đồng thời. Các ứng dụng điển hình như Kling đã đạt được khả năng sinh video chất lượng cao lên đến 1080p, 30fps, dài tối đa 2 phút. Bên cạnh đó, các công nghệ vệ tinh như LivePortrait giúp sinh chuyển động chân dung từ ảnh tĩnh, hay Kling-Avatar giúp tạo nhân vật ảo 3D sinh động."
+
+[MANIM: Sơ đồ: Text/Image/Video → 3 Tokenizer → Chuỗi token chung 
+ → DiT Core → Video output chất lượng cao]
+```
+
+**Scene 15 — 4 hướng nghiên cứu: Mục 1-2 (~50s)**
+```
+Lời: "Trong lĩnh vực tạo video AI, cộng đồng nghiên cứu đang 
+tập trung vào 4 hướng phát triển chính. Hướng thứ nhất là 
+nâng cấp kiến trúc mô hình và thuật toán tạo sinh, tối ưu 
+hóa cấu trúc DiT để đẩy nhanh tốc độ hội tụ của quá trình Diffusion. Hướng thứ hai là tăng cường khả năng tương tác và điều khiển, cho phép điều khiển camera chính xác với các thao tác Pan, Zoom, Tilt, cũng như nhận biết lực tác động vật lý lên môi trường."
+
+[MANIM: 2 hộp xuất hiện lần lượt + icon + ví dụ nhỏ bên cạnh]
+```
+
+**Scene 16 — 4 hướng nghiên cứu: Mục 3-4 (~50s)**
+```
+Lời: "Hướng thứ ba là thiết lập cơ chế đánh giá và căn chỉnh 
+chính xác, xây dựng các thang đo đo lường mức độ chân 
+thực vật lý và sự liên kết nội dung với prompt của người dùng. Hướng thứ tư là cải thiện nhận thức và suy luận đa phương thức, giúp mô hình không chỉ tạo ra video mà còn có khả năng giải thích cấu trúc chuyển động và các hiện tượng xảy ra trong đó."
+
+[MANIM: 2 hộp tiếp theo xuất hiện + highlight "hiểu" vs "chỉ vẽ"]
+```
+
+**Scene 17 — Recap Phần 1 + Chuyển tiếp (~50s)**
+```
+Lời: "Vậy hãy tổng kết Phần 1. Chúng ta đã tìm hiểu 4 đột 
+phá chính trong kiến trúc tạo video AI: 3D VAE giải quyết 
+vấn đề flickering bằng cách nén đồng thời không gian và thời 
+gian. Spatiotemporal Attention cho phép mô hình attend xuyên 
+qua các khung hình. Diffusion Transformer sinh video từ noise 
+qua quá trình denoising lặp lại. Và kiến trúc thống nhất MVL 
+kết hợp mọi tác vụ trong một mô hình duy nhất. Nhưng một câu 
+hỏi quan trọng vẫn còn: Video đẹp là chưa đủ — liệu mô hình 
+có thực sự hiểu cấu trúc 3D của thế giới hay không?"
+
+[MANIM: 4 keyword recap xuất hiện → câu hỏi lớn → transition]
+```
+
+---
+
+### ═══ PHẦN 2: NHẬN THỨC 3D LIÊN TỤC TỪ VIDEO (10 phút — 14 scene) ═══
+
+**Scene 18 — Giới thiệu phần 2 (~40s)**
+```
+Lời: "Phần 2: Nhận thức 3D liên tục từ video. Trong phần 
+này, chúng ta sẽ khám phá cách xây dựng các mô hình AI có 
+khả năng hiểu cấu trúc không gian 3 chiều từ luồng video 
+liên tục — một bước tiến quan trọng từ tạo video sang 
+xây dựng mô hình thế giới thực sự."
+
+[MANIM: Tiêu đề Phần 2 + animation 2D → 3D transformation]
+```
+
+**Scene 19 — Phê phán: Video đẹp nhưng rỗng (~50s)**
+```
+Lời: "Các mô hình tạo video hiện tại đạt mức độ chân thực 
+trực quan đáng kinh ngạc. Chúng tạo ra sóng nước lấp lánh, 
+phản chiếu ánh sáng hoàn hảo, bóng đổ chân thực. Người xem 
+có cảm giác mô hình thực sự hiểu thế giới. Nhưng thực chất 
+thì sao? Chúng chỉ là những pixel renderer siêu việt. Chúng 
+học cách phân phối pixel trên mặt phẳng 2D để đánh lừa thị 
+giác con người, nhưng bên trong hoàn toàn không có structured 
+3D representation nào cả."
+
+[MANIM: Hình ảnh đẹp bên ngoài → "mở ra" → bên trong rỗng]
+```
+
+**Scene 20 — Minh họa: Khi góc quay thay đổi (~50s)**
+```
+Lời: "Vấn đề bộc lộ rõ nhất khi góc quay camera thay đổi 
+hoặc khi vật thể bị che khuất. Mô hình không có bộ nhớ 
+vật lý nào để nhớ rằng mặt sau của vật thể trông như thế 
+nào. Kết quả là hiện tượng structural drift, khi hình dạng vật thể tự thay đổi dần. Hoặc hiện 
+tượng morphing, vật thể tự biến đổi hình dạng phi vật lý 
+khi bị che khuất rồi xuất hiện lại."
+
+[MANIM: Ví dụ: vật thể quay → mặt sau bị biến dạng
+ So sánh: mô hình 3D thật vs mô hình video sai]
+```
+
+**Scene 21 — Streaming Perception: Ý tưởng (~50s)**
+```
+Lời: "Vậy giải pháp là gì? Câu trả lời là Streaming 
+Perception. Ý tưởng này lấy cảm hứng từ cách 
+con người nhận thức thế giới. Khi một đứa trẻ sơ sinh lớn lên, 
+nó liên tục quan sát và tự xây dựng mô hình cấu trúc vật thể trong đầu. Khi ta đi bộ trong một căn phòng, não bộ cũng liên tục cập nhật một mô hình 3D bền vững. Hệ thống AI cũng phải hoạt động tương tự, liên tục cập nhật 3D representation từ luồng camera đầu vào."
+
+[MANIM: Người đi trong phòng → bộ nhớ 3D được xây dựng dần]
+```
+
+**Scene 22 — CUT3R: Giới thiệu (~45s)**
+```
+Lời: "CUT3R, viết tắt của Continuous Updating Transformer 
+for 3D Reconstruction, là một phương pháp hiện thực hóa ý 
+tưởng Streaming Perception. CUT3R là một stateful recurrent 
+Transformer. Điều đặc biệt là nó không xử lý từng khung hình 
+độc lập, cũng không chạy global optimization đắt đỏ. Thay 
+vào đó, nó duy trì một 3D Memory State."
+
+[MANIM: Logo "CUT3R" + sơ đồ khái quát: camera → memory 3D]
+```
+
+**Scene 23 — CUT3R: Quy trình cập nhật (~60s)**
+```
+Lời: "Quy trình hoạt động như sau: Tại mỗi bước thời gian t, khi camera nhận khung hình mới I t, Transformer của CUT3R sẽ nhận hai đầu vào: Recurrent 3D Memory State S t trừ 1, và khung hình mới I t. Nó so sánh thông tin trực quan mới với bộ nhớ cũ, chỉ tính toán và cập nhật phần thông tin thay đổi, rồi bồi đắp vào trạng thái bộ nhớ để sinh ra trạng thái mới S t."
+
+[MANIM: Sơ đồ chi tiết: 
+ S_{t-1} + I_t → Transformer → S_t → lặp lại
+ Animation: bộ nhớ 3D dần được bổ sung thêm chi tiết]
+```
+
+**Scene 24 — CUT3R: Công thức (~45s)**
+```
+Lời: "Công thức cập nhật rất ngắn gọn: S t bằng Transformer Update của S t trừ 1 và I t. Quá trình này diễn ra theo thời gian thực, với mỗi khung hình mới chỉ mất vài mili-giây để cập nhật, thay vì phải chạy global optimization đắt đỏ cho toàn bộ video."
+
+[MANIM: Công thức S_t = Transformer_Update(S_{t-1}, I_t)
+ Highlight: "Thời gian thực" + "Không cần xử lý lại từ đầu"]
+```
+
+**Scene 25 — CUT3R: Xử lý che khuất (~50s)**
+```
+Lời: "Một khả năng ấn tượng của CUT3R là xử lý vật thể bị 
+che khuất. Hãy tưởng tượng camera đang nhìn thấy một chiếc 
+bàn, rồi camera quay sang hướng khác. Chiếc bàn không còn trong khung hình nữa. Với mô hình thông thường, thông tin về chiếc bàn sẽ bị mất. Nhưng CUT3R giữ nguyên hình học của chiếc bàn trong bộ nhớ trạng thái, và khi camera quay trở lại, chiếc bàn được tái dựng nguyên vẹn, đúng vị trí và kích thước."
+
+[MANIM: Animation 3 bước:
+ 1. Camera thấy bàn → bộ nhớ có bàn
+ 2. Camera quay đi → bộ nhớ vẫn giữ bàn (nhấn mạnh)
+ 3. Camera quay lại → bàn tái hiện nguyên vẹn ✓]
+```
+
+**Scene 26 — ST4rtrack: Vấn đề truyền thống (~50s)**
+```
+Lời: "Tiếp theo, chúng ta tìm hiểu ST4rtrack — một phương 
+pháp giải quyết đồng thời bài toán point tracking và 4D 
+reconstruction trong một World Coordinate Frame thống 
+nhất. Để hiểu tại sao đây là đột phá, hãy xem cách truyền 
+thống. Trong Computer Vision truyền thống, hai bài toán 
+này được chia làm 2 bước riêng biệt chạy nối tiếp nhau. 
+Bước 1: Dùng Optical Flow để theo dõi vết các điểm ảnh di chuyển trên mặt phẳng 2D. 
+Bước 2: Dùng thuật toán Structure from Motion để từ các 
+điểm 2D dựng thành mô hình 3D."
+
+[MANIM: Sơ đồ 2 bước: 
+ Hộp 1 "Optical Flow 2D" → Mũi tên → Hộp 2 "SfM 3D"]
+```
+
+**Scene 27 — ST4rtrack: Lỗi tích lũy (~50s)**
+```
+Lời: "Vấn đề nghiêm trọng là hai bước này hoạt động hoàn 
+toàn độc lập và không chia sẻ thông tin. Nếu Optical Flow ở bước một chỉ cần sai lệch vài pixel do nhiễu hoặc ánh sáng, Structure from Motion ở bước hai sẽ nhận đầu vào sai. Sai số này sẽ bị phóng đại, dẫn đến tọa độ 3D bị méo mó và làm sụp đổ toàn bộ mô hình tái dựng."
+
+[MANIM: Sai số nhỏ ε ở Hộp 1 → phóng to thành 10ε ở Hộp 2
+ Animation: mô hình 3D sụp đổ/méo dần]
+```
+
+**Scene 28 — ST4rtrack: Giải pháp (~50s)**
+```
+Lời: "ST4rtrack giải quyết vấn đề này một cách triệt để bằng cách xử lý đồng thời cả hai bài toán tracking và reconstruction trong một feed-forward model duy nhất. 
+Không còn 2 bước riêng biệt nữa. Mô hình dự đoán trực tiếp 
+một Spatiotemporal Pointmap trong một World Coordinate Frame thống nhất."
+
+[MANIM: Sơ đồ: 1 hộp duy nhất "ST4rtrack" → Pointmap 4D
+ So sánh: 2 hộp cũ (✗) vs 1 hộp mới (✓)]
+```
+
+**Scene 29 — ST4rtrack: Công thức (~50s)**
+```
+Lời: "Biểu diễn toán học như sau: Với mỗi điểm i trên bề 
+mặt vật thể, dù tĩnh hay động, mô hình dự đoán tọa độ 3D liên tục theo thời gian t. P i t là một vector gồm X i t, Y i t, và Z i t trong không gian 3 chiều. Việc tích hợp này giúp hình học 3D bổ trợ ngược lại cho tracking 2D, triệt tiêu hoàn toàn sai số tích lũy."
+
+[MANIM: Công thức P_i(t) = [X_i(t), Y_i(t), Z_i(t)] ∈ ℝ^3
+ + Animation: quỹ đạo 3D mượt mà của nhiều điểm]
+```
+
+**Scene 30 — So sánh CUT3R vs ST4rtrack (~50s)**
+```
+Lời: "Hãy so sánh hai phương pháp. CUT3R tập trung vào việc cập nhật liên tục 3D Memory State theo thời gian thực từ video stream, sử dụng cơ chế recurrent. Trong khi đó, ST4rtrack tập trung dự đoán 4D Pointmap cho cả vật thể tĩnh lẫn động bằng mô hình feed-forward, theo dõi tọa độ 3D của mọi điểm liên tục theo thời gian. Cả hai đều hướng tới việc xây dựng structured representation bền vững của thế giới."
+
+[MANIM: Bảng so sánh 2 cột:
+ CUT3R: Bộ nhớ 3D liên tục, hồi quy, cập nhật real-time
+ ST4rtrack: Pointmap 4D, feed-forward, tĩnh + động]
+```
+
+**Scene 31 — Recap Phần 2 + Chuyển tiếp (~50s)**
+```
+Lời: "Tổng kết Phần 2: Chúng ta đã thấy rằng video đẹp là 
+chưa đủ — mô hình AI cần hiểu cấu trúc 3D thực sự. 
+Streaming Perception đặt nền tảng lý thuyết. CUT3R hiện thực 
+hóa bằng Transformer hồi quy với bộ nhớ 3D bền vững. 
+ST4rtrack giải quyết đồng thời theo dõi và tái dựng 4D trong 
+một mô hình duy nhất. Câu hỏi cuối cùng: Làm sao tận dụng 
+tất cả những khả năng này để xây dựng mô hình thế giới giúp 
+robot hành động thông minh?"
+
+[MANIM: 3 keyword recap → câu hỏi → transition Phần 3]
+```
+
+---
+
+### ═══ PHẦN 3: MỞ RỘNG MÔ HÌNH THẾ GIỚI CHO ROBOT (10 phút — 13 scene) ═══
+
+**Scene 32 — Giới thiệu phần 3 (~40s)**
+```
+Lời: "Phần 3: Mở rộng mô hình thế giới cho robot thông minh. 
+Trong phần cuối cùng này, chúng ta sẽ tìm hiểu cách biến 
+các mô hình tạo video thành các bộ giả lập thế giới để huấn 
+luyện và đánh giá robot — một trong những ứng dụng đầy hứa 
+hẹn nhất của AI hiện nay."
+
+[MANIM: Tiêu đề Phần 3 + icon robot + world model]
+```
+
+**Scene 33 — Bối cảnh lịch sử (~60s)**
+```
+Lời: "Ý tưởng về mô hình thế giới đã tồn tại từ lâu trong Reinforcement Learning. Năm 2018, nghiên cứu World Models cho phép agent học trong môi trường giả lập do chính mô hình tạo ra. Từ 2020 đến 2023, loạt công trình Dreamer từ phiên bản V1 đến V3 tiếp tục phát triển ý tưởng này. Tuy nhiên, các mô hình cũ chỉ hoạt động trong môi trường nhỏ và đơn giản như game Atari hay MuJoCo. Điểm khác biệt ngày nay nằm ở hai yếu tố: dữ liệu quy mô Internet và kiến trúc có khả năng mở rộng."
+
+[MANIM: Timeline: 2018 World Models → 2020-2023 Dreamer V1/V2/V3
+ → 2024-2025 Internet-scale → bước nhảy lớn]
+```
+
+**Scene 34 — 21 triệu cặp Video-Hành động: Tổng quan (~50s)**
+```
+Lời: "Mô hình thế giới hiện đại được huấn luyện trên tập dữ liệu khổng lồ gồm 21 triệu cặp time-aligned video và action data từ 4 nguồn dữ liệu đa dạng. Điểm mấu chốt là mỗi hành động phải khớp chính xác với từng khung hình video tương ứng. Ý tưởng cốt lõi là biến video thành một ngôn ngữ chung cho việc ra quyết định. Video không chỉ là hình ảnh động, mà là biểu diễn trực quan của các hành động và hệ quả của chúng."
+
+[MANIM: Con số "21,000,000" xuất hiện ấn tượng + 
+ nhấn mạnh "Time-Aligned" + 4 icon nguồn]
+```
+
+**Scene 35 — 4 loại dữ liệu chi tiết (~60s)**
+```
+Lời: "4 nguồn dữ liệu bao gồm: Thứ nhất, cặp văn bản và 
+video — ví dụ video một người đang dùng dao cắt ớt chuông, 
+đi kèm mô tả hành động. Thứ hai, điều khiển camera — video 
+quay quét đi kèm thông tin xoay 360 độ. Thứ ba, điều khiển 
+robot — video thao tác robot đi kèm vector vận tốc khớp 
+delta x, delta y. Và thứ tư, điều khiển bàn phím — video 
+chơi game như Minecraft đi kèm lịch sử nhấn phím. Sự đa dạng 
+này giúp mô hình học được các quy luật vật lý tổng quát."
+
+[MANIM: 4 hộp với ví dụ cụ thể + icon:
+ 🔤 Text-Video | 🎥 Camera | 🤖 Robot | ⌨️ Keyboard]
+```
+
+**Scene 36 — Action Conditioning: Thách thức (~50s)**
+```
+Lời: "Một thách thức cốt lõi khi xây dựng World Model 
+là: Làm sao đưa continuous control action của robot vào 
+video diffusion model một cách chính xác nhất? Nếu dùng 
+phương pháp discretization hoặc dùng text embedding, kết quả thực nghiệm cho 
+thấy robot trong video di chuyển rất giật cục, sai lệch 
+vị trí nghiêm trọng, và mô phỏng vật lý bị drift."
+
+[MANIM: Vector liên tục → Grid rời rạc → robot giật → dấu ✗
+ Hoặc: Vector → Text encode → robot lệch → dấu ✗]
+```
+
+**Scene 37 — Action Conditioning: Linear Projection (~60s)**
+```
+Lời: "Giải pháp hiệu quả nhất lại là phương pháp đơn giản 
+nhất: Linear Projection. Giữ 
+nguyên raw action vector a, rồi nhân với weight matrix W để 
+ánh xạ thành action feature vector h a. Công thức cực kỳ đơn 
+giản: h a bằng W nhân a. Action feature h a sau đó được cộng 
+trực tiếp vào latent space của mô hình video. Kết quả giúp 
+robot di chuyển mượt mà, bám sát chính xác vector vận tốc 
+thực tế. Bài học rút ra: đôi khi giải pháp đơn giản nhất lại hiệu quả nhất."
+
+[MANIM: Công thức h_a = W · a xuất hiện
+ So sánh: kết quả giật (✗) vs kết quả mượt (✓)]
+```
+
+**Scene 38 — Video Language Planning: Ý tưởng (~50s)**
+```
+Lời: "Tiếp theo, làm sao để robot thực hiện các nhiệm vụ 
+dài hạn phức tạp? Ví dụ như dọn dẹp bàn ăn và cất quả táo 
+vào ngăn kéo. Sinh một video dài thể hiện toàn bộ quá trình 
+trong một lượt là cực kỳ khó và dễ bị suy giảm chất lượng. 
+Giải pháp là Video Language Planning, viết tắt VLP, một 
+cơ chế lập kế hoạch phân cấp kết hợp giữa ngôn ngữ và video."
+
+[MANIM: Nhiệm vụ lớn → dấu hỏi → VLP]
+```
+
+**Scene 39 — VLP: 3 cấp chi tiết (~60s)**
+```
+Lời: "VLP chia quá trình thành 3 cấp. Cấp cao: LLM nhận nhiệm vụ tổng thể và phân rã thành các 
+hành động bằng chữ ngắn hạn. Ví dụ: Bước 1 mở ngăn kéo, bước 2 
+bỏ quả táo vào, bước 3 đóng ngăn kéo. Cấp trung: Với mỗi 
+hành động, mô hình Text-to-Video đóng vai trò Universal 
+Policy, sinh ra video ngắn thể hiện robot hoàn thành bước 
+đó thành công. Cấp thấp: Video sinh ra được đưa vào Inverse 
+Dynamics Model để dịch thành các motor command gửi đến các khớp robot."
+
+[MANIM: Sơ đồ phân cấp 3 tầng:
+ LLM (text plan) → T2V (video plan) → Inverse Dynamics (motor commands)
+ Mỗi tầng xuất hiện lần lượt + ví dụ "mở ngăn kéo"]
+```
+
+**Scene 40 — Đánh giá Robot: Vấn đề (~45s)**
+```
+Lời: "Khi đã có robot policy, câu hỏi tiếp theo là: Làm 
+sao evaluate policy đó mà không cần chạy robot thật, vì 
+robot thật tốn kém và có thể bị hỏng? Đánh giá trong các 
+simulator truyền thống thì sim-to-real gap quá lớn, 
+kết quả hầu như không tương quan với thực tế."
+
+[MANIM: Robot thật ($$$) ✗ | Simulator (gap lớn) ✗]
+```
+
+**Scene 41 — Đánh giá Robot: Dùng Mô hình Thế giới (~50s)**
+```
+Lời: "Giải pháp: Dùng chính mô hình thế giới làm bộ giả 
+lập. Chạy các hành động do robot policy đưa ra vào mô hình thế giới để sinh video giả lập. Sau đó, sử dụng VLM đóng vai trò bộ chấm điểm để đánh giá xem nhiệm vụ có thành công hay không."
+
+[MANIM: Robot Policy → World Model → Video → VLM → Score ✓/✗]
+```
+
+**Scene 42 — False Negative & False Positive (~60s)**
+```
+Lời: "Tuy nhiên, phương pháp này có hai loại lỗi chí mạng 
+cần lưu ý. Lỗi thứ nhất là False Negative: 
+Robot thực tế hành động hoàn toàn đúng, nhưng mô hình thế 
+giới render video bị lỗi hiển thị hoặc méo mó vật lý, 
+khiến VLM đánh giá robot thất bại. Lỗi thứ hai là False Positive: 
+Robot hành động sai và vụng về, nhưng mô hình thế giới tự sửa sai, tự kết xuất video thành công, 
+khiến VLM đánh giá robot đạt. Cả hai lỗi đều nguy hiểm."
+
+[MANIM: 2 sơ đồ song song + highlight đỏ:
+ FN: Robot đúng → Video lỗi → VLM: FAIL ✗
+ FP: Robot sai → Video đẹp → VLM: PASS ✓ (nhưng sai!)]
+```
+
+**Scene 43 — Vòng lặp tự cải tiến (~60s)**
+```
+Lời: "Để khắc phục các lỗi này và liên tục cải thiện, mô 
+hình thế giới sử dụng 2 cơ chế phản hồi. Cơ chế 1 là AI 
+Feedback: VLM chấm điểm chất lượng video sinh ra, sau đó dùng DPO để huấn luyện mô hình tự sửa lỗi. Cơ chế 2 là Execution Feedback: Thu thập dữ liệu từ quá trình robot thực thi thực tế, rồi dùng thuật toán DAgger hoặc STaR để cập nhật mô hình."
+
+[MANIM: Vòng lặp 2 nhánh khép kín:
+ Nhánh 1: Video → VLM → DPO → Model tốt hơn
+ Nhánh 2: Robot thực → Dữ liệu → DAgger → Model tốt hơn]
+```
+
+**Scene 44 — Recap Phần 3 (~50s)**
+```
+Lời: "Tổng kết Phần 3: Mô hình thế giới cho robot cần 3 
+yếu tố. Một là dữ liệu quy mô lớn, với 21 triệu cặp time-aligned video và action data. Hai là kỹ thuật đưa hành động vào mô hình chính xác bằng Linear Projection. Ba là cơ chế tự cải tiến qua AI Feedback và Execution Feedback. Video Language Planning giúp robot thực hiện nhiệm vụ dài hạn, và mô hình thế giới đóng vai trò bộ giả lập để đánh giá robot policy."
+
+[MANIM: 3 keyword + sơ đồ tổng hợp nhỏ]
+```
+
+---
+
+### ═══ KẾT THÚC (2 phút — 2 scene) ═══
+
+**Scene 45 — Tổng kết toàn video (~60s)**
+```
+Lời: "Và đó là toàn bộ hành trình từ tạo video AI đến mô 
+hình thế giới. Chúng ta đã đi qua 3 trụ cột chính. 
+Trụ cột thứ nhất: Kiến trúc tạo video thế hệ mới với 3D 
+VAE, Spatiotemporal Attention, và kiến trúc MVL. Trụ cột thứ hai: 
+Streaming Perception với CUT3R xây dựng bộ nhớ 3D bền 
+vững và ST4rtrack theo dõi tái dựng 4D đồng thời. Và trụ 
+cột thứ ba: Mô hình thế giới cho robot với dữ liệu quy 
+mô Internet, Action Conditioning bằng Linear Projection, và 
+vòng lặp tự cải tiến. Tương lai của AI không chỉ là tạo ra 
+hình ảnh đẹp, mà là thực sự hiểu và tương tác với thế giới. 
+Cảm ơn các bạn đã theo dõi!"
+
+[MANIM: 3 trụ cột xuất hiện tổng hợp → 
+ Animation kết: tất cả merge lại → "Thank you!"]
+```
+
+**Scene 46 — Credits (~40s)**
+```
+Lời: (Không có lời — chỉ nhạc nền nhẹ nếu muốn)
+
+[MANIM: Hiển thị:
+ - Tên video
+ - Thành viên nhóm + MSSV
+ - Thông tin môn học
+ - Danh sách bài báo tham khảo
+ - Link GitHub
+ - "Made with Manim Community Edition"]
+```
+
+---
+
+## PHASE 2: LẬP TRÌNH MANIM (01/06 → 06/06)
+
+### Phân công KHÔNG xung đột:
+
+| Ngày | 👤 Trực (file riêng) | 👤 Tuấn (file riêng) |
+|------|---------|---------|
+| **01/06** | `part1_video_generation.py` (Sc04-07) | Học Manim + `part0_intro.py` (Sc01-03) |
+| **02/06** | `part1_video_generation.py` (Sc08-12) | `part2_3d_perception.py` (Sc18-21) |
+| **03/06** | `part1_video_generation.py` (Sc13-17) | `part2_3d_perception.py` (Sc22-26) |
+| **04/06** | `part3_world_models.py` (Sc32-36) | `part2_3d_perception.py` (Sc27-31) |
+| **05/06** | `part3_world_models.py` (Sc37-41) | `generate_voiceover.py` (tạo audio) |
+| **06/06** | `part3_world_models.py` (Sc42-44) | `part4_credits.py` (Sc45-46) |
+
+> [!IMPORTANT]
+> **Mỗi người code file RIÊNG → không bao giờ xung đột Git.**
+> Trực xong `config.py` trước 01/06 → Tuấn import dùng.
+
+### Hướng dẫn Manim cơ bản:
+
+```python
+# Cấu trúc file — mỗi Scene class = 1 scene video riêng
+from manim import *
+from config import *
+
+class Scene05_2DVAE_Problem(Scene):
+    def construct(self):
+        title = make_title("Vấn đề: 2D VAE truyền thống")
+        self.play(Write(title))
+        self.wait(1)
+        
+        frames = VGroup(*[
+            Rectangle(width=2, height=1.5, color=BLUE, fill_opacity=0.3)
+            for _ in range(5)
+        ]).arrange(RIGHT, buff=0.3).shift(DOWN * 0.5)
+        
+        self.play(LaggedStart(*[FadeIn(f) for f in frames], lag_ratio=0.2))
+        
+        # Mũi tên độc lập cho mỗi frame
+        arrows = VGroup(*[
+            Arrow(f.get_bottom(), f.get_bottom() + DOWN*0.8, 
+                  color=C_RED, stroke_width=2)
+            for f in frames
+        ])
+        self.play(LaggedStart(*[Create(a) for a in arrows], lag_ratio=0.1))
+        
+        error = Text("✗ Nhấp nháy & biến dạng!", font=FONT, 
+                     font_size=28, color=C_RED)
+        error.to_edge(DOWN)
+        self.play(Write(error))
+        self.wait(3)
+        self.play(*[FadeOut(m) for m in self.mobjects])
+
+# Render: manim -pql scenes/part1_video_generation.py Scene05_2DVAE_Problem
+```
+
+### Các lệnh render:
+
+```powershell
+# Test nhanh (480p)
+manim -pql scenes/part1_video_generation.py Scene05_2DVAE_Problem
+
+# Render 1 scene chất lượng cao (1080p)  
+manim -qh scenes/part1_video_generation.py Scene05_2DVAE_Problem
+
+# Render TẤT CẢ scene trong 1 file
+manim -qh scenes/part1_video_generation.py -a
+```
+
+---
+
+## PHASE 3: TẠO GIỌNG NÓI AI (05-06/06) — TUẤN
+
+```python
+# scripts/generate_voiceover.py
+import edge_tts, asyncio, os
+
+SCRIPTS = {
+    "scene_01": "Xin chào các bạn...",  # Copy từ kịch bản
+    "scene_02": "Tại sao chủ đề này...",
+    # ... tất cả 46 scene
+}
+
+VOICE = "vi-VN-HoaiMyNeural"
+
+async def generate_all():
+    os.makedirs("voiceover", exist_ok=True)
+    for name, text in SCRIPTS.items():
+        path = f"voiceover/{name}.mp3"
+        print(f"🎤 {path}...")
+        await edge_tts.Communicate(text, VOICE).save(path)
+        print(f"  ✅ Xong!")
+
+asyncio.run(generate_all())
+```
+
+> [!TIP]
+> Sau khi tạo audio, chạy `check_duration.py` để đo thời lượng từng file.
+> Dùng kết quả này để điều chỉnh `self.wait()` trong code Manim cho khớp.
+
+---
+
+## PHASE 4: GHÉP + NỐI VIDEO (07/06) — CẢ HAI
+
+```powershell
+# 1. Render tất cả ở 1080p
+manim -qh scenes/part0_intro.py -a --media_dir output
+manim -qh scenes/part1_video_generation.py -a --media_dir output
+manim -qh scenes/part2_3d_perception.py -a --media_dir output
+manim -qh scenes/part3_world_models.py -a --media_dir output
+manim -qh scenes/part4_credits.py -a --media_dir output
+
+# 2. Ghép audio + nối video (chạy scripts Python)
+python scripts/merge_audio_video.py
+python scripts/concat_final.py
+# → output/FINAL_VIDEO.mp4 (~30-35 phút)
+```
+
+---
+
+## PHASE 5: KIỂM TRA + UPLOAD (08-09/06)
+
+| Việc | Người |
+|------|-------|
+| Xem lại toàn bộ video 30 phút | Cả hai |
+| Sửa lỗi scene | Ai code scene đó sửa |
+| Upload YouTube (công khai) | Trực |
+| Tạo GitHub repo + push code | Tuấn |
+
+---
+
+## TỔNG LỊCH TRÌNH
+
+| Ngày | Trực | Tuấn | ✅ |
+|------|------|------|----|
+| **30/05** | Cài đặt môi trường | Cài đặt môi trường | Song song |
+| **31/05** | `config.py` + kịch bản | Học Manim | Trực xong config trước |
+| **01-03/06** | Code Part 1 (14 scene) | Code Intro + Part 2 (17 scene) | File riêng |
+| **04-06/06** | Code Part 3 (13 scene) | Audio + Credits (2 scene) | File riêng |
+| **07/06** | Render tất cả | Ghép audio + nối video | Tuần tự |
+| **08/06** | Review + sửa lỗi | Review + sửa lỗi | Song song |
+| **09/06** | Upload YouTube | Push GitHub | Song song |
+| **10/06** | **DEADLINE** | **DEADLINE** | Nộp link |
