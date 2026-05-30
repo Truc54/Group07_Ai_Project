@@ -29,7 +29,7 @@
 ## CẤU TRÚC THƯ MỤC DỰ ÁN
 
 ```
-csai_project/
+CSAI/
 │
 ├── 📁 scenes/                          # Mã nguồn Manim
 │   ├── config.py                       # ⭐ FILE CHUNG — màu, font, helper
@@ -119,7 +119,7 @@ ffmpeg -version   # kiểm tra
 # 2. Cài MiKTeX (cho LaTeX) — https://miktex.org/download
 
 # 3. Tạo venv + cài thư viện
-cd c:\Users\truct\source\csai_project
+cd c:\Users\truct\source\CSAI
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install manim edge-tts pydub
