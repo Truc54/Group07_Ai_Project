@@ -117,13 +117,18 @@ class Scene05_2DVAE_Problem(Scene):
 
         self.play(LaggedStart(*[FadeIn(o, shift=DOWN * 0.3) for o in out_frames], lag_ratio=0.1))
 
-        # Dấu cách ly
+        # Dấu cách ly - vạch đứt dọc màu đỏ biểu thị sự cô lập, chia cắt giữa các frame
         isolation = VGroup()
         for i in range(4):
-            cross = make_cross(size=0.25, stroke_width=3, color=C_RED)
-            cross.move_to((frames[i].get_right() + frames[i + 1].get_left()) / 2)
-            isolation.add(cross)
-        self.play(LaggedStart(*[FadeIn(s, scale=2) for s in isolation], lag_ratio=0.1))
+            mid_x = (frames[i].get_center()[0] + frames[i + 1].get_center()[0]) / 2
+            y_center = frames[i].get_center()[1]
+            divider = DashedLine(
+                start=np.array([mid_x, y_center + 0.6, 0]),
+                end=np.array([mid_x, y_center - 0.6, 0]),
+                color=C_RED, stroke_width=2, dash_length=0.15
+            )
+            isolation.add(divider)
+        self.play(LaggedStart(*[Create(s) for s in isolation], lag_ratio=0.15))
 
         error_text = Text(
             "→ Mỗi frame xử lý ĐỘC LẬP, không biết frame trước hoặc sau!",
@@ -197,12 +202,17 @@ class Scene07_3DVAE_Idea(Scene):
         left_group = VGroup(left_label, left_frames).arrange(DOWN, buff=0.3)
         left_group.move_to(LEFT * 3.2 + DOWN * 0.5)
 
-        # Dấu X ở giữa các frame
+        # Vạch đứt dọc ngăn cách ở giữa các frame biểu thị sự rời rạc
         left_crosses = VGroup()
         for i in range(3):
-            x = make_cross(size=0.18, stroke_width=2, color=C_RED)
-            x.move_to((left_frames[i].get_right() + left_frames[i + 1].get_left()) / 2)
-            left_crosses.add(x)
+            mid_x = (left_frames[i].get_center()[0] + left_frames[i + 1].get_center()[0]) / 2
+            y_center = left_frames[i].get_center()[1]
+            divider = DashedLine(
+                start=np.array([mid_x, y_center + 0.4, 0]),
+                end=np.array([mid_x, y_center - 0.4, 0]),
+                color=C_RED, stroke_width=1.5, dash_length=0.12
+            )
+            left_crosses.add(divider)
 
         # === BÊN PHẢI: 3D VAE (liên tục) ===
         right_label = Text("3D VAE", font=FONT, font_size=24, color=WHITE)
@@ -228,7 +238,7 @@ class Scene07_3DVAE_Idea(Scene):
         # Animate
         self.play(FadeIn(left_label, shift=DOWN * 0.2))
         self.play(LaggedStart(*[FadeIn(f) for f in left_frames], lag_ratio=0.1))
-        self.play(LaggedStart(*[FadeIn(x, scale=2) for x in left_crosses], lag_ratio=0.1))
+        self.play(LaggedStart(*[Create(x) for x in left_crosses], lag_ratio=0.1))
         self.wait(0.5)
 
         self.play(FadeIn(vs_text))
@@ -276,7 +286,7 @@ class Scene08_3DVAE_Math(Scene):
             r"V \in \mathbb{R}^{T \times C \times H \times W}",
             font_size=40, color=WHITE
         )
-        input_eq.next_to(input_label, RIGHT, buff=0.3).shift(UP * 0.15)
+        input_eq.next_to(input_label, RIGHT, buff=0.3).shift(UP * 0.08)
         input_group = VGroup(input_label, input_eq).move_to(UP * 1.4)
 
         self.play(FadeIn(input_group))
@@ -294,7 +304,7 @@ class Scene08_3DVAE_Math(Scene):
             r"z \in \mathbb{R}^{\hat{T} \times \hat{C} \times \hat{H} \times \hat{W}}",
             font_size=40, color=WHITE
         )
-        lat_eq.next_to(lat_label, RIGHT, buff=0.3).shift(UP * 0.20)
+        lat_eq.next_to(lat_label, RIGHT, buff=0.3).shift(UP * 0.12)
         lat_group = VGroup(lat_label, lat_eq).move_to(DOWN * 0.3)
 
         self.play(FadeIn(lat_group))
@@ -715,15 +725,18 @@ class Scene13_SeparateModels(Scene):
             self.play(FadeIn(mg, shift=UP * 0.3), run_time=0.6)
             self.wait(0.3)
 
-        # Dấu X giữa các model - đặt giữa các Model boxes ở dưới
+        # Vạch đứt dọc ngăn cách giữa các model ở dưới biểu thị sự tách biệt
         crosses = VGroup()
         for i in range(2):
-            x = make_cross(size=0.35, stroke_width=3, color=C_RED)
-            x_pos = (model_groups[i].get_right()[0] + model_groups[i + 1].get_left()[0]) / 2
+            mid_x = (model_groups[i].get_right()[0] + model_groups[i + 1].get_left()[0]) / 2
             y_pos = model_groups[i][3].get_center()[1]  # Y coordinate of model_box
-            x.move_to(np.array([x_pos, y_pos, 0]))
-            crosses.add(x)
-        self.play(LaggedStart(*[FadeIn(x, scale=2) for x in crosses], lag_ratio=0.2))
+            divider = DashedLine(
+                start=np.array([mid_x, y_pos + 0.65, 0]),
+                end=np.array([mid_x, y_pos - 0.65, 0]),
+                color=C_RED, stroke_width=2, dash_length=0.15
+            )
+            crosses.add(divider)
+        self.play(LaggedStart(*[Create(x) for x in crosses], lag_ratio=0.2))
 
         problem = Text(
             "3 mô hình riêng biệt → Lãng phí và không chia sẻ kiến thức!",
@@ -996,7 +1009,7 @@ class Scene17_Part1Recap(Scene):
             run_time=0.8
         )
 
-        next_part = Text("→ Phần 2: Nhận thức 3D liên tục từ video",
+        next_part = Text("Phần 2: Nhận thức 3D liên tục từ video",
                          font=FONT, font_size=28, color=WHITE)
         next_part.move_to(ORIGIN)
         self.play(FadeOut(transition_box), FadeOut(question))
