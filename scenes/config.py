@@ -2,7 +2,7 @@
 from manim import *
 
 # === MÀU SẮC DỰ ÁN (PREMIUM AESTHETICS) ===
-BG       = "#0f0f1a"
+BG       = "#000000"
 C_TITLE  = "#00d4ff"
 C_SUB    = "#a0a0c0"
 C_RED    = "#ff6b6b"
@@ -12,13 +12,13 @@ C_PURPLE = "#e599f7"
 C_BLUE   = "#74c0fc"
 C_BOX    = "#1a1a2e"
 
-FONT = "Arial"
+FONT = "Segoe UI"
 
 def make_title(text, sub=""):
     """
     Tạo VGroup tiêu đề chuẩn hóa cho các Scene.
     """
-    t = Text(text, font=FONT, font_size=42, color=C_TITLE).to_edge(UP, buff=0.5)
+    t = Text(text, font=FONT, font_size=42, color=WHITE).to_edge(UP, buff=0.8)
     if sub:
         s = Text(sub, font=FONT, font_size=28, color=C_SUB).next_to(t, DOWN, buff=0.3)
         return VGroup(t, s)
@@ -44,3 +44,12 @@ def make_bullets(items):
         lines.add(VGroup(dot, txt).arrange(RIGHT, buff=0.3))
     lines.arrange(DOWN, aligned_edge=LEFT, buff=0.35)
     return lines
+
+def make_cross(size=0.3, stroke_width=3, color=C_RED):
+    """
+    Tạo dấu X (cross) chuyên nghiệp gồm 2 Line chéo nhau.
+    """
+    line1 = Line(LEFT * size / 2 + UP * size / 2, RIGHT * size / 2 + DOWN * size / 2, color=color, stroke_width=stroke_width)
+    line2 = Line(LEFT * size / 2 + DOWN * size / 2, RIGHT * size / 2 + UP * size / 2, color=color, stroke_width=stroke_width)
+    return VGroup(line1, line2)
+

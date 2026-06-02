@@ -1,5 +1,9 @@
 import os
+import sys
 import subprocess
+
+if sys.platform.startswith('win'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 def concat_all_videos():
     merged_dir = os.path.join("output", "merged")
