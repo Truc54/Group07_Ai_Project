@@ -147,9 +147,9 @@ class Scene06_Flickering(Scene):
 
         # 3 Bullet points hậu quả của 2D VAE
         bullet_items = [
-            ("1. Flickering:", " Ánh sáng và màu sắc thay đổi đột ngột giữa các khung hình"),
-            ("2. Biến dạng cấu trúc:", " Vật thể bị méo mó phi vật lý khi chuyển động"),
-            ("3. Temporal Inconsistency:", " Vật thể tự biến mất hoặc thay đổi hình dạng bất thường"),
+            ("Flickering:", " Ánh sáng và màu sắc thay đổi đột ngột giữa các khung hình"),
+            ("Biến dạng cấu trúc:", " Vật thể bị méo mó phi vật lý khi chuyển động"),
+            ("Temporal Inconsistency:", " Vật thể tự biến mất hoặc thay đổi hình dạng bất thường"),
         ]
         
         bullets = VGroup()
@@ -276,7 +276,7 @@ class Scene08_3DVAE_Math(Scene):
             r"V \in \mathbb{R}^{T \times C \times H \times W}",
             font_size=40, color=WHITE
         )
-        input_eq.next_to(input_label, RIGHT, buff=0.3).shift(UP * 0.02)
+        input_eq.next_to(input_label, RIGHT, buff=0.3).shift(UP * 0.15)
         input_group = VGroup(input_label, input_eq).move_to(UP * 1.4)
 
         self.play(FadeIn(input_group))
@@ -294,7 +294,7 @@ class Scene08_3DVAE_Math(Scene):
             r"z \in \mathbb{R}^{\hat{T} \times \hat{C} \times \hat{H} \times \hat{W}}",
             font_size=40, color=WHITE
         )
-        lat_eq.next_to(lat_label, RIGHT, buff=0.3).shift(UP * 0.05)
+        lat_eq.next_to(lat_label, RIGHT, buff=0.3).shift(UP * 0.20)
         lat_group = VGroup(lat_label, lat_eq).move_to(DOWN * 0.3)
 
         self.play(FadeIn(lat_group))
@@ -401,7 +401,7 @@ class Scene09_3DVAE_Visual(Scene):
         reduce_box = RoundedRectangle(
             width=5.8, height=1.2, corner_radius=0.15,
             color=C_RED, fill_opacity=0.1, stroke_width=2
-        ).shift(DOWN * 1.5)
+        ).shift(DOWN * 2.1)
 
         reduce_text = VGroup(
             Text("Giảm ", font=FONT, font_size=28, color=WHITE),
@@ -504,8 +504,8 @@ class Scene10_SpatiotemporalAttention(Scene):
                 if sq is not target:
                     arr = Arrow(
                         target.get_center(), sq.get_center(),
-                        color=C_GREEN, stroke_width=1.5, stroke_opacity=0.6,
-                        buff=0.12, max_tip_length_to_length_ratio=0.25
+                        color=C_GREEN, stroke_width=1.0, stroke_opacity=0.4,
+                        buff=0.08, tip_length=0.10
                     )
                     cross_arrows.add(arr)
 
@@ -686,7 +686,11 @@ class Scene13_SeparateModels(Scene):
                 width=2.8, height=1.3, corner_radius=0.12,
                 color=C_SUB, fill_opacity=0.08, stroke_width=1.5
             )
-            task_label = Text(task_name, font=FONT, font_size=16, color=WHITE, line_spacing=1.1).move_to(task_box)
+            # Center multi-line task label by splitting by \n
+            t_lines = task_name.split("\n")
+            task_label = VGroup(*[
+                Text(line, font=FONT, font_size=16, color=WHITE) for line in t_lines
+            ]).arrange(DOWN, buff=0.1).move_to(task_box)
 
             # Arrow down
             arr = Arrow(task_box.get_bottom(), task_box.get_bottom() + DOWN * 0.8,
@@ -697,7 +701,11 @@ class Scene13_SeparateModels(Scene):
                 width=2.8, height=1.3, corner_radius=0.12,
                 color=col, fill_opacity=0.12, stroke_width=2
             ).next_to(arr, DOWN, buff=0.05)
-            model_label = Text(model_name, font=FONT, font_size=16, color=WHITE, line_spacing=1.1).move_to(model_box)
+            # Center multi-line model label by splitting by \n
+            m_lines = model_name.split("\n")
+            model_label = VGroup(*[
+                Text(line, font=FONT, font_size=16, color=WHITE) for line in m_lines
+            ]).arrange(DOWN, buff=0.1).move_to(model_box)
 
             model_groups.add(VGroup(task_box, task_label, arr, model_box, model_label))
 
@@ -707,16 +715,18 @@ class Scene13_SeparateModels(Scene):
             self.play(FadeIn(mg, shift=UP * 0.3), run_time=0.6)
             self.wait(0.3)
 
-        # Dấu X giữa các model
+        # Dấu X giữa các model - đặt giữa các Model boxes ở dưới
         crosses = VGroup()
         for i in range(2):
             x = make_cross(size=0.35, stroke_width=3, color=C_RED)
-            x.move_to((model_groups[i].get_right() + model_groups[i + 1].get_left()) / 2)
+            x_pos = (model_groups[i].get_right()[0] + model_groups[i + 1].get_left()[0]) / 2
+            y_pos = model_groups[i][3].get_center()[1]  # Y coordinate of model_box
+            x.move_to(np.array([x_pos, y_pos, 0]))
             crosses.add(x)
         self.play(LaggedStart(*[FadeIn(x, scale=2) for x in crosses], lag_ratio=0.2))
 
         problem = Text(
-            "3 mô hình riêng biệt → Lãng phí & không chia sẻ kiến thức!",
+            "3 mô hình riêng biệt → Lãng phí và không chia sẻ kiến thức!",
             font=FONT, font_size=20, color=WHITE
         ).to_edge(DOWN, buff=0.8)
         self.play(FadeIn(problem))
@@ -824,47 +834,43 @@ class Scene15_Research1_2(Scene):
     def construct(self):
         self.camera.background_color = BG
 
-        title = make_title("4 hướng nghiên cứu chính", "Hướng 1 & 2")
+        title = make_title("4 hướng nghiên cứu chính", "Hướng 1 và 2")
         self.play(FadeIn(title), run_time=0.8)
         self.wait(0.5)
 
         # Hướng 1
-        h1_box = RoundedRectangle(
-            width=10, height=2.2, corner_radius=0.15,
-            color=C_BLUE, fill_opacity=0.08, stroke_width=2
-        ).shift(UP * 0.3)
-
-        h1_num = Text("①", font_size=36, color=WHITE).move_to(h1_box.get_left() + RIGHT * 0.6)
+        h1_num = Text("①", font_size=40, color=C_BLUE)
         h1_title = Text(
-            "Nâng cấp kiến trúc & thuật toán",
-            font=FONT, font_size=22, color=WHITE
-        ).next_to(h1_num, RIGHT, buff=0.3)
+            "Nâng cấp kiến trúc và thuật toán",
+            font=FONT, font_size=22, color=WHITE, weight=BOLD
+        )
+        h1_header = VGroup(h1_num, h1_title).arrange(RIGHT, buff=0.3)
         h1_desc = Text(
             "Tối ưu cấu trúc DiT, đẩy nhanh tốc độ hội tụ Diffusion",
-            font=FONT, font_size=16, color=WHITE
-        ).next_to(h1_title, DOWN, buff=0.2, aligned_edge=LEFT)
+            font=FONT, font_size=16, color=C_SUB
+        )
+        h1_group = VGroup(h1_header, h1_desc).arrange(DOWN, aligned_edge=LEFT, buff=0.25).shift(UP * 0.8)
+        h1_group.to_edge(LEFT, buff=1.5)
 
-        self.play(FadeIn(h1_box), FadeIn(h1_num), FadeIn(h1_title), run_time=0.8)
+        self.play(FadeIn(h1_header, shift=RIGHT * 0.2), run_time=0.8)
         self.play(FadeIn(h1_desc, shift=UP * 0.1))
         self.wait(1)
 
         # Hướng 2
-        h2_box = RoundedRectangle(
-            width=10, height=2.2, corner_radius=0.15,
-            color=C_GREEN, fill_opacity=0.08, stroke_width=2
-        ).shift(DOWN * 2.2)
-
-        h2_num = Text("②", font_size=36, color=WHITE).move_to(h2_box.get_left() + RIGHT * 0.6)
+        h2_num = Text("②", font_size=40, color=C_GREEN)
         h2_title = Text(
-            "Tăng cường tương tác & điều khiển",
-            font=FONT, font_size=22, color=WHITE
-        ).next_to(h2_num, RIGHT, buff=0.3)
+            "Tăng cường tương tác và điều khiển",
+            font=FONT, font_size=22, color=WHITE, weight=BOLD
+        )
+        h2_header = VGroup(h2_num, h2_title).arrange(RIGHT, buff=0.3)
         h2_desc = Text(
             "Điều khiển camera (Pan, Zoom, Tilt) + nhận biết vật lý",
-            font=FONT, font_size=16, color=WHITE
-        ).next_to(h2_title, DOWN, buff=0.2, aligned_edge=LEFT)
+            font=FONT, font_size=16, color=C_SUB
+        )
+        h2_group = VGroup(h2_header, h2_desc).arrange(DOWN, aligned_edge=LEFT, buff=0.25).shift(DOWN * 1.2)
+        h2_group.to_edge(LEFT, buff=1.5)
 
-        self.play(FadeIn(h2_box), FadeIn(h2_num), FadeIn(h2_title), run_time=0.8)
+        self.play(FadeIn(h2_header, shift=RIGHT * 0.2), run_time=0.8)
         self.play(FadeIn(h2_desc, shift=UP * 0.1))
         self.wait(3)
         self.play(*[FadeOut(m) for m in self.mobjects])
@@ -877,52 +883,43 @@ class Scene16_Research3_4(Scene):
     def construct(self):
         self.camera.background_color = BG
 
-        title = make_title("4 hướng nghiên cứu chính", "Hướng 3 & 4")
+        title = make_title("4 hướng nghiên cứu chính", "Hướng 3 và 4")
         self.play(FadeIn(title), run_time=0.8)
         self.wait(0.5)
 
         # Hướng 3
-        h3_box = RoundedRectangle(
-            width=10, height=2.2, corner_radius=0.15,
-            color=C_YELLOW, fill_opacity=0.08, stroke_width=2
-        ).shift(UP * 0.3)
-
-        h3_num = Text("③", font_size=36, color=WHITE).move_to(h3_box.get_left() + RIGHT * 0.6)
+        h3_num = Text("③", font_size=40, color=C_YELLOW)
         h3_title = Text(
-            "Đánh giá & căn chỉnh chính xác",
-            font=FONT, font_size=22, color=WHITE
-        ).next_to(h3_num, RIGHT, buff=0.3)
+            "Đánh giá và căn chỉnh chính xác",
+            font=FONT, font_size=22, color=WHITE, weight=BOLD
+        )
+        h3_header = VGroup(h3_num, h3_title).arrange(RIGHT, buff=0.3)
         h3_desc = Text(
             "Đo lường chân thực vật lý + liên kết nội dung với prompt",
-            font=FONT, font_size=16, color=WHITE
-        ).next_to(h3_title, DOWN, buff=0.2, aligned_edge=LEFT)
+            font=FONT, font_size=16, color=C_SUB
+        )
+        h3_group = VGroup(h3_header, h3_desc).arrange(DOWN, aligned_edge=LEFT, buff=0.25).shift(UP * 0.8)
+        h3_group.to_edge(LEFT, buff=1.5)
 
-        self.play(FadeIn(h3_box), FadeIn(h3_num), FadeIn(h3_title), run_time=0.8)
+        self.play(FadeIn(h3_header, shift=RIGHT * 0.2), run_time=0.8)
         self.play(FadeIn(h3_desc, shift=UP * 0.1))
         self.wait(1)
 
         # Hướng 4
-        h4_box = RoundedRectangle(
-            width=10, height=2.2, corner_radius=0.15,
-            color=C_PURPLE, fill_opacity=0.08, stroke_width=2
-        ).shift(DOWN * 2.2)
-
-        h4_num = Text("④", font_size=36, color=WHITE).move_to(h4_box.get_left() + RIGHT * 0.6)
+        h4_num = Text("④", font_size=40, color=C_PURPLE)
         h4_title = Text(
-            "Nhận thức & suy luận đa phương thức",
-            font=FONT, font_size=22, color=WHITE
-        ).next_to(h4_num, RIGHT, buff=0.3)
+            "Nhận thức và suy luận đa phương thức",
+            font=FONT, font_size=22, color=WHITE, weight=BOLD
+        )
+        h4_header = VGroup(h4_num, h4_title).arrange(RIGHT, buff=0.3)
         h4_desc = Text(
             "Mô hình không chỉ vẽ — mà còn giải thích cấu trúc chuyển động",
-            font=FONT, font_size=16, color=WHITE
-        ).next_to(h4_title, DOWN, buff=0.2, aligned_edge=LEFT)
+            font=FONT, font_size=16, color=C_SUB
+        )
+        h4_group = VGroup(h4_header, h4_desc).arrange(DOWN, aligned_edge=LEFT, buff=0.25).shift(DOWN * 1.2)
+        h4_group.to_edge(LEFT, buff=1.5)
 
-        highlight = RoundedRectangle(
-            width=4, height=0.5, corner_radius=0.1,
-            color=C_PURPLE, fill_opacity=0.2, stroke_width=1
-        ).move_to(h4_desc.get_center())
-
-        self.play(FadeIn(h4_box), FadeIn(h4_num), FadeIn(h4_title), run_time=0.8)
+        self.play(FadeIn(h4_header, shift=RIGHT * 0.2), run_time=0.8)
         self.play(FadeIn(h4_desc, shift=UP * 0.1))
         self.wait(3)
         self.play(*[FadeOut(m) for m in self.mobjects])
@@ -935,7 +932,7 @@ class Scene17_Part1Recap(Scene):
     def construct(self):
         self.camera.background_color = BG
 
-        title = make_title("Tổng kết Phần 1")
+        title = make_title("Tổng kết phần 1")
         self.play(FadeIn(title), run_time=0.8)
         self.wait(0.5)
 
@@ -953,8 +950,17 @@ class Scene17_Part1Recap(Scene):
                 width=2.5, height=2.4, corner_radius=0.15,
                 color=col, fill_opacity=0.1, stroke_width=2
             )
-            t = Text(kw_title, font=FONT, font_size=18, color=WHITE, line_spacing=1.1).move_to(box.get_top() + DOWN * 0.55)
-            d = Text(kw_desc, font=FONT, font_size=14, color=WHITE, line_spacing=1.1).move_to(box.get_center() + DOWN * 0.3)
+            # Center multi-line text by splitting by \n
+            t_lines = kw_title.split("\n")
+            t = VGroup(*[
+                Text(line, font=FONT, font_size=18, color=WHITE) for line in t_lines
+            ]).arrange(DOWN, buff=0.1).move_to(box.get_top() + DOWN * 0.6)
+
+            d_lines = kw_desc.split("\n")
+            d = VGroup(*[
+                Text(line, font=FONT, font_size=14, color=WHITE) for line in d_lines
+            ]).arrange(DOWN, buff=0.1).move_to(box.get_center() + DOWN * 0.3)
+
             check = Text("✓", font_size=28, color=col).move_to(box.get_bottom() + UP * 0.35)
             kw_cards.add(VGroup(box, t, d, check))
 
