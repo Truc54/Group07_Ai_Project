@@ -44,3 +44,12 @@ def make_bullets(items):
         lines.add(VGroup(dot, txt).arrange(RIGHT, buff=0.3))
     lines.arrange(DOWN, aligned_edge=LEFT, buff=0.35)
     return lines
+
+def make_cross(size=0.3, stroke_width=3, color=C_RED):
+    """
+    Tạo dấu X (cross) chuyên nghiệp gồm 2 Line chéo nhau.
+    """
+    line1 = Line(LEFT * size / 2 + UP * size / 2, RIGHT * size / 2 + DOWN * size / 2, color=color, stroke_width=stroke_width)
+    line2 = Line(LEFT * size / 2 + DOWN * size / 2, RIGHT * size / 2 + UP * size / 2, color=color, stroke_width=stroke_width)
+    return VGroup(line1, line2)
+
