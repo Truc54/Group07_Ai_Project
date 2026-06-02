@@ -28,10 +28,10 @@ class Scene04_Part1Intro(Scene):
         # Timeline tiến bộ
         self.play(FadeOut(part_group))
         timeline_title = Text("Tiến bộ qua các năm", font=FONT, font_size=30, color=WHITE)
-        timeline_title.to_edge(UP, buff=0.6)
+        timeline_title.to_edge(UP, buff=1.0)
         self.play(FadeIn(timeline_title))
 
-        line = Line(LEFT * 5, RIGHT * 5, color=C_SUB, stroke_width=2).shift(DOWN * 0.3)
+        line = Line(LEFT * 5, RIGHT * 5, color=C_SUB, stroke_width=2).shift(DOWN * 0.1)
         self.play(Create(line))
 
         years = ["2022", "2023", "2024", "2025"]
@@ -40,16 +40,21 @@ class Scene04_Part1Intro(Scene):
 
         for i, (year, desc, col) in enumerate(zip(years, descs, colors)):
             x_pos = LEFT * 3.75 + RIGHT * 2.5 * i
-            dot = Dot(point=x_pos + DOWN * 0.3, radius=0.12, color=col)
+            dot = Dot(point=x_pos + DOWN * 0.1, radius=0.12, color=col)
             y_label = Text(year, font=FONT, font_size=22, color=WHITE).next_to(dot, DOWN, buff=0.25)
-            d_label = Text(desc, font=FONT, font_size=16, color=WHITE, line_spacing=1.1).next_to(y_label, DOWN, buff=0.2)
+            
+            # Center multi-line text by splitting into separate Text objects and vertical stacking
+            desc_lines = desc.split("\n")
+            d_label = VGroup(*[
+                Text(line_text, font=FONT, font_size=16, color=WHITE) for line_text in desc_lines
+            ]).arrange(DOWN, buff=0.12).next_to(y_label, DOWN, buff=0.2)
+            
             self.play(FadeIn(dot, scale=0.5), FadeIn(y_label), run_time=0.5)
             self.play(FadeIn(d_label, shift=UP * 0.2), run_time=0.4)
 
-        question = Text(
-            "Đằng sau sự tiến bộ này là\nnhững đột phá kỹ thuật nào?",
-            font=FONT, font_size=28, color=WHITE, line_spacing=1.2
-        ).to_edge(DOWN, buff=0.8)
+        q1 = Text("Đằng sau sự tiến bộ này là", font=FONT, font_size=28, color=WHITE)
+        q2 = Text("những đột phá kỹ thuật nào?", font=FONT, font_size=28, color=WHITE)
+        question = VGroup(q1, q2).arrange(DOWN, buff=0.18).to_edge(DOWN, buff=1.1)
         self.play(FadeIn(question), run_time=1)
         self.wait(2)
         self.play(*[FadeOut(m) for m in self.mobjects])
@@ -121,9 +126,9 @@ class Scene05_2DVAE_Problem(Scene):
         self.play(LaggedStart(*[FadeIn(s, scale=2) for s in isolation], lag_ratio=0.1))
 
         error_text = Text(
-            "→ Mỗi frame xử lý ĐỘC LẬP, không biết frame trước/sau!",
+            "→ Mỗi frame xử lý ĐỘC LẬP, không biết frame trước hoặc sau!",
             font=FONT, font_size=22, color=WHITE
-        ).to_edge(DOWN, buff=0.5)
+        ).to_edge(DOWN, buff=0.8)
         self.play(FadeIn(error_text))
         self.wait(3)
         self.play(*[FadeOut(m) for m in self.mobjects])
@@ -142,7 +147,7 @@ class Scene06_Flickering(Scene):
 
         # 3 lỗi minh họa
         errors = [
-            ("1. Flickering", "Ánh sáng & màu sắc\nthay đổi đột ngột", C_YELLOW),
+            ("1. Flickering", "Ánh sáng và màu sắc\nthay đổi đột ngột", C_YELLOW),
             ("2. Biến dạng cấu trúc", "Vật thể bị méo\nkhi chuyển động", C_RED),
             ("3. Temporal Inconsistency", "Vật thể biến mất\nrồi xuất hiện lại", C_PURPLE),
         ]
@@ -167,7 +172,7 @@ class Scene06_Flickering(Scene):
         conclusion = Text(
             "→ 2D VAE không đủ cho video chất lượng cao!",
             font=FONT, font_size=24, color=WHITE
-        ).to_edge(DOWN, buff=0.4)
+        ).to_edge(DOWN, buff=0.8)
         self.play(FadeIn(conclusion))
         self.wait(2)
         self.play(*[FadeOut(m) for m in self.mobjects])
@@ -251,7 +256,7 @@ class Scene07_3DVAE_Idea(Scene):
         conclusion = Text(
             "✓ Nén đồng thời 3 chiều → giữ liên tục giữa các frame",
             font=FONT, font_size=22, color=WHITE
-        ).to_edge(DOWN, buff=0.4)
+        ).to_edge(DOWN, buff=0.8)
         self.play(FadeIn(conclusion))
         self.wait(3)
         self.play(*[FadeOut(m) for m in self.mobjects])
@@ -274,15 +279,15 @@ class Scene08_3DVAE_Math(Scene):
             r"V \in \mathbb{R}^{T \times C \times H \times W}",
             font_size=40, color=WHITE
         )
-        input_eq.next_to(input_label, RIGHT, buff=0.3).shift(UP * 0.08)
-        input_group = VGroup(input_label, input_eq).move_to(UP * 1.8)
+        input_eq.next_to(input_label, RIGHT, buff=0.3).shift(UP * 0.15)
+        input_group = VGroup(input_label, input_eq).move_to(UP * 1.4)
 
         self.play(FadeIn(input_group))
         self.wait(1)
 
         # Encoder arrow
-        enc_arrow = Arrow(ORIGIN + UP * 0.5, ORIGIN + DOWN * 0.5, color=C_YELLOW, stroke_width=3)
-        enc_arrow.move_to(UP * 0.7)
+        enc_arrow = Arrow(ORIGIN + UP * 0.4, ORIGIN + DOWN * 0.4, color=C_YELLOW, stroke_width=3)
+        enc_arrow.move_to(UP * 0.55)
         enc_text = Text("Encoder 3D", font=FONT, font_size=20, color=WHITE).next_to(enc_arrow, RIGHT, buff=0.2)
         self.play(Create(enc_arrow), FadeIn(enc_text))
 
@@ -292,35 +297,45 @@ class Scene08_3DVAE_Math(Scene):
             r"z \in \mathbb{R}^{\hat{T} \times \hat{C} \times \hat{H} \times \hat{W}}",
             font_size=40, color=WHITE
         )
-        lat_eq.next_to(lat_label, RIGHT, buff=0.3).shift(UP * 0.08)
-        lat_group = VGroup(lat_label, lat_eq).move_to(DOWN * 0.2)
+        lat_eq.next_to(lat_label, RIGHT, buff=0.3).shift(UP * 0.15)
+        lat_group = VGroup(lat_label, lat_eq).move_to(DOWN * 0.3)
 
         self.play(FadeIn(lat_group))
         self.wait(1)
 
-        # Highlight compression ratios
-        compress_box = RoundedRectangle(
-            width=8, height=1.8, corner_radius=0.15,
+        # Hai khung nén song song cạnh nhau
+        box_width = 4.2
+        box_height = 1.6
+        
+        # Khung bên trái (Nén thời gian)
+        left_box = RoundedRectangle(
+            width=box_width, height=box_height, corner_radius=0.15,
             color=C_YELLOW, fill_opacity=0.08, stroke_width=1.5
-        ).shift(DOWN * 2)
-
-        t1 = Text("Nén thời gian:", font=FONT, font_size=20, color=WHITE)
+        )
+        t1 = Text("Nén thời gian", font=FONT, font_size=18, color=WHITE)
         m1 = MathTex(r"\hat{T} < T", font_size=32, color=WHITE)
-        t2 = Text("    Nén không gian:", font=FONT, font_size=20, color=WHITE)
+        left_content = VGroup(t1, m1).arrange(DOWN, buff=0.2).move_to(left_box).shift(UP * 0.05)
+        left_group = VGroup(left_box, left_content)
+        
+        # Khung bên phải (Nén không gian)
+        right_box = RoundedRectangle(
+            width=box_width, height=box_height, corner_radius=0.15,
+            color=C_BLUE, fill_opacity=0.08, stroke_width=1.5
+        )
+        t2 = Text("Nén không gian", font=FONT, font_size=18, color=WHITE)
         m2 = MathTex(r"\hat{H} < H, \; \hat{W} < W", font_size=32, color=WHITE)
+        right_content = VGroup(t2, m2).arrange(DOWN, buff=0.2).move_to(right_box).shift(UP * 0.05)
+        right_group = VGroup(right_box, right_content)
         
-        m1.next_to(t1, RIGHT, buff=0.25).shift(UP * 0.08)
-        t2.next_to(m1, RIGHT, buff=0.4)
-        m2.next_to(t2, RIGHT, buff=0.25).shift(UP * 0.08)
-        
-        comp_items = VGroup(t1, m1, t2, m2).move_to(compress_box)
+        # Sắp xếp 2 khung song song cạnh nhau, dịch sát lại nội dung
+        compress_boxes = VGroup(left_group, right_group).arrange(RIGHT, buff=0.5).shift(DOWN * 1.6)
 
-        self.play(FadeIn(compress_box), FadeIn(comp_items), run_time=1)
+        self.play(FadeIn(compress_boxes), run_time=1)
 
         benefit = Text(
             "→ Chi phí tính toán giảm đáng kể, chuyển động vẫn mịn màng",
             font=FONT, font_size=20, color=WHITE
-        ).to_edge(DOWN, buff=0.3)
+        ).to_edge(DOWN, buff=0.7)
         self.play(FadeIn(benefit))
         self.wait(3)
         self.play(*[FadeOut(m) for m in self.mobjects])
@@ -339,52 +354,55 @@ class Scene09_3DVAE_Visual(Scene):
 
         # Video gốc: khối lớn
         original_label = Text("Video gốc", font=FONT, font_size=22, color=WHITE)
-        original_label.move_to(UP * 1.5 + LEFT * 4)
-
         orig_box = RoundedRectangle(
             width=3, height=2, corner_radius=0.15,
             color=C_BLUE, fill_opacity=0.15, stroke_width=2
-        ).next_to(original_label, DOWN, buff=0.3)
-
+        )
         orig_dims = VGroup(
             Text("16 frames", font=FONT, font_size=16, color=WHITE),
             Text("256 × 256 px", font=FONT, font_size=16, color=WHITE),
         ).arrange(DOWN, buff=0.15).move_to(orig_box)
+        orig_group = VGroup(original_label, orig_box, orig_dims).arrange(DOWN, buff=0.25)
 
-        self.play(FadeIn(original_label), FadeIn(orig_box), FadeIn(orig_dims))
-        self.wait(0.5)
-
-        # Arrow
+        # Mũi tên nén ở giữa
         compress_arrow = Arrow(
-            orig_box.get_right() + RIGHT * 0.2, orig_box.get_right() + RIGHT * 2.5,
+            LEFT * 1.0, RIGHT * 1.0,
             color=C_YELLOW, stroke_width=3
         )
         arrow_label = VGroup(
             Text("3D VAE", font=FONT, font_size=18, color=WHITE),
             Text("Nén T×4, HW×8", font=FONT, font_size=14, color=WHITE),
         ).arrange(DOWN, buff=0.1).next_to(compress_arrow, UP, buff=0.15)
+        arrow_group = VGroup(compress_arrow, arrow_label)
 
-        self.play(Create(compress_arrow), FadeIn(arrow_label))
-
-        # Latent: khối nhỏ
+        # Latent: khối nhỏ bên phải
+        latent_label = Text("z (latent)", font=FONT, font_size=22, color=WHITE)
         lat_box = RoundedRectangle(
-            width=1.5, height=1.2, corner_radius=0.1,
+            width=1.8, height=1.3, corner_radius=0.1,
             color=C_GREEN, fill_opacity=0.2, stroke_width=2
-        ).next_to(compress_arrow, RIGHT, buff=0.3)
-
+        )
         lat_dims = VGroup(
             Text("4 tokens", font=FONT, font_size=14, color=WHITE),
             Text("32 × 32", font=FONT, font_size=14, color=WHITE),
         ).arrange(DOWN, buff=0.1).move_to(lat_box)
+        lat_group = VGroup(latent_label, lat_box, lat_dims).arrange(DOWN, buff=0.25)
 
-        self.play(FadeIn(lat_box, scale=0.5), FadeIn(lat_dims))
+        # Ghép 3 phần thành 1 hàng ngang và CĂN GIỮA TUYỆT ĐỐI
+        middle_row = VGroup(orig_group, arrow_group, lat_group).arrange(RIGHT, buff=0.5)
+        middle_row.move_to(UP * 0.4) # Chuyển dịch nhẹ lên trên để dành chỗ cho kết luận
+
+        # Animate từng phần
+        self.play(FadeIn(orig_group, shift=RIGHT * 0.2))
+        self.wait(0.5)
+        self.play(Create(compress_arrow), FadeIn(arrow_label))
+        self.play(FadeIn(lat_group, scale=0.5))
         self.wait(0.5)
 
         # Highlight giảm
         reduce_box = RoundedRectangle(
             width=5, height=1.2, corner_radius=0.15,
             color=C_RED, fill_opacity=0.1, stroke_width=2
-        ).shift(DOWN * 2)
+        ).shift(DOWN * 1.5)
 
         reduce_text = VGroup(
             Text("Giảm ", font=FONT, font_size=28, color=WHITE),
@@ -395,7 +413,7 @@ class Scene09_3DVAE_Visual(Scene):
         sub_text = Text(
             "Thông tin chuyển động vẫn được bảo toàn!",
             font=FONT, font_size=20, color=WHITE
-        ).next_to(reduce_box, DOWN, buff=0.25)
+        ).next_to(reduce_box, DOWN, buff=0.2)
 
         self.play(FadeIn(reduce_box), FadeIn(reduce_text), run_time=0.8)
         self.play(FadeIn(sub_text))
@@ -410,7 +428,7 @@ class Scene10_SpatiotemporalAttention(Scene):
     def construct(self):
         self.camera.background_color = BG
 
-        title = make_title("Spatiotemporal Attention", "Attention xuyên không gian & thời gian")
+        title = make_title("Spatiotemporal Attention", "Attention xuyên không gian và thời gian")
         self.play(FadeIn(title), run_time=1)
         self.wait(0.5)
 
@@ -485,9 +503,10 @@ class Scene10_SpatiotemporalAttention(Scene):
         for grid in right_grids:
             for sq in grid:
                 if sq is not target:
-                    arr = Line(
+                    arr = Arrow(
                         target.get_center(), sq.get_center(),
-                        color=C_GREEN, stroke_width=1, stroke_opacity=0.5
+                        color=C_GREEN, stroke_width=1.5, stroke_opacity=0.6,
+                        buff=0.12, max_tip_length_to_length_ratio=0.25
                     )
                     cross_arrows.add(arr)
 
@@ -512,34 +531,31 @@ class Scene11_STA_Applications(Scene):
         self.play(FadeIn(title), run_time=0.8)
         self.wait(0.5)
 
-        # 3 ứng dụng
-        apps = [
-            ("Vật thể di chuyển nhanh", "Không bị nhòe\nhay biến mất", "✓", C_GREEN),
-            ("Camera xoay/chuyển cảnh", "Không bị rách hình\nkhi thay đổi góc", "✓", C_GREEN),
-            ("Cấu trúc phức tạp", "Giữ nguyên chi tiết\n(ngón tay, lông chim...)", "✓", C_GREEN),
+        # 3 Bullet points ứng dụng chuyển động phức tạp
+        bullet_items = [
+            ("Vật thể di chuyển nhanh:", " Không bị nhòe hay biến mất đột ngột"),
+            ("Camera xoay/chuyển cảnh biên độ lớn:", " Không bị rách hình khi thay đổi góc"),
+            ("Cấu trúc vật thể phức tạp:", " Giữ nguyên chi tiết (ngón tay khi múa, lông chim...)"),
         ]
+        
+        bullets = VGroup()
+        for title_text, desc_text in bullet_items:
+            dot = Dot(radius=0.08, color=C_GREEN)
+            t_part = Text(title_text, font=FONT, font_size=20, color=WHITE, weight=BOLD)
+            d_part = Text(desc_text, font=FONT, font_size=20, color=WHITE)
+            line = VGroup(dot, t_part, d_part).arrange(RIGHT, buff=0.2)
+            bullets.add(line)
+            
+        bullets.arrange(DOWN, aligned_edge=LEFT, buff=0.55).move_to(ORIGIN + DOWN * 0.2)
 
-        cards = VGroup()
-        for app_title, app_desc, check, col in apps:
-            box = RoundedRectangle(
-                width=3.5, height=2.8, corner_radius=0.15,
-                color=col, fill_opacity=0.06, stroke_width=1.5
-            )
-            t = Text(app_title, font=FONT, font_size=18, color=WHITE).move_to(box.get_top() + DOWN * 0.5)
-            d = Text(app_desc, font=FONT, font_size=15, color=WHITE, line_spacing=1.2).next_to(t, DOWN, buff=0.35)
-            c = Text(check, font_size=40, color=C_GREEN).move_to(box.get_bottom() + UP * 0.45)
-            cards.add(VGroup(box, t, d, c))
-
-        cards.arrange(RIGHT, buff=0.3).shift(DOWN * 0.3)
-
-        for card in cards:
-            self.play(FadeIn(card, shift=UP * 0.3), run_time=0.6)
-            self.wait(0.6)
+        for bullet in bullets:
+            self.play(FadeIn(bullet, shift=RIGHT * 0.3), run_time=0.6)
+            self.wait(0.5)
 
         conclusion = Text(
-            "Spatiotemporal Attention = xử lý chuyển động phức tạp hoàn hảo",
-            font=FONT, font_size=20, color=WHITE
-        ).to_edge(DOWN, buff=0.4)
+            "→ Hỗ trợ xử lý các loại chuyển động phức tạp một cách hoàn hảo!",
+            font=FONT, font_size=22, color=WHITE
+        ).to_edge(DOWN, buff=0.8)
         self.play(FadeIn(conclusion))
         self.wait(2)
         self.play(*[FadeOut(m) for m in self.mobjects])
@@ -618,7 +634,7 @@ class Scene12_DiT(Scene):
         desc_box = RoundedRectangle(
             width=10, height=1.2, corner_radius=0.1,
             color=C_BOX, fill_opacity=0.3, stroke_width=1
-        ).to_edge(DOWN, buff=0.3)
+        ).to_edge(DOWN, buff=0.7)
 
         desc = VGroup(
             Text("Diffusion", font=FONT, font_size=18, color=WHITE),
@@ -689,7 +705,7 @@ class Scene13_SeparateModels(Scene):
         problem = Text(
             "3 mô hình riêng biệt → Lãng phí & không chia sẻ kiến thức!",
             font=FONT, font_size=20, color=WHITE
-        ).to_edge(DOWN, buff=0.4)
+        ).to_edge(DOWN, buff=0.8)
         self.play(FadeIn(problem))
         self.wait(2)
         self.play(*[FadeOut(m) for m in self.mobjects])
