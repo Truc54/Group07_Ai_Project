@@ -2,7 +2,7 @@
 from manim import *
 
 # === MÀU SẮC DỰ ÁN (PREMIUM AESTHETICS) ===
-BG       = "#0f0f1a"
+BG       = "#000000"
 C_TITLE  = "#00d4ff"
 C_SUB    = "#a0a0c0"
 C_RED    = "#ff6b6b"

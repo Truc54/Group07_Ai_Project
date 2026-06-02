@@ -145,33 +145,30 @@ class Scene06_Flickering(Scene):
         self.play(FadeIn(title), run_time=0.8)
         self.wait(0.5)
 
-        # 3 lỗi minh họa
-        errors = [
-            ("1. Flickering", "Ánh sáng và màu sắc\nthay đổi đột ngột", C_YELLOW),
-            ("2. Biến dạng cấu trúc", "Vật thể bị méo\nkhi chuyển động", C_RED),
-            ("3. Temporal Inconsistency", "Vật thể biến mất\nrồi xuất hiện lại", C_PURPLE),
+        # 3 Bullet points hậu quả của 2D VAE
+        bullet_items = [
+            ("1. Flickering:", " Ánh sáng và màu sắc thay đổi đột ngột giữa các khung hình"),
+            ("2. Biến dạng cấu trúc:", " Vật thể bị méo mó phi vật lý khi chuyển động"),
+            ("3. Temporal Inconsistency:", " Vật thể tự biến mất hoặc thay đổi hình dạng bất thường"),
         ]
+        
+        bullets = VGroup()
+        for title_text, desc_text in bullet_items:
+            dot = Dot(radius=0.08, color=C_RED)
+            t_part = Text(title_text, font=FONT, font_size=20, color=WHITE, weight=BOLD)
+            d_part = Text(desc_text, font=FONT, font_size=20, color=WHITE)
+            line = VGroup(dot, t_part, d_part).arrange(RIGHT, buff=0.2)
+            bullets.add(line)
+            
+        bullets.arrange(DOWN, aligned_edge=LEFT, buff=0.55).move_to(ORIGIN + DOWN * 0.2)
 
-        cards = VGroup()
-        for err_title, err_desc, col in errors:
-            box = RoundedRectangle(
-                width=3.5, height=2.8, corner_radius=0.15,
-                color=col, fill_opacity=0.08, stroke_width=2
-            )
-            t = Text(err_title, font=FONT, font_size=20, color=WHITE).move_to(box.get_top() + DOWN * 0.5)
-            d = Text(err_desc, font=FONT, font_size=16, color=WHITE, line_spacing=1.2).next_to(t, DOWN, buff=0.3)
-            cross = make_cross(size=0.4, stroke_width=4, color=C_RED).move_to(box.get_bottom() + UP * 0.5)
-            cards.add(VGroup(box, t, d, cross))
-
-        cards.arrange(RIGHT, buff=0.4).shift(DOWN * 0.3)
-
-        for card in cards:
-            self.play(FadeIn(card, shift=UP * 0.3), run_time=0.7)
-            self.wait(0.8)
+        for bullet in bullets:
+            self.play(FadeIn(bullet, shift=RIGHT * 0.3), run_time=0.6)
+            self.wait(0.5)
 
         conclusion = Text(
             "→ 2D VAE không đủ cho video chất lượng cao!",
-            font=FONT, font_size=24, color=WHITE
+            font=FONT, font_size=22, color=WHITE
         ).to_edge(DOWN, buff=0.8)
         self.play(FadeIn(conclusion))
         self.wait(2)
@@ -279,7 +276,7 @@ class Scene08_3DVAE_Math(Scene):
             r"V \in \mathbb{R}^{T \times C \times H \times W}",
             font_size=40, color=WHITE
         )
-        input_eq.next_to(input_label, RIGHT, buff=0.3).shift(UP * 0.15)
+        input_eq.next_to(input_label, RIGHT, buff=0.3).shift(UP * 0.02)
         input_group = VGroup(input_label, input_eq).move_to(UP * 1.4)
 
         self.play(FadeIn(input_group))
@@ -297,7 +294,7 @@ class Scene08_3DVAE_Math(Scene):
             r"z \in \mathbb{R}^{\hat{T} \times \hat{C} \times \hat{H} \times \hat{W}}",
             font_size=40, color=WHITE
         )
-        lat_eq.next_to(lat_label, RIGHT, buff=0.3).shift(UP * 0.15)
+        lat_eq.next_to(lat_label, RIGHT, buff=0.3).shift(UP * 0.05)
         lat_group = VGroup(lat_label, lat_eq).move_to(DOWN * 0.3)
 
         self.play(FadeIn(lat_group))
@@ -355,14 +352,15 @@ class Scene09_3DVAE_Visual(Scene):
         # Video gốc: khối lớn
         original_label = Text("Video gốc", font=FONT, font_size=22, color=WHITE)
         orig_box = RoundedRectangle(
-            width=3, height=2, corner_radius=0.15,
+            width=3.2, height=2.2, corner_radius=0.15,
             color=C_BLUE, fill_opacity=0.15, stroke_width=2
         )
         orig_dims = VGroup(
             Text("16 frames", font=FONT, font_size=16, color=WHITE),
             Text("256 × 256 px", font=FONT, font_size=16, color=WHITE),
         ).arrange(DOWN, buff=0.15).move_to(orig_box)
-        orig_group = VGroup(original_label, orig_box, orig_dims).arrange(DOWN, buff=0.25)
+        orig_box_group = VGroup(orig_box, orig_dims)
+        orig_group = VGroup(original_label, orig_box_group).arrange(DOWN, buff=0.25)
 
         # Mũi tên nén ở giữa
         compress_arrow = Arrow(
@@ -378,14 +376,15 @@ class Scene09_3DVAE_Visual(Scene):
         # Latent: khối nhỏ bên phải
         latent_label = Text("z (latent)", font=FONT, font_size=22, color=WHITE)
         lat_box = RoundedRectangle(
-            width=1.8, height=1.3, corner_radius=0.1,
+            width=2.0, height=1.5, corner_radius=0.1,
             color=C_GREEN, fill_opacity=0.2, stroke_width=2
         )
         lat_dims = VGroup(
             Text("4 tokens", font=FONT, font_size=14, color=WHITE),
             Text("32 × 32", font=FONT, font_size=14, color=WHITE),
         ).arrange(DOWN, buff=0.1).move_to(lat_box)
-        lat_group = VGroup(latent_label, lat_box, lat_dims).arrange(DOWN, buff=0.25)
+        lat_box_group = VGroup(lat_box, lat_dims)
+        lat_group = VGroup(latent_label, lat_box_group).arrange(DOWN, buff=0.25)
 
         # Ghép 3 phần thành 1 hàng ngang và CĂN GIỮA TUYỆT ĐỐI
         middle_row = VGroup(orig_group, arrow_group, lat_group).arrange(RIGHT, buff=0.5)
@@ -398,9 +397,9 @@ class Scene09_3DVAE_Visual(Scene):
         self.play(FadeIn(lat_group, scale=0.5))
         self.wait(0.5)
 
-        # Highlight giảm
+        # Highlight giảm - Tăng độ rộng lên 5.8 để chữ KHÔNG bị tràn/chạm viền
         reduce_box = RoundedRectangle(
-            width=5, height=1.2, corner_radius=0.15,
+            width=5.8, height=1.2, corner_radius=0.15,
             color=C_RED, fill_opacity=0.1, stroke_width=2
         ).shift(DOWN * 1.5)
 
@@ -630,20 +629,34 @@ class Scene12_DiT(Scene):
         )
         self.play(Create(final_arr), FadeIn(clean, scale=0.8), run_time=0.5)
 
-        # Description
-        desc_box = RoundedRectangle(
-            width=10, height=1.2, corner_radius=0.1,
-            color=C_BOX, fill_opacity=0.3, stroke_width=1
-        ).to_edge(DOWN, buff=0.7)
+        # Hai khung giải thích song song cạnh nhau
+        box_width = 5.2
+        box_height = 1.3
+        
+        # Khung bên trái (Diffusion)
+        left_box = RoundedRectangle(
+            width=box_width, height=box_height, corner_radius=0.15,
+            color=C_BOX, fill_opacity=0.3, stroke_width=1.5, stroke_color=C_RED
+        )
+        t1 = Text("Diffusion", font=FONT, font_size=18, color=WHITE, weight=BOLD)
+        d1 = Text("sinh dữ liệu từ noise", font=FONT, font_size=14, color=WHITE)
+        left_content = VGroup(t1, d1).arrange(DOWN, buff=0.15).move_to(left_box)
+        left_group = VGroup(left_box, left_content)
+        
+        # Khung bên phải (Transformer)
+        right_box = RoundedRectangle(
+            width=box_width, height=box_height, corner_radius=0.15,
+            color=C_BOX, fill_opacity=0.3, stroke_width=1.5, stroke_color=C_BLUE
+        )
+        t2 = Text("Transformer", font=FONT, font_size=18, color=WHITE, weight=BOLD)
+        d2 = Text("mô hình hóa quan hệ token", font=FONT, font_size=14, color=WHITE)
+        right_content = VGroup(t2, d2).arrange(DOWN, buff=0.15).move_to(right_box)
+        right_group = VGroup(right_box, right_content)
+        
+        # Sắp xếp 2 khung song song cạnh nhau ở đáy
+        desc_boxes = VGroup(left_group, right_group).arrange(RIGHT, buff=0.4).to_edge(DOWN, buff=0.7)
 
-        desc = VGroup(
-            Text("Diffusion", font=FONT, font_size=18, color=WHITE),
-            Text(" = sinh dữ liệu từ noise  |  ", font=FONT, font_size=16, color=WHITE),
-            Text("Transformer", font=FONT, font_size=18, color=WHITE),
-            Text(" = mô hình hóa quan hệ token", font=FONT, font_size=16, color=WHITE),
-        ).arrange(RIGHT, buff=0.05).move_to(desc_box)
-
-        self.play(FadeIn(desc_box), FadeIn(desc))
+        self.play(FadeIn(desc_boxes))
         self.wait(3)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
