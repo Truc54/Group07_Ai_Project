@@ -1,5 +1,9 @@
 import os
+import sys
 import subprocess
+
+if sys.platform.startswith('win'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 def find_file_recursive(directory, filename):
     """ Tìm kiếm file theo tên đệ quy trong thư mục """

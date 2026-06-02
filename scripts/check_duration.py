@@ -1,5 +1,9 @@
 import os
+import sys
 from pydub import AudioSegment
+
+if sys.platform.startswith('win'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 def check_all_durations():
     voiceover_dir = "voiceover"

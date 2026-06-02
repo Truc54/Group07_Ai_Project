@@ -32,12 +32,12 @@
 CSAI/
 │
 ├── 📁 scenes/                          # Mã nguồn Manim
-│   ├── config.py                       # ⭐ FILE CHUNG — màu, font, helper
-│   ├── part0_intro.py                  # Tuấn: Mở đầu (Sc01-03)
-│   ├── part1_video_generation.py       # Trực: Phần 1 (Sc04-17)
-│   ├── part2_3d_perception.py          # Tuấn: Phần 2 (Sc18-31)
-│   ├── part3_world_models.py           # Trực: Phần 3 (Sc32-44)
-│   └── part4_credits.py                # Tuấn: Kết (Sc45-46)
+│   ├── config.py                       # ⭐ FILE CHUNG — màu, font, helper (Trực tạo)
+│   ├── part0_intro.py                  # 👤 Tuấn: Mở đầu (Sc01-03)
+│   ├── part1_video_generation.py       # 👤 Trực: Phần 1 (Sc04-17) ✅ XONG
+│   ├── part2_3d_perception.py          # 👤 Tuấn: Phần 2 (Sc18-31)
+│   ├── part3_world_models.py           # 👤 Trực: Phần 3 (Sc32-44)
+│   └── part4_credits.py                # 👤 Tuấn: Kết (Sc45-46)
 │
 ├── 📁 scripts/
 │   ├── generate_voiceover.py           # Tạo giọng nói AI
@@ -56,13 +56,13 @@ CSAI/
 
 ## PHÂN TÍCH XUNG ĐỘT: ✅ KHÔNG CÓ
 
-| Trực code (file riêng) | Tuấn code (file riêng) |
+| 👤 Trực code (file riêng) | 👤 Tuấn code (file riêng) |
 |---|---|
-| `scenes/config.py` (tạo trước 31/05) | Chỉ import, không sửa |
-| `scenes/part1_video_generation.py` | `scenes/part0_intro.py` |
+| `scenes/config.py` (tạo trước, dùng chung) | Chỉ import, không sửa |
+| `scenes/part1_video_generation.py` ✅ | `scenes/part0_intro.py` |
 | `scenes/part3_world_models.py` | `scenes/part2_3d_perception.py` |
-| | `scenes/part4_credits.py` |
-| Upload YouTube | Push GitHub + ghép video |
+| `scripts/*` (voiceover, merge, concat) | `scenes/part4_credits.py` |
+| Render + Ghép voice + Nối video + Upload YouTube | Push GitHub |
 
 ---
 
@@ -768,16 +768,17 @@ Lời: (Không có lời — chỉ nhạc nền nhẹ nếu muốn)
 
 | Ngày | 👤 Trực (file riêng) | 👤 Tuấn (file riêng) |
 |------|---------|---------|
-| **01/06** | `part1_video_generation.py` (Sc04-07) | Học Manim + `part0_intro.py` (Sc01-03) |
-| **02/06** | `part1_video_generation.py` (Sc08-12) | `part2_3d_perception.py` (Sc18-21) |
-| **03/06** | `part1_video_generation.py` (Sc13-17) | `part2_3d_perception.py` (Sc22-26) |
-| **04/06** | `part3_world_models.py` (Sc32-36) | `part2_3d_perception.py` (Sc27-31) |
-| **05/06** | `part3_world_models.py` (Sc37-41) | `generate_voiceover.py` (tạo audio) |
-| **06/06** | `part3_world_models.py` (Sc42-44) | `part4_credits.py` (Sc45-46) |
+| **01/06** | `part1_video_generation.py` (Sc04-10) | Học Manim + `part0_intro.py` (Sc01-03) |
+| **02/06** | `part1_video_generation.py` (Sc11-17) ✅ | `part2_3d_perception.py` (Sc18-22) |
+| **03/06** | `part3_world_models.py` (Sc32-37) | `part2_3d_perception.py` (Sc23-27) |
+| **04/06** | `part3_world_models.py` (Sc38-44) | `part2_3d_perception.py` (Sc28-31) |
+| **05/06** | Render toàn bộ scene chất lượng cao | `part4_credits.py` (Sc45-46) |
+| **06/06** | Ghép voice + nối video | Review & sửa lỗi |
 
 > [!IMPORTANT]
 > **Mỗi người code file RIÊNG → không bao giờ xung đột Git.**
 > Trực xong `config.py` trước 01/06 → Tuấn import dùng.
+> Trực phụ trách toàn bộ pipeline tổng hợp (render, voice, merge, concat).
 
 ### Hướng dẫn Manim cơ bản:
 
@@ -832,29 +833,19 @@ manim -qh scenes/part1_video_generation.py -a
 
 ---
 
-## PHASE 3: TẠO GIỌNG NÓI AI (05-06/06) — TUẤN
+## PHASE 3: TẠO GIỌNG NÓI AI (05-06/06) — TRỰC
 
-```python
-# scripts/generate_voiceover.py
-import edge_tts, asyncio, os
+> [!NOTE]
+> Trực phụ trách toàn bộ pipeline tổng hợp: sinh voice → ghép audio → nối video → upload.
+> Script `generate_voiceover.py` đã có sẵn đầy đủ kịch bản 45 scene (scene 46 không có lời).
+> Voiceover đã được sinh thành công, tổng thời lượng: **~19 phút thuyết minh**.
 
-SCRIPTS = {
-    "scene_01": "Xin chào các bạn...",  # Copy từ kịch bản
-    "scene_02": "Tại sao chủ đề này...",
-    # ... tất cả 46 scene
-}
+```powershell
+# Sinh giọng nói AI cho tất cả 45 scene
+python scripts/generate_voiceover.py
 
-VOICE = "vi-VN-HoaiMyNeural"
-
-async def generate_all():
-    os.makedirs("voiceover", exist_ok=True)
-    for name, text in SCRIPTS.items():
-        path = f"voiceover/{name}.mp3"
-        print(f"🎤 {path}...")
-        await edge_tts.Communicate(text, VOICE).save(path)
-        print(f"  ✅ Xong!")
-
-asyncio.run(generate_all())
+# Kiểm tra thời lượng từng file
+python scripts/check_duration.py
 ```
 
 > [!TIP]
@@ -863,20 +854,20 @@ asyncio.run(generate_all())
 
 ---
 
-## PHASE 4: GHÉP + NỐI VIDEO (07/06) — CẢ HAI
+## PHASE 4: GHÉP + NỐI VIDEO (07/06) — TRỰC
 
 ```powershell
-# 1. Render tất cả ở 1080p
-manim -qh scenes/part0_intro.py -a --media_dir output
-manim -qh scenes/part1_video_generation.py -a --media_dir output
-manim -qh scenes/part2_3d_perception.py -a --media_dir output
-manim -qh scenes/part3_world_models.py -a --media_dir output
-manim -qh scenes/part4_credits.py -a --media_dir output
+# 1. Render tất cả ở 1080p (Trực thực hiện sau khi cả 2 merge code xong)
+manim -qh scenes/part0_intro.py -a
+manim -qh scenes/part1_video_generation.py -a
+manim -qh scenes/part2_3d_perception.py -a
+manim -qh scenes/part3_world_models.py -a
+manim -qh scenes/part4_credits.py -a
 
-# 2. Ghép audio + nối video (chạy scripts Python)
+# 2. Ghép audio + nối video (Trực chạy scripts Python)
 python scripts/merge_audio_video.py
 python scripts/concat_final.py
-# → output/FINAL_VIDEO.mp4 (~30-35 phút)
+# → output/merged/FINAL_VIDEO.mp4 (~30-35 phút)
 ```
 
 ---
@@ -894,13 +885,14 @@ python scripts/concat_final.py
 
 ## TỔNG LỊCH TRÌNH
 
-| Ngày | Trực | Tuấn | ✅ |
+| Ngày | 👤 Trực | 👤 Tuấn | ✅ |
 |------|------|------|----|
-| **30/05** | Cài đặt môi trường | Cài đặt môi trường | Song song |
-| **31/05** | `config.py` + kịch bản | Học Manim | Trực xong config trước |
-| **01-03/06** | Code Part 1 (14 scene) | Code Intro + Part 2 (17 scene) | File riêng |
-| **04-06/06** | Code Part 3 (13 scene) | Audio + Credits (2 scene) | File riêng |
-| **07/06** | Render tất cả | Ghép audio + nối video | Tuần tự |
+| **30/05** | Cài đặt môi trường | Cài đặt môi trường | ✅ Song song |
+| **31/05** | `config.py` + kịch bản + scripts | Học Manim | ✅ Trực xong config |
+| **01-02/06** | Code Part 1 (14 scene) ✅ | Code Intro (3 scene) + Part 2 (Sc18-22) | File riêng |
+| **03-04/06** | Code Part 3 (13 scene) | Code Part 2 (Sc23-31) + Part 4 (2 scene) | File riêng |
+| **05-06/06** | Render tất cả + Sinh voice + Ghép audio | Review & sửa lỗi scene | Trực tổng hợp |
+| **07/06** | Nối video cuối cùng | Review video | Trực nối |
 | **08/06** | Review + sửa lỗi | Review + sửa lỗi | Song song |
 | **09/06** | Upload YouTube | Push GitHub | Song song |
 | **10/06** | **DEADLINE** | **DEADLINE** | Nộp link |

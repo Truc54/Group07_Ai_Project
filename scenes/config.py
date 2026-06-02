@@ -12,13 +12,13 @@ C_PURPLE = "#e599f7"
 C_BLUE   = "#74c0fc"
 C_BOX    = "#1a1a2e"
 
-FONT = "Arial"
+FONT = "Segoe UI"
 
 def make_title(text, sub=""):
     """
     Tạo VGroup tiêu đề chuẩn hóa cho các Scene.
     """
-    t = Text(text, font=FONT, font_size=42, color=C_TITLE).to_edge(UP, buff=0.5)
+    t = Text(text, font=FONT, font_size=42, color=WHITE).to_edge(UP, buff=0.5)
     if sub:
         s = Text(sub, font=FONT, font_size=28, color=C_SUB).next_to(t, DOWN, buff=0.3)
         return VGroup(t, s)

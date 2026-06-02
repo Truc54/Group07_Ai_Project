@@ -1,6 +1,11 @@
 import asyncio
 import os
+import sys
 import edge_tts
+
+# Ensure stdout handles UTF-8 for emoji output
+if sys.platform.startswith('win'):
+    sys.stdout.reconfigure(encoding='utf-8')
 
 SCRIPTS = {
     "scene_01": "Xin chào các bạn. Chào mừng đến với video kiến thức về trí tuệ nhân tạo. Trong video hôm nay, chúng ta sẽ cùng khám phá một trong những xu hướng nghiên cứu đang được quan tâm nhất hiện nay trong lĩnh vực AI — đó là hành trình từ tạo video bằng trí tuệ nhân tạo đến xây dựng các mô hình thế giới thông minh. Đây là một chủ đề nằm ở giao điểm của nhiều lĩnh vực: Computer Vision, Deep Learning, và Robotics.",
