@@ -376,8 +376,8 @@ class Scene23_CUT3RProcess(Scene):
         frame_content = VGroup(frame_label_main, frame_label_sub).arrange(DOWN, buff=0.06).move_to(frame_box)
         frame_group = VGroup(frame_box, frame_content)
 
-        # Sắp xếp 2 input cạnh nhau
-        inputs = VGroup(mem_group, frame_group).arrange(RIGHT, buff=0.8)
+        # Sắp xếp 2 input theo chiều dọc để tránh mũi tên từ S(t-1) đi xuyên qua I(t)
+        inputs = VGroup(mem_group, frame_group).arrange(DOWN, buff=0.5)
 
         # Transformer center
         trans_box = RoundedRectangle(
@@ -642,7 +642,6 @@ class Scene26_ST4rtrackProblem(Scene):
             color=C_YELLOW, stroke_width=2.5
         )
         arrow_label = Text("Sai lệch ε", font=FONT, font_size=12, color=C_YELLOW)
-        arrow_label.next_to(arrow, UP, buff=0.1)
 
         # Bước 2: SfM
         step2_box = RoundedRectangle(
@@ -654,8 +653,10 @@ class Scene26_ST4rtrackProblem(Scene):
         step2_content = VGroup(step2_title, step2_desc).arrange(DOWN, buff=0.12).move_to(step2_box)
         step2_group = VGroup(step2_box, step2_content)
 
-        # Arrange pipeline
-        pipeline = VGroup(step1_group, arrow, arrow_label, step2_group).arrange(RIGHT, buff=0.3).shift(UP * 0.8)
+        # Arrange pipeline (xếp hộp và mũi tên, sau đó đặt nhãn lên trên mũi tên rồi shift cả cụm)
+        pipeline_no_label = VGroup(step1_group, arrow, step2_group).arrange(RIGHT, buff=0.3)
+        arrow_label.next_to(arrow, UP, buff=0.15)
+        pipeline = VGroup(pipeline_no_label, arrow_label).shift(UP * 0.8)
 
         self.play(
             FadeIn(step1_group, shift=LEFT * 0.2),
@@ -735,8 +736,9 @@ class Scene27_ST4rtrackSolution(Scene):
         # Arrange
         comparison = VGroup(old_group, new_group).arrange(RIGHT, buff=1.0).shift(UP * 0.5)
 
-        # VS divider
+        # VS divider (căn giữa theo cụm so sánh để khớp chiều cao y)
         vs_text = Text("vs", font=FONT, font_size=28, color=C_YELLOW, weight=BOLD)
+        vs_text.move_to(comparison.get_center())
 
         self.play(
             FadeIn(old_group, shift=LEFT * 0.3),
