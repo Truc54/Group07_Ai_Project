@@ -121,18 +121,19 @@ class Scene46_Credits(Scene):
         # ── Tên video ─────────────────────────────────────────────────────────
         video_title = Text(
             "Từ Tạo Video AI đến Mô hình Thế giới",
-            font=FONT, font_size=30, color=C_TITLE,
+            font=FONT, font_size=28, color=WHITE, weight=BOLD
         )
         video_title.to_edge(UP, buff=0.55)
         self.play(FadeIn(video_title, shift=DOWN * 0.2), run_time=0.8)
 
         # ── Đường kẻ ngang phân cách ─────────────────────────────────────────
-        divider = Line(LEFT * 5.5, RIGHT * 5.5, color=C_SUB, stroke_width=1)
+        divider = Line(LEFT * 5.5, RIGHT * 5.5, color=WHITE, stroke_width=0.8)
+        divider.set_opacity(0.3)
         divider.next_to(video_title, DOWN, buff=0.3)
         self.play(Create(divider), run_time=0.5)
 
         # ── Thành viên nhóm ───────────────────────────────────────────────────
-        team_header = Text("Nhóm CAF", font=FONT, font_size=22, color=C_YELLOW)
+        team_header = Text("NHÓM CODEX", font=FONT, font_size=20, color=WHITE, weight=BOLD)
 
         members = [
             ("Nguyễn Ngọc Minh Tuấn",  "MSSV: 23120102"),
@@ -140,35 +141,38 @@ class Scene46_Credits(Scene):
         ]
         member_rows = VGroup()
         for name, mssv in members:
-            name_txt = Text(name, font=FONT, font_size=19, color=WHITE)
-            mssv_txt = Text(mssv, font=FONT, font_size=17, color=C_SUB)
-            row = VGroup(name_txt, mssv_txt).arrange(RIGHT, buff=0.6)
+            name_txt = Text(name, font=FONT, font_size=17, color=WHITE)
+            mssv_txt = Text(mssv, font=FONT, font_size=15, color=WHITE)
+            mssv_txt.set_opacity(0.6)
+            row = VGroup(name_txt, mssv_txt).arrange(RIGHT, buff=0.4)
             member_rows.add(row)
-        member_rows.arrange(DOWN, aligned_edge=LEFT, buff=0.22)
+        member_rows.arrange(DOWN, aligned_edge=LEFT, buff=0.2)
 
-        team_block = VGroup(team_header, member_rows).arrange(DOWN, aligned_edge=LEFT, buff=0.25)
+        team_block = VGroup(team_header, member_rows).arrange(DOWN, aligned_edge=LEFT, buff=0.2)
 
         # ── Thông tin môn học ─────────────────────────────────────────────────
-        course_header = Text("Môn học", font=FONT, font_size=22, color=C_YELLOW)
-        course_info = VGroup(
-            Text("Big Data — Seminar Paper Presentation", font=FONT, font_size=19, color=WHITE),
-            Text("Học kỳ 2, năm học 2024–2025", font=FONT, font_size=17, color=C_SUB),
-        ).arrange(DOWN, aligned_edge=LEFT, buff=0.15)
+        course_header = Text("MÔN HỌC", font=FONT, font_size=20, color=WHITE, weight=BOLD)
+        course_name = Text("Cơ sở Trí tuệ Nhân tạo", font=FONT, font_size=17, color=WHITE)
+        course_time = Text("Học kỳ 2, năm học 2024–2025", font=FONT, font_size=15, color=WHITE)
+        course_time.set_opacity(0.6)
+        
+        course_info = VGroup(course_name, course_time).arrange(DOWN, aligned_edge=LEFT, buff=0.15)
         course_block = VGroup(course_header, course_info).arrange(DOWN, aligned_edge=LEFT, buff=0.2)
 
         # ── 2 cột: thành viên | môn học ──────────────────────────────────────
-        two_cols = VGroup(team_block, course_block).arrange(RIGHT, buff=1.5, aligned_edge=UP)
-        two_cols.next_to(divider, DOWN, buff=0.45)
+        two_cols = VGroup(team_block, course_block).arrange(RIGHT, buff=1.8, aligned_edge=UP)
+        two_cols.next_to(divider, DOWN, buff=0.4)
         self.play(FadeIn(two_cols, shift=UP * 0.15), run_time=0.9)
         self.wait(0.5)
 
         # ── Đường kẻ phân cách thứ 2 ─────────────────────────────────────────
-        divider2 = Line(LEFT * 5.5, RIGHT * 5.5, color=C_SUB, stroke_width=1)
+        divider2 = Line(LEFT * 5.5, RIGHT * 5.5, color=WHITE, stroke_width=0.8)
+        divider2.set_opacity(0.3)
         divider2.next_to(two_cols, DOWN, buff=0.35)
         self.play(Create(divider2), run_time=0.4)
 
         # ── Tài liệu tham khảo ───────────────────────────────────────────────
-        ref_header = Text("Tài liệu tham khảo", font=FONT, font_size=20, color=C_YELLOW)
+        ref_header = Text("TÀI LIỆU THAM KHẢO", font=FONT, font_size=18, color=WHITE, weight=BOLD)
         refs = [
             "CUT3R: Continuous 3D Perception (CVPR 2025)",
             "ST4rtrack: Simultaneous 4D Amodal Tracking (arXiv 2025)",
@@ -177,27 +181,25 @@ class Scene46_Credits(Scene):
         ]
         ref_items = VGroup()
         for r in refs:
-            dot = Dot(radius=0.05, color=C_RED)
-            txt = Text(r, font=FONT, font_size=15, color=C_SUB)
+            dot = Dot(radius=0.04, color=WHITE)
+            dot.set_opacity(0.8)
+            txt = Text(r, font=FONT, font_size=14, color=WHITE)
+            txt.set_opacity(0.8)
             ref_items.add(VGroup(dot, txt).arrange(RIGHT, buff=0.2))
-        ref_items.arrange(DOWN, aligned_edge=LEFT, buff=0.18)
+        ref_items.arrange(DOWN, aligned_edge=LEFT, buff=0.15)
         ref_block = VGroup(ref_header, ref_items).arrange(DOWN, aligned_edge=LEFT, buff=0.2)
         ref_block.next_to(divider2, DOWN, buff=0.3)
-        ref_block.to_edge(LEFT, buff=0.7)
+        ref_block.to_edge(LEFT, buff=0.8)
         self.play(FadeIn(ref_block, shift=UP * 0.1), run_time=0.8)
 
-        # ── Footer: GitHub + Made with Manim ─────────────────────────────────
-        github_txt = Text(
-            "GitHub: github.com/your-repo",
-            font=FONT, font_size=16, color=C_BLUE,
-        )
+        # ── Footer: Made with Manim ──────────────────────────────────────────
         manim_txt = Text(
             "Made with Manim Community Edition",
-            font=FONT, font_size=15, color=C_SUB,
+            font=FONT, font_size=13, color=WHITE,
         )
-        footer = VGroup(github_txt, manim_txt).arrange(RIGHT, buff=1.2)
-        footer.to_edge(DOWN, buff=0.35)
-        self.play(FadeIn(footer), run_time=0.7)
+        manim_txt.set_opacity(0.5)
+        manim_txt.to_edge(DOWN, buff=0.35)
+        self.play(FadeIn(manim_txt), run_time=0.7)
 
         self.wait(3.0)
 
