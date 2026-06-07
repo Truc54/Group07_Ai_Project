@@ -15,66 +15,72 @@ class Scene45_Summary(Scene):
         self.camera.background_color = BG
 
         # ── Tiêu đề ──────────────────────────────────────────────────────────
-        title = Text("Tổng kết", font=FONT, font_size=40, color=C_TITLE)
-        title.to_edge(UP, buff=0.5)
+        title = Text("Tổng kết", font=FONT, font_size=32, color=WHITE, weight=BOLD)
+        title.to_edge(UP, buff=0.55)
         self.play(Write(title), run_time=0.8)
         self.wait(0.3)
 
-        # ── 3 Trụ cột ────────────────────────────────────────────────────────
+        # ── 3 Trụ cột (Thiết kế lại theo tone màu của từng cột, nội dung 1 dòng) ─
         pillars_data = [
             {
                 "num":   "Trụ cột 1",
-                "label": "Kiến trúc\nTạo Video",
+                "label": "Kiến trúc Tạo Video",
                 "color": C_BLUE,
-                "items": ["3D VAE", "Spatiotemporal\nAttention", "MVL Architecture"],
+                "items": ["3D VAE", "Spatiotemporal Attention", "MVL Architecture"],
             },
             {
                 "num":   "Trụ cột 2",
-                "label": "Streaming\nPerception",
+                "label": "Streaming Perception",
                 "color": C_GREEN,
-                "items": ["CUT3R", "Bộ nhớ 3D\nbền vững", "ST4rtrack 4D"],
+                "items": ["CUT3R", "Bộ nhớ 3D bền vững", "ST4rtrack 4D"],
             },
             {
                 "num":   "Trụ cột 3",
-                "label": "World Model\ncho Robot",
+                "label": "World Model cho Robot",
                 "color": C_PURPLE,
-                "items": ["Dữ liệu Internet", "Action Conditioning\nLinear Projection", "Vòng lặp\ntự cải tiến"],
+                "items": ["Dữ liệu Internet", "Action Conditioning", "Vòng lặp tự cải tiến"],
             },
         ]
 
         pillar_groups = VGroup()
 
         for p in pillars_data:
-            # Header: content trước, box bao quanh sau
-            num_text = Text(p["num"], font=FONT, font_size=17, color=p["color"])
-            label_text = Text(p["label"], font=FONT, font_size=20, color=WHITE, line_spacing=1.2)
-            header_content = VGroup(num_text, label_text).arrange(DOWN, buff=0.1)
+            # Header text: cả num_text và label_text đều có màu tương tự khung (p["color"])
+            num_text = Text(p["num"], font=FONT, font_size=14, color=p["color"], weight=BOLD)
+            label_text = Text(p["label"], font=FONT, font_size=15, color=p["color"], weight=BOLD)
+            header = VGroup(num_text, label_text).arrange(DOWN, buff=0.1)
 
-            header_rect = SurroundingRectangle(
-                header_content,
-                color=p["color"],
-                fill_color=p["color"],
-                fill_opacity=0.15,
-                stroke_width=2,
-                corner_radius=0.18,
-                buff=0.25,
-            )
-            header = VGroup(header_rect, header_content)
-
-            # Sub-items
+            # Sub-items (đảm bảo hiển thị gọn gàng trên 1 dòng)
             sub_group = VGroup()
             for item_str in p["items"]:
-                dot = Dot(radius=0.055, color=p["color"])
-                item_txt = Text(item_str, font=FONT, font_size=16, color=C_SUB, line_spacing=1.2)
-                row = VGroup(dot, item_txt).arrange(RIGHT, buff=0.2)
+                dot = Dot(radius=0.045, color=p["color"])
+                dot.set_opacity(0.85)
+                item_txt = Text(item_str, font=FONT, font_size=13, color=WHITE)
+                item_txt.set_opacity(0.9)
+                row = VGroup(dot, item_txt).arrange(RIGHT, buff=0.15)
                 sub_group.add(row)
-            sub_group.arrange(DOWN, aligned_edge=LEFT, buff=0.22)
+            sub_group.arrange(DOWN, aligned_edge=LEFT, buff=0.2)
 
-            col = VGroup(header, sub_group).arrange(DOWN, buff=0.25)
+            # Gộp Header và Sub-items thành nội dung cột
+            col_content = VGroup(header, sub_group).arrange(DOWN, buff=0.28)
+
+            # Tạo khung (card) bao quanh toàn bộ nội dung cột
+            card_rect = SurroundingRectangle(
+                col_content,
+                color=p["color"],
+                fill_color=p["color"],
+                fill_opacity=0.06,
+                stroke_width=1.5,
+                corner_radius=0.18,
+                buff=0.32,
+            )
+            card_rect.set_stroke(color=p["color"], opacity=0.7, width=1.5)
+
+            col = VGroup(card_rect, col_content)
             pillar_groups.add(col)
 
-        pillar_groups.arrange(RIGHT, buff=0.55)
-        pillar_groups.move_to(ORIGIN + UP * 0.2)
+        pillar_groups.arrange(RIGHT, buff=0.4)
+        pillar_groups.move_to(ORIGIN + UP * 0.25)
 
         # Animate từng trụ cột xuất hiện tuần tự
         for pg in pillar_groups:
@@ -85,23 +91,22 @@ class Scene45_Summary(Scene):
 
         # ── Câu kết luận ─────────────────────────────────────────────────────
         conclusion = Text(
-            "Tương lai của AI: không chỉ tạo hình ảnh đẹp\n"
-            "— mà thực sự hiểu và tương tác với thế giới.",
-            font=FONT, font_size=21, color=C_YELLOW,
-            line_spacing=1.4,
+            "Tương lai của AI: không chỉ tạo hình ảnh đẹp — mà thực sự hiểu và tương tác với thế giới.",
+            font=FONT, font_size=16, color=WHITE,
         )
+        conclusion.set_opacity(0.9)
         conclusion.to_edge(DOWN, buff=0.55)
         self.play(FadeIn(conclusion, shift=UP * 0.2), run_time=1.0)
         self.wait(1.5)
 
-        # ── Merge animation: thu nhỏ, "Cảm ơn!" bùng lên ────────────────────
+        # ── Thu nhỏ và ẩn các trụ cột khi hiện câu cảm ơn (mất cột hoàn toàn) ─
         self.play(
-            pillar_groups.animate.scale(0.55).to_edge(UP, buff=1.1),
+            FadeOut(pillar_groups),
             FadeOut(conclusion),
             run_time=1.0,
         )
 
-        thank_you = Text("Cảm ơn các bạn đã theo dõi!", font=FONT, font_size=44, color=C_TITLE)
+        thank_you = Text("Cảm ơn các bạn đã theo dõi!", font=FONT, font_size=40, color=WHITE, weight=BOLD)
         self.play(Write(thank_you), run_time=1.2)
         self.play(thank_you.animate.scale(1.08), run_time=0.4, rate_func=there_and_back)
         self.play(thank_you.animate.scale(1.05), run_time=0.35, rate_func=there_and_back)
@@ -139,16 +144,23 @@ class Scene46_Credits(Scene):
             ("Nguyễn Ngọc Minh Tuấn",  "MSSV: 23120102"),
             ("Trần Lê Trung Trực",    "MSSV: 23120180"),
         ]
-        member_rows = VGroup()
+        
+        # Tạo hai cột riêng để MSSV được căn thẳng hàng
+        names_list = []
+        mssvs_list = []
         for name, mssv in members:
-            name_txt = Text(name, font=FONT, font_size=17, color=WHITE)
-            mssv_txt = Text(mssv, font=FONT, font_size=15, color=WHITE)
-            mssv_txt.set_opacity(0.6)
-            row = VGroup(name_txt, mssv_txt).arrange(RIGHT, buff=0.4)
-            member_rows.add(row)
-        member_rows.arrange(DOWN, aligned_edge=LEFT, buff=0.2)
-
-        team_block = VGroup(team_header, member_rows).arrange(DOWN, aligned_edge=LEFT, buff=0.2)
+            names_list.append(Text(name, font=FONT, font_size=17, color=WHITE))
+            mssvs_list.append(Text(mssv, font=FONT, font_size=15, color=WHITE).set_opacity(0.6))
+            
+        names_group = VGroup(*names_list).arrange(DOWN, aligned_edge=LEFT, buff=0.2)
+        mssvs_group = VGroup(*mssvs_list)
+        
+        for i in range(len(members)):
+            mssvs_group[i].align_to(names_group[i], UP)
+            mssvs_group[i].align_to(names_group, LEFT).shift(RIGHT * 2.8)
+            
+        member_rows = VGroup(names_group, mssvs_group)
+        team_block = VGroup(team_header, member_rows).arrange(DOWN, aligned_edge=LEFT, buff=0.25)
 
         # ── Thông tin môn học ─────────────────────────────────────────────────
         course_header = Text("MÔN HỌC", font=FONT, font_size=20, color=WHITE, weight=BOLD)
@@ -189,7 +201,7 @@ class Scene46_Credits(Scene):
         ref_items.arrange(DOWN, aligned_edge=LEFT, buff=0.15)
         ref_block = VGroup(ref_header, ref_items).arrange(DOWN, aligned_edge=LEFT, buff=0.2)
         ref_block.next_to(divider2, DOWN, buff=0.3)
-        ref_block.to_edge(LEFT, buff=0.8)
+        ref_block.align_to(team_block, LEFT)  # Căn thẳng hàng lề trái với Nhóm Codex
         self.play(FadeIn(ref_block, shift=UP * 0.1), run_time=0.8)
 
         # ── Footer: Made with Manim ──────────────────────────────────────────
