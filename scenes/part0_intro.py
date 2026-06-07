@@ -216,13 +216,17 @@ class Scene03_Roadmap(Scene):
         cards.arrange(RIGHT, buff=0.5).shift(UP * 0.2)
 
         # === Thanh tiến trình dưới (progress bar) ===
-        progress_line = Line(LEFT * 5.5, RIGHT * 5.5, color=C_SUB, stroke_width=1.5).shift(DOWN * 1.2)
-        
         progress_dots = VGroup()
         for i in range(3):
-            dot_pos = LEFT * 5.5 + RIGHT * 5.5 * (i / 2)
-            dot = Dot(point=dot_pos + DOWN * 1.2, radius=0.1, color=parts[i]["color"])
+            dot_x = cards[i].get_center()[0]
+            dot = Dot(point=[dot_x, -1.2, 0], radius=0.1, color=parts[i]["color"])
             progress_dots.add(dot)
+
+        progress_line = Line(
+            [cards[0].get_center()[0], -1.2, 0],
+            [cards[2].get_center()[0], -1.2, 0],
+            color=C_SUB, stroke_width=1.5
+        )
 
         # === Animation: Xuất hiện từng card + thanh tiến trình ===
         for i, card in enumerate(cards):
