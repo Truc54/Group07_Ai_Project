@@ -18,7 +18,7 @@ class Scene45_Summary(Scene):
         title = Text("Tổng kết", font=FONT, font_size=32, color=WHITE, weight=BOLD)
         title.to_edge(UP, buff=0.55)
         self.play(Write(title), run_time=0.8)
-        self.wait(0.3)
+        self.wait(2.17)
 
         # ── 3 Trụ cột (Thiết kế lại theo tone màu của từng cột, nội dung 1 dòng) ─
         pillars_data = [
@@ -85,9 +85,9 @@ class Scene45_Summary(Scene):
         # Animate từng trụ cột xuất hiện tuần tự
         for pg in pillar_groups:
             self.play(FadeIn(pg, shift=UP * 0.3), run_time=0.7)
-            self.wait(0.15)
+            self.wait(1.09)
 
-        self.wait(1.0)
+        self.wait(7.24)
 
         # ── Câu kết luận ─────────────────────────────────────────────────────
         conclusion = Text(
@@ -97,12 +97,13 @@ class Scene45_Summary(Scene):
         conclusion.set_opacity(0.9)
         conclusion.to_edge(DOWN, buff=0.55)
         self.play(FadeIn(conclusion, shift=UP * 0.2), run_time=1.0)
-        self.wait(1.5)
+        self.wait(10.87)
 
         # ── Thu nhỏ và ẩn các trụ cột khi hiện câu cảm ơn (mất cột hoàn toàn) ─
         self.play(
             FadeOut(pillar_groups),
             FadeOut(conclusion),
+            FadeOut(title),
             run_time=1.0,
         )
 
@@ -111,7 +112,7 @@ class Scene45_Summary(Scene):
         self.play(thank_you.animate.scale(1.08), run_time=0.4, rate_func=there_and_back)
         self.play(thank_you.animate.scale(1.05), run_time=0.35, rate_func=there_and_back)
 
-        self.wait(2.0)
+        self.wait(14.49)
 
         self.play(*[FadeOut(m) for m in self.mobjects])
 

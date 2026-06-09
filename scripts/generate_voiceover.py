@@ -12,21 +12,21 @@ SCRIPTS = {
     
     "scene_02": "Tại sao chủ đề này lại quan trọng? Hãy tưởng tượng một ngày nào đó, bạn chỉ cần gõ một câu mô tả, và AI sẽ tạo ra một đoạn video chân thực đến mức không thể phân biệt với thực tế. Nhưng câu hỏi sâu hơn là: Liệu AI có thực sự hiểu thế giới khi tạo ra video đó? Hay nó chỉ đang sao chép các mẫu pixel? Đây chính là câu hỏi mà các nhà nghiên cứu hàng đầu đang cố gắng trả lời.",
     
-    "scene_03": "Video sẽ được chia thành 3 phần chính. Phần thứ nhất: Kiến trúc tạo video AI thế hệ mới, chúng ta sẽ tìm hiểu 3D VAE, Spatiotemporal Attention, và kiến trúc MVL. Phần thứ hai: Streaming Perception, với hai phương pháp đột phá là CUT3R và ST4rtrack. Và phần thứ ba: Mở rộng mô hình thế giới cho robot, bao gồm dữ liệu lớn, Action Conditioning, và vòng lặp tự cải tiến. Nào, bắt đầu thôi!",
+    "scene_03": "Video sẽ được chia thành 3 phần chính. Phần thứ nhất: Kiến trúc tạo video AI thế hệ mới, chúng ta sẽ tìm hiểu 3 đê VAE, Spatiotemporal Attention, và kiến trúc MVL. Phần thứ hai: Streaming Perception, với hai phương pháp đột phá là CUT3R và ST4rtrack. Và phần thứ ba: Mở rộng mô hình thế giới cho robot, bao gồm dữ liệu lớn, Action Conditioning, và vòng lặp tự cải tiến. Nào, bắt đầu thôi!",
     
     "scene_04": "Phần 1: Kiến trúc tạo video AI thế hệ mới. Trong những năm gần đây, các mô hình tạo video bằng AI đã đạt được những bước tiến đáng kinh ngạc. Từ những đoạn video ngắn, nhòe mờ, đến các video dài tới 2 phút ở chất lượng 1080p với 30 khung hình mỗi giây. Vậy đằng sau sự tiến bộ này là những đột phá kỹ thuật nào? Hãy cùng tìm hiểu.",
     
-    "scene_05": "Để hiểu tại sao kiến trúc mới lại cần thiết, trước tiên chúng ta cần biết phương pháp cũ gặp vấn đề gì. Các mô hình tạo video thế hệ đầu sử dụng 2D VAE. 2D VAE nén và giải nén từng khung hình một cách hoàn toàn độc lập với nhau. Nó coi mỗi khung hình như một bức ảnh riêng lẻ, không hề biết khung hình trước và sau trông như thế nào.",
+    "scene_05": "Để hiểu tại sao kiến trúc mới lại cần thiết, trước tiên chúng ta cần biết phương pháp cũ gặp vấn đề gì. Các mô hình tạo video thế hệ đầu sử dụng 2 đê VAE. 2 đê VAE nén và giải nén từng khung hình một cách hoàn toàn độc lập với nhau. Nó coi mỗi khung hình như một bức ảnh riêng lẻ, không hề biết khung hình trước và sau trông như thế nào.",
     
     "scene_06": "Hệ quả của việc nén từng khung hình độc lập là gì? Đầu tiên là hiện tượng flickering, khi ánh sáng và màu sắc thay đổi đột ngột giữa hai khung hình liên tiếp. Tiếp theo là biến dạng cấu trúc khi vật thể chuyển động — ví dụ, khuôn mặt người bị méo khi quay đầu. Và nghiêm trọng nhất là hiện tượng temporal inconsistency, khi một vật thể có thể tự thay đổi hình dạng hoặc biến mất rồi xuất hiện lại giữa các khung hình.",
     
-    "scene_07": "Giải pháp cho vấn đề này là 3D VAE. Ý tưởng cốt lõi rất trực quan: Thay vì nén từng khung hình riêng lẻ, hãy nén toàn bộ video cùng một lúc. 3D VAE xem video không phải là tập hợp các ảnh 2D rời rạc, mà là một khối dữ liệu 3D liên tục — bao gồm chiều ngang, chiều dọc, và chiều thời gian. Bằng cách nén đồng thời cả 3 chiều, mô hình giữ lại được mối liên hệ mượt mà giữa các khung hình liên tiếp.",
+    "scene_07": "Giải pháp cho vấn đề này là 3 đê VAE. Ý tưởng cốt lõi rất trực quan: Thay vì nén từng khung hình riêng lẻ, hãy nén toàn bộ video cùng một lúc. 3 đê VAE xem video không phải là tập hợp các ảnh 2 đê rời rạc, mà là một khối dữ liệu 3 đê liên tục — bao gồm chiều ngang, chiều dọc, và chiều thời gian. Bằng cách nén đồng thời cả 3 chiều, mô hình giữ lại được mối liên hệ mượt mà giữa các khung hình liên tiếp.",
     
-    "scene_08": "Hãy nhìn vào biểu diễn toán học. Video đầu vào V là một tensor 4 chiều: T khung hình, C kênh màu — thường là 3 kênh RGB, chiều cao H, và chiều rộng W. Khi đưa qua Encoder của 3D VAE, video được ánh xạ vào latent space z. Kết quả z có kích thước T mũ nhân C mũ nhân H mũ nhân W mũ. Trong đó, T mũ nhỏ hơn T thể hiện tỷ lệ nén thời gian, còn H mũ nhỏ hơn H và W mũ nhỏ hơn W thể hiện tỷ lệ nén không gian. Nhờ nén đồng thời không-thời gian, chi phí tính toán giảm đáng kể trong khi vẫn giữ được chuyển động mịn màng.",
+    "scene_08": "Hãy nhìn vào biểu diễn toán học. Video đầu vào V là một tensor 4 chiều: T khung hình, C kênh màu — thường là 3 kênh RGB, chiều cao H, và chiều rộng W. Khi đưa qua Encoder của 3 đê VAE, video được ánh xạ vào latent space z. Kết quả z có kích thước T mũ nhân C mũ nhân H mũ nhân W mũ. Trong đó, T mũ nhỏ hơn T thể hiện tỷ lệ nén thời gian, còn H mũ nhỏ hơn H và W mũ nhỏ hơn W thể hiện tỷ lệ nén không gian. Nhờ nén đồng thời không-thời gian, chi phí tính toán giảm đáng kể trong khi vẫn giữ được chuyển động mịn màng.",
     
-    "scene_09": "Để hình dung rõ hơn, hãy tưởng tượng video gốc có 16 khung hình, mỗi khung 256 nhân 256 pixel. Sau khi đi qua 3D VAE với tỷ lệ nén thời gian 4 lần và tỷ lệ nén không gian 8 lần, ta thu được chỉ 4 token thời gian, mỗi token có kích thước 32 nhân 32. Lượng dữ liệu giảm đi 256 lần, nhưng thông tin quan trọng — đặc biệt là sự liên tục giữa các chuyển động — vẫn được bảo toàn.",
+    "scene_09": "Để hình dung rõ hơn, hãy tưởng tượng video gốc có 16 khung hình, mỗi khung 256 nhân 256 pixel. Sau khi đi qua 3 đê VAE với tỷ lệ nén thời gian 4 lần và tỷ lệ nén không gian 8 lần, ta thu được chỉ 4 token thời gian, mỗi token có kích thước 32 nhân 32. Lượng dữ liệu giảm đi 256 lần, nhưng thông tin quan trọng — đặc biệt là sự liên tục giữa các chuyển động — vẫn được bảo toàn.",
     
-    "scene_10": "Bên cạnh 3D VAE, một cơ chế quan trọng khác giúp mô hình xử lý chuyển động phức tạp là Full Spatiotemporal Attention. Trong cơ chế Self-Attention thông thường, mỗi token chỉ tính attention với các token trong cùng một khung hình. Nhưng với Spatiotemporal Attention, mỗi latent token ở tọa độ x, y và t bất kỳ có thể tính attention với tất cả các token khác, bất kể ở khung hình hay vị trí nào.",
+    "scene_10": "Bên cạnh 3 đê VAE, một cơ chế quan trọng khác giúp mô hình xử lý chuyển động phức tạp là Full Spatiotemporal Attention. Trong cơ chế Self-Attention thông thường, mỗi token chỉ tính attention với các token trong cùng một khung hình. Nhưng với Spatiotemporal Attention, mỗi latent token ở tọa độ x, y và t bất kỳ có thể tính attention với tất cả các token khác, bất kể ở khung hình hay vị trí nào.",
     
     "scene_11": "Nhờ cơ chế này, mô hình có thể xử lý hoàn hảo nhiều tình huống khó. Ví dụ: Vật thể chuyển động tốc độ cực nhanh mà không bị nhòe hình hay biến mất đột ngột. Các pha chuyển cảnh và thay đổi góc quay camera biên độ lớn mà không bị rách hình. Và đặc biệt, giữ được cấu trúc vật thể phức tạp — chẳng hạn các ngón tay khi múa, hay lông chim khi vỗ cánh — điều mà các mô hình cũ thường xuyên thất bại.",
     
@@ -34,41 +34,39 @@ SCRIPTS = {
     
     "scene_13": "Trước đây, mỗi tác vụ thị giác đều cần một mô hình riêng biệt. Muốn tạo video từ chữ? Dùng mô hình A. Muốn chỉnh sửa video? Dùng mô hình B. Muốn AI hiểu nội dung video? Dùng mô hình C. Ba mô hình độc lập, ba bộ trọng số riêng, không chia sẻ kiến thức với nhau. Điều này gây lãng phí tài nguyên và hạn chế khả năng tổng quát hóa.",
     
-    "scene_14": "Xu hướng hiện nay là xây dựng một kiến trúc thống nhất duy nhất cho tất cả các tác vụ. Ý tưởng là sử dụng Multimodal Visual Language, viết tắt là MVL. Tất cả dữ liệu đầu vào như văn bản, hình ảnh, hay video đều được chuyển đổi thành chuỗi token chung thông qua các bộ tokenizer chuyên biệt. Chuỗi token thống nhất này sau đó được đưa vào lõi Diffusion Transformer để xử lý đồng thời. Các ứng dụng điển hình như Kling đã đạt được khả năng sinh video chất lượng cao lên đến 1080p, 30fps, dài tối đa 2 phút. Bên cạnh đó, các công nghệ vệ tinh như LivePortrait giúp sinh chuyển động chân dung từ ảnh tĩnh, hay Kling-Avatar giúp tạo nhân vật ảo 3D sinh động.",
+    "scene_14": "Xu hướng hiện nay là xây dựng một kiến trúc thống nhất duy nhất cho tất cả các tác vụ. Ý tưởng là sử dụng Multimodal Visual Language, viết tắt là MVL. Tất cả dữ liệu đầu vào như văn bản, hình ảnh, hay video đều được chuyển đổi thành chuỗi token chung thông qua các bộ tokenizer chuyên biệt. Chuỗi token thống nhất này sau đó được đưa vào lõi Diffusion Transformer để xử lý đồng thời. Các ứng dụng điển hình như Kling đã đạt được khả năng sinh video chất lượng cao lên đến 1080p, 30fps, dài tối đa 2 phút. Bên cạnh đó, các công nghệ vệ tinh như LivePortrait giúp sinh chuyển động chân dung từ ảnh tĩnh, hay Kling-Avatar giúp tạo nhân vật ảo 3 đê sinh động.",
     
     "scene_15": "Trong lĩnh vực tạo video AI, cộng đồng nghiên cứu đang tập trung vào 4 hướng phát triển chính. Hướng thứ nhất là nâng cấp kiến trúc mô hình và thuật toán tạo sinh, tối ưu hóa cấu trúc DiT để đẩy nhanh tốc độ hội tụ của quá trình Diffusion. Hướng thứ hai là tăng cường khả năng tương tác và điều khiển, cho phép điều khiển camera chính xác với các thao tác Pan, Zoom, Tilt, cũng như nhận biết lực tác động vật lý lên môi trường.",
     
     "scene_16": "Hướng thứ ba là thiết lập cơ chế đánh giá và căn chỉnh chính xác, xây dựng các thang đo đo lường mức độ chân thực vật lý và sự liên kết nội dung với prompt của người dùng. Hướng thứ tư là cải thiện nhận thức và suy luận đa phương thức, giúp mô hình không chỉ tạo ra video mà còn có khả năng giải thích cấu trúc chuyển động và các hiện tượng xảy ra trong đó.",
     
-    "scene_17": "Vậy hãy tổng kết Phần 1. Chúng ta đã tìm hiểu 4 đột phá chính trong kiến trúc tạo video AI: 3D VAE giải quyết vấn đề flickering bằng cách nén đồng thời không gian và thời gian. Spatiotemporal Attention cho phép mô hình attend xuyên qua các khung hình. Diffusion Transformer sinh video từ noise qua quá trình denoising lặp lại. Và kiến trúc thống nhất MVL kết hợp mọi tác vụ trong một mô hình duy nhất. Nhưng một câu hỏi quan trọng vẫn còn: Video đẹp là chưa đủ — liệu mô hình có thực sự hiểu cấu trúc 3D của thế giới hay không?",
+    "scene_17": "Vậy hãy tổng kết Phần 1. Chúng ta đã tìm hiểu 4 đột phá chính trong kiến trúc tạo video AI: 3 đê VAE giải quyết vấn đề flickering bằng cách nén đồng thời không gian và thời gian. Spatiotemporal Attention cho phép mô hình attend xuyên qua các khung hình. Diffusion Transformer sinh video từ noise qua quá trình denoising lặp lại. Và kiến trúc thống nhất MVL kết hợp mọi tác vụ trong một mô hình duy nhất. Nhưng một câu hỏi quan trọng vẫn còn: Video đẹp là chưa đủ — liệu mô hình có thực sự hiểu cấu trúc 3 đê của thế giới hay không?",
     
-    "scene_18": "Phần 2: Nhận thức 3D liên tục từ video. Trong phần này, chúng ta sẽ khám phá cách xây dựng các mô hình AI có khả năng hiểu cấu trúc không gian 3 chiều từ luồng video liên tục — một bước tiến quan trọng từ tạo video sang xây dựng mô hình thế giới thực sự.",
+    "scene_18": "Phần 2: Nhận thức 3 đê liên tục từ video. Trong phần này, chúng ta sẽ khám phá cách xây dựng các mô hình AI có khả năng hiểu cấu trúc không gian 3 chiều từ luồng video liên tục — một bước tiến quan trọng từ tạo video sang xây dựng mô hình thế giới thực sự.",
     
-    "scene_19": "Các mô hình tạo video hiện tại đạt mức độ chân thực trực quan đáng kinh ngạc. Chúng tạo ra sóng nước lấp lánh, phản chiếu ánh sáng hoàn hảo, bóng đổ chân thực. Người xem có cảm giác mô hình thực sự hiểu thế giới. Nhưng thực chất thì sao? Chúng chỉ là những pixel renderer siêu việt. Chúng học cách phân phối pixel trên mặt phẳng 2D để đánh lừa thị giác con người, nhưng bên trong hoàn toàn không có structured 3D representation nào cả.",
+    "scene_19": "Các mô hình tạo video hiện tại đạt mức độ chân thực trực quan đáng kinh ngạc. Chúng tạo ra sóng nước lấp lánh, phản chiếu ánh sáng hoàn hảo, bóng đổ chân thực. Người xem có cảm giác mô hình thực sự hiểu thế giới. Nhưng thực chất thì sao? Chúng chỉ là những pixel renderer siêu việt. Chúng học cách phân phối pixel trên mặt phẳng 2 đê để đánh lừa thị giác con người, nhưng bên trong hoàn toàn không có structured 3 đê representation nào cả.",
     
     "scene_20": "Vấn đề bộc lộ rõ nhất khi góc quay camera thay đổi hoặc khi vật thể bị che khuất. Mô hình không có bộ nhớ vật lý nào để nhớ rằng mặt sau của vật thể trông như thế nào. Kết quả là hiện tượng structural drift, khi hình dạng vật thể tự thay đổi dần. Hoặc hiện tượng morphing, vật thể tự biến đổi hình dạng phi vật lý khi bị che khuất rồi xuất hiện lại.",
     
-    "scene_21": "Vậy giải pháp là gì? Câu trả lời là Streaming Perception. Ý tưởng này lấy cảm hứng từ cách con người nhận thức thế giới. Khi một đứa trẻ sơ sinh lớn lên, nó liên tục quan sát và tự xây dựng mô hình cấu trúc vật thể trong đầu. Khi ta đi bộ trong một căn phòng, não bộ cũng liên tục cập nhật một mô hình 3D bền vững. Hệ thống AI cũng phải hoạt động tương tự, liên tục cập nhật 3D representation từ luồng camera đầu vào.",
+    "scene_21": "Vậy giải pháp là gì? Câu trả lời là Streaming Perception. Ý tưởng này lấy cảm hứng từ cách con người nhận thức thế giới. Khi một đứa trẻ sơ sinh lớn lên, nó liên tục quan sát và tự xây dựng mô hình cấu trúc vật thể trong đầu. Khi ta đi bộ trong một căn phòng, não bộ cũng liên tục cập nhật một mô hình 3 đê bền vững. Hệ thống AI cũng phải hoạt động tương tự, liên tục cập nhật 3 đê representation từ luồng camera đầu vào.",
     
-    "scene_22": "CUT3R, viết tắt của Continuous Updating Transformer for 3D Reconstruction, là một phương pháp hiện thực hóa ý tưởng Streaming Perception. CUT3R là một stateful recurrent Transformer. Điều đặc biệt là nó không xử lý từng khung hình độc lập, cũng không chạy global optimization đắt đỏ. Thay vào đó, nó duy trì một 3D Memory State.",
+    "scene_22": "CUT3R, viết tắt của Continuous Updating Transformer for 3 đê Reconstruction, là một phương pháp hiện thực hóa ý tưởng Streaming Perception. CUT3R là một stateful recurrent Transformer. Điều đặc biệt là nó không xử lý từng khung hình độc lập, cũng không chạy global optimization đắt đỏ. Thay vào đó, nó duy trì một 3 đê Memory State.",
     
-    "scene_23": "Quy trình hoạt động như sau: Tại mỗi bước thời gian t, khi camera nhận khung hình mới I t, Transformer của CUT3R sẽ nhận hai đầu vào: Recurrent 3D Memory State S t trừ 1, và khung hình mới I t. Nó so sánh thông tin trực quan mới với bộ nhớ cũ, chỉ tính toán và cập nhật phần thông tin thay đổi, rồi bồi đắp vào trạng thái bộ nhớ để sinh ra trạng thái mới S t.",
+    "scene_23": "Quy trình hoạt động như sau: Tại mỗi bước thời gian t, khi camera nhận khung hình mới I t, Transformer của CUT3R sẽ nhận hai đầu vào: Recurrent 3 đê Memory State S t trừ 1, và khung hình mới I t. Nó so sánh thông tin trực quan mới với bộ nhớ cũ, chỉ tính toán và cập nhật phần thông tin thay đổi, rồi bồi đắp vào trạng thái bộ nhớ để sinh ra trạng thái mới S t.",
     
     "scene_24": "Công thức cập nhật rất ngắn gọn: S t bằng Transformer Update của S t trừ 1 và I t. Quá trình này diễn ra theo thời gian thực, với mỗi khung hình mới chỉ mất vài mili-giây để cập nhật, thay vì phải chạy global optimization đắt đỏ cho toàn bộ video.",
     
     "scene_25": "Một khả năng ấn tượng của CUT3R là xử lý vật thể bị che khuất. Hãy tưởng tượng camera đang nhìn thấy một chiếc bàn, rồi camera quay sang hướng khác. Chiếc bàn không còn trong khung hình nữa. Với mô hình thông thường, thông tin về chiếc bàn sẽ bị mất. Nhưng CUT3R giữ nguyên hình học của chiếc bàn trong bộ nhớ trạng thái, và khi camera quay trở lại, chiếc bàn được tái dựng nguyên vẹn, đúng vị trí và kích thước.",
     
-    "scene_26": "Tiếp theo, chúng ta tìm hiểu ST4rtrack — một phương pháp giải quyết đồng thời bài toán point tracking và 4D reconstruction trong một World Coordinate Frame thống nhất. Để hiểu tại sao đây là đột phá, hãy xem cách truyền thống. Trong Computer Vision truyền thống, hai bài toán này được chia làm 2 bước riêng biệt chạy nối tiếp nhau. Bước 1: Dùng Optical Flow để theo dõi vết các điểm ảnh di chuyển trên mặt phẳng 2D. Bước 2: Dùng thuật toán Structure from Motion để từ các điểm 2D dựng thành mô hình 3D.",
+    "scene_26": "Tiếp theo, chúng ta tìm hiểu ST4rtrack — một phương pháp giải quyết đồng thời bài toán point tracking và 4 đê reconstruction trong một World Coordinate Frame thống nhất. Để hiểu tại sao đây là đột phá, hãy xem cách truyền thống. Trong Computer Vision truyền thống, hai bài toán này được chia làm 2 bước riêng biệt chạy nối tiếp nhau. Bước 1: Dùng Optical Flow để theo dõi vết các điểm ảnh di chuyển trên mặt phẳng 2 đê. Bước 2: Dùng thuật toán Structure from Motion để từ các điểm 2 đê dựng thành mô hình 3 đê. Vấn đề nghiêm trọng là hai bước này hoạt động hoàn toàn độc lập và không chia sẻ thông tin. Nếu Optical Flow ở bước một chỉ cần sai lệch vài pixel do nhiễu hoặc ánh sáng, Structure from Motion ở bước hai sẽ nhận đầu vào sai. Sai số này sẽ bị phóng đại, dẫn đến tọa độ 3 đê bị méo mó và làm sụp đổ toàn bộ mô hình tái dựng.",
     
-    "scene_27": "Vấn đề nghiêm trọng là hai bước này hoạt động hoàn toàn độc lập và không chia sẻ thông tin. Nếu Optical Flow ở bước một chỉ cần sai lệch vài pixel do nhiễu hoặc ánh sáng, Structure from Motion ở bước hai sẽ nhận đầu vào sai. Sai số này sẽ bị phóng đại, dẫn đến tọa độ 3D bị méo mó và làm sụp đổ toàn bộ mô hình tái dựng.",
+    "scene_27": "ST4rtrack giải quyết vấn đề này một cách triệt để bằng cách xử lý đồng thời cả hai bài toán tracking và reconstruction trong một feed-forward model duy nhất. Không còn 2 bước riêng biệt nữa. Mô hình dự đoán trực tiếp một Spatiotemporal Pointmap trong một World Coordinate Frame thống nhất.",
     
-    "scene_28": "ST4rtrack giải quyết vấn đề này một cách triệt để bằng cách xử lý đồng thời cả hai bài toán tracking và reconstruction trong một feed-forward model duy nhất. Không còn 2 bước riêng biệt nữa. Mô hình dự đoán trực tiếp một Spatiotemporal Pointmap trong một World Coordinate Frame thống nhất.",
+    "scene_28": "Biểu diễn toán học như sau: Với mỗi điểm i trên bề mặt vật thể, dù tĩnh hay động, mô hình dự đoán tọa độ 3 đê liên tục theo thời gian t. P i t là một vector gồm X i t, Y i t, và Z i t trong không gian 3 chiều. Việc tích hợp này giúp hình học 3 đê bổ trợ ngược lại cho tracking 2 đê, triệt tiêu hoàn toàn sai số tích lũy.",
     
-    "scene_29": "Biểu diễn toán học như sau: Với mỗi điểm i trên bề mặt vật thể, dù tĩnh hay động, mô hình dự đoán tọa độ 3D liên tục theo thời gian t. P i t là một vector gồm X i t, Y i t, và Z i t trong không gian 3 chiều. Việc tích hợp này giúp hình học 3D bổ trợ ngược lại cho tracking 2D, triệt tiêu hoàn toàn sai số tích lũy.",
+    "scene_29": "Hãy so sánh hai phương pháp. CUT3R tập trung vào việc cập nhật liên tục 3 đê Memory State theo thời gian thực từ video stream, sử dụng cơ chế recurrent. Trong khi đó, ST4rtrack tập trung dự đoán 4 đê Pointmap cho cả vật thể tĩnh lẫn động bằng mô hình feed-forward, theo dõi tọa độ 3 đê của mọi điểm liên tục theo thời gian. Cả hai đều hướng tới việc xây dựng structured representation bền vững của thế giới.",
     
-    "scene_30": "Hãy so sánh hai phương pháp. CUT3R tập trung vào việc cập nhật liên tục 3D Memory State theo thời gian thực từ video stream, sử dụng cơ chế recurrent. Trong khi đó, ST4rtrack tập trung dự đoán 4D Pointmap cho cả vật thể tĩnh lẫn động bằng mô hình feed-forward, theo dõi tọa độ 3D của mọi điểm liên tục theo thời gian. Cả hai đều hướng tới việc xây dựng structured representation bền vững của thế giới.",
-    
-    "scene_31": "Tổng kết Phần 2: Chúng ta đã thấy rằng video đẹp là chưa đủ — mô hình AI cần hiểu cấu trúc 3D thực sự. Streaming Perception đặt nền tảng lý thuyết. CUT3R hiện thực hóa bằng Transformer hồi quy với bộ nhớ 3D bền vững. ST4rtrack giải quyết đồng thời theo dõi và tái dựng 4D trong một mô hình duy nhất. Câu hỏi cuối cùng: Làm sao tận dụng tất cả những khả năng này để xây dựng mô hình thế giới giúp robot hành động thông minh?",
+    "scene_30": "Tổng kết Phần 2: Chúng ta đã thấy rằng video đẹp là chưa đủ — mô hình AI cần hiểu cấu trúc 3 đê thực sự. Streaming Perception đặt nền tảng lý thuyết. CUT3R hiện thực hóa bằng Transformer hồi quy với bộ nhớ 3 đê bền vững. ST4rtrack giải quyết đồng thời theo dõi và tái dựng 4 đê trong một mô hình duy nhất. Câu hỏi cuối cùng: Làm sao tận dụng tất cả những khả năng này để xây dựng mô hình thế giới giúp robot hành động thông minh?",
     
     "scene_32": "Phần 3: Mở rộng mô hình thế giới cho robot thông minh. Trong phần cuối cùng này, chúng ta sẽ tìm hiểu cách biến các mô hình tạo video thành các bộ giả lập thế giới để huấn luyện và đánh giá robot — một trong những ứng dụng đầy hứa hẹn nhất của AI hiện nay.",
     
@@ -96,25 +94,47 @@ SCRIPTS = {
     
     "scene_44": "Tổng kết Phần 3: Mô hình thế giới cho robot cần 3 yếu tố. Một là dữ liệu quy mô lớn, với 21 triệu cặp time-aligned video và action data. Hai là kỹ thuật đưa hành động vào mô hình chính xác bằng Linear Projection. Ba là cơ chế tự cải tiến qua AI Feedback và Execution Feedback. Video Language Planning giúp robot thực hiện nhiệm vụ dài hạn, và mô hình thế giới đóng vai trò bộ giả lập để đánh giá robot policy.",
     
-    "scene_45": "Và đó là toàn bộ hành trình từ tạo video AI đến mô hình thế giới. Chúng ta đã đi qua 3 trụ cột chính. Trụ cột thứ nhất: Kiến trúc tạo video thế hệ mới với 3D VAE, Spatiotemporal Attention, và kiến trúc MVL. Trụ cột thứ hai: Streaming Perception với CUT3R xây dựng bộ nhớ 3D bền vững và ST4rtrack theo dõi tái dựng 4D đồng thời. Và trụ cột thứ ba: Mô hình thế giới cho robot với dữ liệu quy mô Internet, Action Conditioning bằng Linear Projection, và vòng lặp tự cải tiến. Tương lai của AI không chỉ là tạo ra hình ảnh đẹp, mà là thực sự hiểu và tương tác với thế giới. Cảm ơn các bạn đã theo dõi!"
+    "scene_45": "Và đó là toàn bộ hành trình từ tạo video AI đến mô hình thế giới. Chúng ta đã đi qua 3 trụ cột chính. Trụ cột thứ nhất: Kiến trúc tạo video thế hệ mới với 3 đê VAE, Spatiotemporal Attention, và kiến trúc MVL. Trụ cột thứ hai: Streaming Perception với CUT3R xây dựng bộ nhớ 3 đê bền vững và ST4rtrack theo dõi tái dựng 4 đê đồng thời. Và trụ cột thứ ba: Mô hình thế giới cho robot với dữ liệu quy mô Internet, Action Conditioning bằng Linear Projection, và vòng lặp tự cải tiến. Tương lai của AI không chỉ là tạo ra hình ảnh đẹp, mà là thực sự hiểu và tương tác với thế giới. Cảm ơn các bạn đã theo dõi!"
 }
 
-VOICE = "vi-VN-HoaiMyNeural"
+VOICE = "vi-VN-NamMinhNeural"
 
 async def generate_all():
     os.makedirs("voiceover", exist_ok=True)
     for name, text in SCRIPTS.items():
         path = f"voiceover/{name}.mp3"
-        print(f"🎤 Generating {path}...")
-        if os.path.exists(path):
-            print(f"  Already exists, skipping!")
+        
+        # Skip if file already exists and is valid (greater than 10KB)
+        # This allows resuming from previous failures
+        if os.path.exists(path) and os.path.getsize(path) > 10000:
+            print(f"🎤 {path} already exists and is valid, skipping.")
             continue
-        try:
-            communicate = edge_tts.Communicate(text, VOICE)
-            await communicate.save(path)
-            print(f"  ✅ Success!")
-        except Exception as e:
-            print(f"  ❌ Error: {e}")
+            
+        print(f"🎤 Generating {path}...")
+        success = False
+        for attempt in range(1, 6):
+            try:
+                communicate = edge_tts.Communicate(text, VOICE)
+                await communicate.save(path)
+                if os.path.exists(path) and os.path.getsize(path) > 1000:
+                    print(f"  ✅ Success on attempt {attempt}!")
+                    success = True
+                    break
+                else:
+                    raise Exception("Generated file is too small or missing")
+            except Exception as e:
+                print(f"  ❌ Attempt {attempt} failed: {e}")
+                if os.path.exists(path):
+                    try:
+                        os.remove(path)
+                    except:
+                        pass
+                await asyncio.sleep(2 * attempt) # Exponential backoff
+                
+        if not success:
+            print(f"🔴 FAILED to generate voiceover for {name} after 5 attempts.")
+            
+        await asyncio.sleep(1.0) # Rate-limiting delay
 
 if __name__ == "__main__":
     asyncio.run(generate_all())
