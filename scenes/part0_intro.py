@@ -35,13 +35,13 @@ class Scene01_Title(Scene):
 
         # === Animation: Xuất hiện tiêu đề từng phần ===
         self.play(Write(main_title), run_time=1.5)
-        self.wait(0.3)
+        self.wait(1.29)
         self.play(Write(subtitle), run_time=1.5)
-        self.wait(0.5)
+        self.wait(2.15)
         
         # Phụ đề xuất hiện với fade
         self.play(FadeIn(description, shift=UP * 0.2), run_time=1.0)
-        self.wait(2)
+        self.wait(8.61)
 
         # === Hiệu ứng highlight: Viền quanh tiêu đề ===
         border_box = SurroundingRectangle(
@@ -52,7 +52,7 @@ class Scene01_Title(Scene):
         )
         
         self.play(Create(border_box), run_time=1.0)
-        self.wait(1.5)
+        self.wait(6.80)
 
         # === Transition: Fade out toàn bộ ===
         self.play(*[FadeOut(m) for m in self.mobjects])
@@ -68,7 +68,7 @@ class Scene02_Importance(Scene):
         # === Tiêu đề ===
         title = make_title("Tại sao chủ đề này quan trọng?")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(2.22)
 
         # === Câu hỏi trung tâm lớn ===
         question = Text(
@@ -85,7 +85,7 @@ class Scene02_Importance(Scene):
         
         self.play(Write(question), run_time=1.2)
         self.play(Write(question_sub), run_time=1.0)
-        self.wait(0.5)
+        self.wait(2.22)
 
         # === BÊN TRÁI: Pixel-Only (Sai) ===
         left_box = RoundedRectangle(
@@ -130,7 +130,7 @@ class Scene02_Importance(Scene):
             FadeIn(vs_text),
             run_time=1.2
         )
-        self.wait(1.0)
+        self.wait(4.44)
 
         # === Dòng kết luận ===
         conclusion = Text(
@@ -139,7 +139,7 @@ class Scene02_Importance(Scene):
         ).to_edge(DOWN, buff=1.0)
         
         self.play(FadeIn(conclusion, shift=UP * 0.3), run_time=0.8)
-        self.wait(2)
+        self.wait(8.89)
 
         # === Transition ===
         self.play(*[FadeOut(m) for m in self.mobjects])
@@ -155,7 +155,7 @@ class Scene03_Roadmap(Scene):
         # === Tiêu đề ===
         title = make_title("Lộ trình của video")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(5.90)
 
         # === 3 Phần chính của video ===
         parts = [
@@ -232,10 +232,10 @@ class Scene03_Roadmap(Scene):
         for i, card in enumerate(cards):
             self.play(FadeIn(card, shift=UP * 0.3), run_time=0.6)
             self.play(Create(progress_dots[i]), run_time=0.3)
-            self.wait(0.2)
+            self.wait(2.36)
 
         self.play(Create(progress_line), run_time=0.5)
-        self.wait(0.5)
+        self.wait(5.90)
 
         # === Lời kết ===
         outro_text = Text(
@@ -244,7 +244,7 @@ class Scene03_Roadmap(Scene):
         ).to_edge(DOWN, buff=0.8)
         
         self.play(FadeIn(outro_text, scale=0.8), run_time=0.7)
-        self.wait(1)
+        self.wait(11.81)
 
         # === Transition: Fade out toàn bộ ===
         self.play(*[FadeOut(m) for m in self.mobjects])

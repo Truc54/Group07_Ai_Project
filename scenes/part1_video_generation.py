@@ -23,7 +23,7 @@ class Scene04_Part1Intro(Scene):
 
         self.play(FadeIn(part_num, shift=DOWN * 0.3), run_time=0.8)
         self.play(FadeIn(part_title), run_time=1.2)
-        self.wait(1)
+        self.wait(5.32)
 
         # Timeline tiến bộ
         self.play(FadeOut(part_group))
@@ -56,7 +56,7 @@ class Scene04_Part1Intro(Scene):
         q2 = Text("những đột phá kỹ thuật nào?", font=FONT, font_size=28, color=WHITE)
         question = VGroup(q1, q2).arrange(DOWN, buff=0.18).to_edge(DOWN, buff=1.1)
         self.play(FadeIn(question), run_time=1)
-        self.wait(2)
+        self.wait(10.64)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -69,7 +69,7 @@ class Scene05_2DVAE_Problem(Scene):
 
         title = make_title("Vấn đề: 2D VAE truyền thống")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(1.62)
 
         # 5 khung hình riêng lẻ
         frames = VGroup()
@@ -83,7 +83,7 @@ class Scene05_2DVAE_Problem(Scene):
         frames.arrange(RIGHT, buff=0.25).shift(UP * 0.5)
 
         self.play(LaggedStart(*[FadeIn(f, scale=0.8) for f in frames], lag_ratio=0.15))
-        self.wait(0.5)
+        self.wait(1.62)
 
         # Mũi tên encoder riêng biệt
         arrows_down = VGroup()
@@ -101,7 +101,7 @@ class Scene05_2DVAE_Problem(Scene):
             LaggedStart(*[Create(a) for a in arrows_down], lag_ratio=0.1),
             LaggedStart(*[FadeIn(e) for e in encoders], lag_ratio=0.1),
         )
-        self.wait(0.5)
+        self.wait(1.62)
 
         # Output frames riêng lẻ
         out_frames = VGroup()
@@ -135,7 +135,7 @@ class Scene05_2DVAE_Problem(Scene):
             font=FONT, font_size=22, color=WHITE
         ).to_edge(DOWN, buff=0.8)
         self.play(FadeIn(error_text))
-        self.wait(3)
+        self.wait(9.73)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -148,7 +148,7 @@ class Scene06_Flickering(Scene):
 
         title = make_title("Hậu quả của 2D VAE")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(3.44)
 
         # 3 Bullet points hậu quả của 2D VAE
         bullet_items = [
@@ -169,14 +169,14 @@ class Scene06_Flickering(Scene):
 
         for bullet in bullets:
             self.play(FadeIn(bullet, shift=RIGHT * 0.3), run_time=0.6)
-            self.wait(0.5)
+            self.wait(3.44)
 
         conclusion = Text(
             "→ 2D VAE không đủ cho video chất lượng cao!",
             font=FONT, font_size=22, color=WHITE
         ).to_edge(DOWN, buff=0.8)
         self.play(FadeIn(conclusion))
-        self.wait(2)
+        self.wait(13.77)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -189,7 +189,7 @@ class Scene07_3DVAE_Idea(Scene):
 
         title = make_title("Giải pháp: 3D VAE", "Nén toàn bộ video cùng lúc")
         self.play(FadeIn(title), run_time=1)
-        self.wait(0.5)
+        self.wait(1.92)
 
         # === BÊN TRÁI: 2D VAE (rời rạc) ===
         left_label = Text("2D VAE", font=FONT, font_size=24, color=WHITE)
@@ -239,7 +239,7 @@ class Scene07_3DVAE_Idea(Scene):
         self.play(FadeIn(left_label, shift=DOWN * 0.2))
         self.play(LaggedStart(*[FadeIn(f) for f in left_frames], lag_ratio=0.1))
         self.play(LaggedStart(*[Create(x) for x in left_crosses], lag_ratio=0.1))
-        self.wait(0.5)
+        self.wait(1.92)
 
         self.play(FadeIn(vs_text))
         self.play(FadeIn(right_label, shift=DOWN * 0.2))
@@ -265,7 +265,7 @@ class Scene07_3DVAE_Idea(Scene):
             font=FONT, font_size=22, color=WHITE
         ).to_edge(DOWN, buff=0.8)
         self.play(FadeIn(conclusion))
-        self.wait(3)
+        self.wait(11.54)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -278,7 +278,7 @@ class Scene08_3DVAE_Math(Scene):
 
         title = make_title("3D VAE: Biểu diễn toán học")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(2.60)
 
         # Input tensor
         input_label = Text("Video đầu vào:", font=FONT, font_size=22, color=WHITE)
@@ -290,7 +290,7 @@ class Scene08_3DVAE_Math(Scene):
         input_group = VGroup(input_label, input_eq).move_to(UP * 1.4)
 
         self.play(FadeIn(input_group))
-        self.wait(1)
+        self.wait(5.21)
 
         # Encoder arrow
         enc_arrow = Arrow(ORIGIN + UP * 0.4, ORIGIN + DOWN * 0.4, color=C_YELLOW, stroke_width=3)
@@ -308,7 +308,7 @@ class Scene08_3DVAE_Math(Scene):
         lat_group = VGroup(lat_label, lat_eq).move_to(DOWN * 0.3)
 
         self.play(FadeIn(lat_group))
-        self.wait(1)
+        self.wait(5.21)
 
         # Hai khung nén song song cạnh nhau
         box_width = 4.2
@@ -344,7 +344,7 @@ class Scene08_3DVAE_Math(Scene):
             font=FONT, font_size=20, color=WHITE
         ).to_edge(DOWN, buff=0.7)
         self.play(FadeIn(benefit))
-        self.wait(3)
+        self.wait(16.50)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -357,7 +357,7 @@ class Scene09_3DVAE_Visual(Scene):
 
         title = make_title("3D VAE: Minh họa trực quan")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(2.22)
 
         # Video gốc: khối lớn
         original_label = Text("Video gốc", font=FONT, font_size=22, color=WHITE)
@@ -402,10 +402,10 @@ class Scene09_3DVAE_Visual(Scene):
 
         # Animate từng phần
         self.play(FadeIn(orig_group, shift=RIGHT * 0.2))
-        self.wait(0.5)
+        self.wait(2.22)
         self.play(Create(compress_arrow), FadeIn(arrow_label))
         self.play(FadeIn(lat_group, scale=0.5))
-        self.wait(0.5)
+        self.wait(2.22)
 
         # Highlight giảm - Tăng độ rộng lên 5.8 để chữ KHÔNG bị tràn/chạm viền
         reduce_box = RoundedRectangle(
@@ -426,7 +426,7 @@ class Scene09_3DVAE_Visual(Scene):
 
         self.play(FadeIn(reduce_box), FadeIn(reduce_text), run_time=0.8)
         self.play(FadeIn(sub_text))
-        self.wait(3)
+        self.wait(13.80)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -439,7 +439,7 @@ class Scene10_SpatiotemporalAttention(Scene):
 
         title = make_title("Spatiotemporal Attention", "Attention xuyên không gian và thời gian")
         self.play(FadeIn(title), run_time=1)
-        self.wait(0.5)
+        self.wait(1.45)
 
         # === BÊN TRÁI: Self-Attention thường (1 frame) ===
         left_label = Text("Self-Attention thường", font=FONT, font_size=18, color=WHITE)
@@ -479,7 +479,7 @@ class Scene10_SpatiotemporalAttention(Scene):
         left_note = Text("Chỉ trong 1 frame", font=FONT, font_size=16, color=WHITE)
         left_note.next_to(left_frame_label, DOWN, buff=0.2)
         self.play(FadeIn(left_note))
-        self.wait(1)
+        self.wait(2.91)
 
         # === BÊN PHẢI: Spatiotemporal Attention (3 frames) ===
         right_label = Text("Spatiotemporal Attention", font=FONT, font_size=18, color=WHITE)
@@ -525,7 +525,7 @@ class Scene10_SpatiotemporalAttention(Scene):
         right_note = Text("Xuyên tất cả frames!", font=FONT, font_size=16, color=WHITE)
         right_note.next_to(frame_labels_r, DOWN, buff=0.3)
         self.play(FadeIn(right_note))
-        self.wait(3)
+        self.wait(8.74)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -538,7 +538,7 @@ class Scene11_STA_Applications(Scene):
 
         title = make_title("Spatiotemporal Attention: Ứng dụng")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(3.49)
 
         # 3 Bullet points ứng dụng chuyển động phức tạp
         bullet_items = [
@@ -559,14 +559,14 @@ class Scene11_STA_Applications(Scene):
 
         for bullet in bullets:
             self.play(FadeIn(bullet, shift=RIGHT * 0.3), run_time=0.6)
-            self.wait(0.5)
+            self.wait(3.49)
 
         conclusion = Text(
             "→ Hỗ trợ xử lý các loại chuyển động phức tạp một cách hoàn hảo!",
             font=FONT, font_size=22, color=WHITE
         ).to_edge(DOWN, buff=0.8)
         self.play(FadeIn(conclusion))
-        self.wait(2)
+        self.wait(13.96)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -579,7 +579,7 @@ class Scene12_DiT(Scene):
 
         title = make_title("Diffusion Transformer (DiT)")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(3.03)
 
         # Pipeline: Noise -> DiT steps -> Clean video
         steps_count = 5
@@ -619,7 +619,7 @@ class Scene12_DiT(Scene):
 
         # Animate noise
         self.play(FadeIn(noise, scale=0.8))
-        self.wait(0.3)
+        self.wait(1.82)
 
         # Animate arrows + dit steps
         for i, step in enumerate(dit_steps):
@@ -667,7 +667,7 @@ class Scene12_DiT(Scene):
         desc_boxes = VGroup(left_group, right_group).arrange(RIGHT, buff=0.4).to_edge(DOWN, buff=0.7)
 
         self.play(FadeIn(desc_boxes))
-        self.wait(3)
+        self.wait(18.19)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -680,7 +680,7 @@ class Scene13_SeparateModels(Scene):
 
         title = make_title("Vấn đề: Mỗi tác vụ một mô hình riêng")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(3.54)
 
         # 3 mô hình riêng biệt
         models = [
@@ -723,7 +723,7 @@ class Scene13_SeparateModels(Scene):
 
         for mg in model_groups:
             self.play(FadeIn(mg, shift=UP * 0.3), run_time=0.6)
-            self.wait(0.3)
+            self.wait(2.12)
 
         # Vạch đứt dọc ngăn cách giữa các model ở dưới biểu thị sự tách biệt
         crosses = VGroup()
@@ -743,7 +743,7 @@ class Scene13_SeparateModels(Scene):
             font=FONT, font_size=20, color=WHITE
         ).to_edge(DOWN, buff=0.8)
         self.play(FadeIn(problem))
-        self.wait(2)
+        self.wait(14.15)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -756,7 +756,7 @@ class Scene14_UnifiedMVL(Scene):
 
         title = make_title("Kiến trúc thống nhất: MVL")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(3.63)
 
         # Input modalities
         inputs = [
@@ -772,7 +772,7 @@ class Scene14_UnifiedMVL(Scene):
         input_boxes.arrange(RIGHT, buff=0.3).move_to(UP * 1.8)
 
         self.play(LaggedStart(*[FadeIn(b, shift=DOWN * 0.2) for b in input_boxes], lag_ratio=0.15))
-        self.wait(0.3)
+        self.wait(2.18)
 
         # Tokenizers
         tok_arrows = VGroup()
@@ -802,7 +802,7 @@ class Scene14_UnifiedMVL(Scene):
         ).move_to(token_bar)
 
         self.play(FadeIn(token_bar), FadeIn(token_label))
-        self.wait(0.5)
+        self.wait(3.63)
 
         # DiT Core
         dit_arrow = Arrow(
@@ -816,7 +816,7 @@ class Scene14_UnifiedMVL(Scene):
         dit_label = Text("DiT Core", font=FONT, font_size=24, color=WHITE, weight=BOLD).move_to(dit_box)
 
         self.play(Create(dit_arrow), FadeIn(dit_box), FadeIn(dit_label))
-        self.wait(0.5)
+        self.wait(3.63)
 
         # Output
         out_arrow = Arrow(
@@ -836,7 +836,7 @@ class Scene14_UnifiedMVL(Scene):
             font=FONT, font_size=16, color=WHITE
         ).next_to(out_label, DOWN, buff=0.2)
         self.play(FadeIn(examples))
-        self.wait(3)
+        self.wait(21.75)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -849,7 +849,7 @@ class Scene15_Research1_2(Scene):
 
         title = make_title("4 hướng nghiên cứu chính", "Hướng 1 và 2")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(2.15)
 
         # Hướng 1
         h1_num = Text("①", font_size=40, color=C_BLUE)
@@ -867,7 +867,7 @@ class Scene15_Research1_2(Scene):
 
         self.play(FadeIn(h1_header, shift=RIGHT * 0.2), run_time=0.8)
         self.play(FadeIn(h1_desc, shift=UP * 0.1))
-        self.wait(1)
+        self.wait(4.30)
 
         # Hướng 2
         h2_num = Text("②", font_size=40, color=C_GREEN)
@@ -885,7 +885,7 @@ class Scene15_Research1_2(Scene):
 
         self.play(FadeIn(h2_header, shift=RIGHT * 0.2), run_time=0.8)
         self.play(FadeIn(h2_desc, shift=UP * 0.1))
-        self.wait(3)
+        self.wait(12.90)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -898,7 +898,7 @@ class Scene16_Research3_4(Scene):
 
         title = make_title("4 hướng nghiên cứu chính", "Hướng 3 và 4")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(1.47)
 
         # Hướng 3
         h3_num = Text("③", font_size=40, color=C_YELLOW)
@@ -916,7 +916,7 @@ class Scene16_Research3_4(Scene):
 
         self.play(FadeIn(h3_header, shift=RIGHT * 0.2), run_time=0.8)
         self.play(FadeIn(h3_desc, shift=UP * 0.1))
-        self.wait(1)
+        self.wait(2.94)
 
         # Hướng 4
         h4_num = Text("④", font_size=40, color=C_PURPLE)
@@ -934,7 +934,7 @@ class Scene16_Research3_4(Scene):
 
         self.play(FadeIn(h4_header, shift=RIGHT * 0.2), run_time=0.8)
         self.play(FadeIn(h4_desc, shift=UP * 0.1))
-        self.wait(3)
+        self.wait(9.30)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -947,7 +947,7 @@ class Scene17_Part1Recap(Scene):
 
         title = make_title("Tổng kết phần 1")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(4.00)
 
         # 4 keyword recap
         keywords = [
@@ -981,9 +981,9 @@ class Scene17_Part1Recap(Scene):
 
         for card in kw_cards:
             self.play(FadeIn(card, shift=UP * 0.3), run_time=0.5)
-            self.wait(0.3)
+            self.wait(2.40)
 
-        self.wait(1)
+        self.wait(7.98)
 
         # Câu hỏi chuyển tiếp
         transition_box = RoundedRectangle(
@@ -1000,19 +1000,13 @@ class Scene17_Part1Recap(Scene):
         ).arrange(DOWN, buff=0.15).move_to(transition_box)
 
         self.play(FadeIn(transition_box), FadeIn(question), run_time=1)
-        self.wait(2)
+        self.wait(15.97)
 
-        # Transition effect
+        # Fade out all mobjects to end the scene
         self.play(
             *[FadeOut(card, shift=LEFT * 2) for card in kw_cards],
             FadeOut(title, shift=UP),
+            FadeOut(transition_box),
+            FadeOut(question),
             run_time=0.8
         )
-
-        next_part = Text("Phần 2: Nhận thức 3D liên tục từ video",
-                         font=FONT, font_size=28, color=WHITE)
-        next_part.move_to(ORIGIN)
-        self.play(FadeOut(transition_box), FadeOut(question))
-        self.play(FadeIn(next_part), run_time=1)
-        self.wait(2)
-        self.play(FadeOut(next_part))

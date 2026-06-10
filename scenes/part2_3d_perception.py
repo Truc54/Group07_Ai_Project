@@ -23,7 +23,7 @@ class Scene18_Part2Intro(Scene):
 
         self.play(FadeIn(part_num, shift=DOWN * 0.3), run_time=0.8)
         self.play(FadeIn(part_title), run_time=1.2)
-        self.wait(1)
+        self.wait(2.40)
 
         # === Transformation: 2D → 3D ===
         self.play(FadeOut(part_group))
@@ -59,7 +59,7 @@ class Scene18_Part2Intro(Scene):
             FadeIn(group_3d, shift=RIGHT * 0.2),
             run_time=1.2
         )
-        self.wait(1)
+        self.wait(2.40)
 
         # === Mô tả phần ===
         description = Text(
@@ -68,7 +68,7 @@ class Scene18_Part2Intro(Scene):
         ).to_edge(DOWN, buff=0.8)
 
         self.play(FadeIn(description, shift=UP * 0.3), run_time=0.8)
-        self.wait(2)
+        self.wait(4.79)
 
         # === Transition ===
         self.play(*[FadeOut(m) for m in self.mobjects])
@@ -83,7 +83,7 @@ class Scene19_PixelOnlyCritique(Scene):
 
         title = make_title("Vấn đề: Video đẹp nhưng rỗng")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(3.41)
 
         # === BÊN TRÁI: Bề ngoài đẹp ===
         left_box = RoundedRectangle(
@@ -121,12 +121,12 @@ class Scene19_PixelOnlyCritique(Scene):
 
         # === Mũi tên "tách ra" ===
         split_arrow_left = Arrow(
-            ORIGIN + LEFT * 0.8, ORIGIN + LEFT * 2.5,
-            color=C_YELLOW, stroke_width=2
+            LEFT * 0.8 + UP * 0.3, LEFT * 2.2 + UP * 0.3,
+            color=C_YELLOW, stroke_width=2, buff=0
         )
         split_arrow_right = Arrow(
-            ORIGIN + RIGHT * 0.8, ORIGIN + RIGHT * 2.5,
-            color=C_YELLOW, stroke_width=2
+            RIGHT * 0.8 + UP * 0.3, RIGHT * 2.2 + UP * 0.3,
+            color=C_YELLOW, stroke_width=2, buff=0
         )
 
         self.play(
@@ -136,7 +136,7 @@ class Scene19_PixelOnlyCritique(Scene):
             Create(split_arrow_right),
             run_time=1.2
         )
-        self.wait(1)
+        self.wait(6.82)
 
         # === Kết luận ===
         conclusion = Text(
@@ -145,7 +145,7 @@ class Scene19_PixelOnlyCritique(Scene):
         ).to_edge(DOWN, buff=1.0)
 
         self.play(FadeIn(conclusion, shift=UP * 0.3), run_time=0.8)
-        self.wait(2)
+        self.wait(13.63)
 
         self.play(*[FadeOut(m) for m in self.mobjects])
 
@@ -159,7 +159,7 @@ class Scene20_StructuralDrift(Scene):
 
         title = make_title("Vấn đề: Structural Drift & Morphing")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(2.54)
 
         # === Vấn đề 1: Structural Drift ===
         problem1_box = RoundedRectangle(
@@ -202,15 +202,15 @@ class Scene20_StructuralDrift(Scene):
         )
         angle_label = Text("Góc quay thay đổi", font=FONT, font_size=14, color=C_BLUE)
         angle_label.next_to(arrow_up, LEFT, buff=0.2)
+        angle_group = VGroup(arrow_up, angle_label).shift(DOWN * 0.3)
 
         self.play(
             FadeIn(p1_group, shift=LEFT * 0.3),
             FadeIn(p2_group, shift=RIGHT * 0.3),
-            Create(arrow_up),
-            FadeIn(angle_label),
+            FadeIn(angle_group),
             run_time=1.2
         )
-        self.wait(1)
+        self.wait(5.09)
 
         # === Kết luận ===
         conclusion = Text(
@@ -219,7 +219,7 @@ class Scene20_StructuralDrift(Scene):
         ).to_edge(DOWN, buff=1.0)
 
         self.play(FadeIn(conclusion, shift=UP * 0.3), run_time=0.8)
-        self.wait(2)
+        self.wait(10.18)
 
         self.play(*[FadeOut(m) for m in self.mobjects])
 
@@ -233,11 +233,11 @@ class Scene21_StreamingPerceptionIdea(Scene):
 
         title = make_title("Giải pháp: Streaming Perception")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(3.98)
 
         # === Ví dụ: Trẻ sơ sinh ===
         baby_box = RoundedRectangle(
-            width=4.5, height=1.8, corner_radius=0.12,
+            width=4.5, height=1.4, corner_radius=0.12,
             color=C_BLUE, fill_opacity=0.08, stroke_width=2
         )
         baby_icon = Text("👶", font_size=40)
@@ -246,13 +246,13 @@ class Scene21_StreamingPerceptionIdea(Scene):
             Text("Liên tục quan sát & xây dựng mô hình 3D trong đầu", font=FONT, font_size=12, color=WHITE),
         ).arrange(DOWN, buff=0.12)
         
-        baby_content = VGroup(baby_icon, baby_desc).arrange(DOWN, buff=0.18).move_to(baby_box)
+        baby_content = VGroup(baby_icon, baby_desc).arrange(DOWN, buff=0.12).move_to(baby_box)
         baby_group = VGroup(baby_box, baby_content)
-        baby_group.shift(UP * 0.8)
+        baby_group.shift(UP * 0.95)
 
         # === Ví dụ: Con người đi bộ ===
         human_box = RoundedRectangle(
-            width=4.5, height=1.8, corner_radius=0.12,
+            width=4.5, height=1.4, corner_radius=0.12,
             color=C_GREEN, fill_opacity=0.08, stroke_width=2
         )
         human_icon = Text("🚶", font_size=40)
@@ -261,13 +261,13 @@ class Scene21_StreamingPerceptionIdea(Scene):
             Text("Não bộ liên tục cập nhật mô hình 3D bền vững", font=FONT, font_size=12, color=WHITE),
         ).arrange(DOWN, buff=0.12)
         
-        human_content = VGroup(human_icon, human_desc).arrange(DOWN, buff=0.18).move_to(human_box)
+        human_content = VGroup(human_icon, human_desc).arrange(DOWN, buff=0.12).move_to(human_box)
         human_group = VGroup(human_box, human_content)
-        human_group.shift(DOWN * 0.8)
+        human_group.shift(DOWN * 0.95)
 
         # === Mũi tên chỉ AI ===
         ai_arrow = Arrow(
-            RIGHT * 2.5 + UP * 0.8, RIGHT * 4.0 + UP * 0.8,
+            RIGHT * 2.5, RIGHT * 3.8,
             color=C_YELLOW, stroke_width=2
         )
         ai_label = Text("AI cũng phải\nhoạt động tương tự", font=FONT, font_size=13, color=C_YELLOW)
@@ -278,14 +278,14 @@ class Scene21_StreamingPerceptionIdea(Scene):
             FadeIn(human_group, shift=DOWN * 0.2),
             run_time=1.0
         )
-        self.wait(0.5)
+        self.wait(3.98)
 
         self.play(
             Create(ai_arrow),
             FadeIn(ai_label),
             run_time=0.8
         )
-        self.wait(2)
+        self.wait(16.50)
 
         self.play(*[FadeOut(m) for m in self.mobjects])
 
@@ -299,7 +299,7 @@ class Scene22_CUT3RIntro(Scene):
 
         title = make_title("CUT3R", "Continuous Updating Transformer for 3D Reconstruction")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(3.52)
 
         # === Đặc điểm CUT3R ===
         features = [
@@ -325,7 +325,7 @@ class Scene22_CUT3RIntro(Scene):
 
         for i, card in enumerate(cards):
             self.play(FadeIn(card, shift=UP * 0.2), run_time=0.5)
-            self.wait(0.3)
+            self.wait(2.12)
 
         # === Core idea ===
         core_box = RoundedRectangle(
@@ -339,7 +339,7 @@ class Scene22_CUT3RIntro(Scene):
         ).move_to(core_box)
 
         self.play(FadeIn(core_box), FadeIn(core_text), run_time=0.8)
-        self.wait(2)
+        self.wait(14.10)
 
         self.play(*[FadeOut(m) for m in self.mobjects])
 
@@ -353,7 +353,7 @@ class Scene23_CUT3RProcess(Scene):
 
         title = make_title("CUT3R: Quy trình cập nhật")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(1.48)
 
         # === Layout: Hàng ngang dài ===
         # Input 1: S(t-1)
@@ -437,27 +437,27 @@ class Scene23_CUT3RProcess(Scene):
             FadeIn(frame_group, shift=LEFT * 0.2),
             run_time=0.7
         )
-        self.wait(0.3)
+        self.wait(0.90)
 
         self.play(
             Create(arrow1),
             Create(arrow2),
             run_time=0.6
         )
-        self.wait(0.2)
+        self.wait(0.60)
 
         self.play(
             FadeIn(trans_group),
             run_time=0.6
         )
-        self.wait(0.3)
+        self.wait(0.90)
 
         self.play(
             Create(arrow_out),
             FadeIn(out_group, shift=RIGHT * 0.2),
             run_time=0.8
         )
-        self.wait(1)
+        self.wait(2.98)
 
         # === Khung tổng hợp ===
         full_pipeline = VGroup(
@@ -470,7 +470,7 @@ class Scene23_CUT3RProcess(Scene):
         )
 
         self.play(Create(pipeline_box), run_time=0.6)
-        self.wait(0.5)
+        self.wait(1.48)
 
         # === Loop label ===
         loop_label = Text(
@@ -479,7 +479,7 @@ class Scene23_CUT3RProcess(Scene):
         ).next_to(pipeline_box, DOWN, buff=0.4)
 
         self.play(FadeIn(loop_label, shift=UP * 0.2), run_time=0.6)
-        self.wait(2)
+        self.wait(8.00)
 
         self.play(*[FadeOut(m) for m in self.mobjects])
 
@@ -493,35 +493,54 @@ class Scene24_CUT3RFormula(Scene):
 
         title = make_title("CUT3R: Công thức cập nhật")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(0.82)
 
         # === Công thức chính ===
         formula_eq = MathTex(
-            r"S_t = \text{TransformerUpdate}(S_{t-1}, I_t)",
+            r"S_t", r"=", r"\text{TransformerUpdate}", r"(", r"S_{t-1}", r",", r"I_t", r")",
             font_size=56, color=WHITE
         ).shift(UP * 1.0)
 
         self.play(Write(formula_eq), run_time=1.2)
-        self.wait(1)
+        self.wait(1.63)
 
         # === Giải thích các thành phần ===
-        explain_box = RoundedRectangle(
-            width=9.5, height=1.8, corner_radius=0.12,
-            color=C_BLUE, fill_opacity=0.08, stroke_width=2
-        ).shift(DOWN * 1.2)
+        row_St = MathTex(r"S_t", r":", font_size=44, color=WHITE)
+        row_St_prev = MathTex(r"S_{t-1}", r":", font_size=44, color=WHITE)
+        row_It = MathTex(r"I_t", r":", font_size=44, color=WHITE)
 
-        explain_lines = VGroup(
-            Text("• S_t: Trạng thái bộ nhớ tại thời điểm t", font=FONT, font_size=14, color=WHITE),
-            Text("• S_{t-1}: Bộ nhớ từ bước thời gian trước", font=FONT, font_size=14, color=WHITE),
-            Text("• I_t: Khung hình video tại thời điểm t", font=FONT, font_size=14, color=WHITE),
-        ).arrange(DOWN, aligned_edge=LEFT, buff=0.18)
-        
-        explain_lines.move_to(explain_box).shift(LEFT * 0.3)
+        rows = VGroup(row_St, row_St_prev, row_It).arrange(DOWN, buff=0.45)
+        for row in [row_St_prev, row_It]:
+            row[1].align_to(row_St[1], LEFT)
+            row[0].align_to(row_St[0], RIGHT)
 
-        self.play(FadeIn(explain_box), run_time=0.5)
-        for line in explain_lines:
-            self.play(FadeIn(line, shift=RIGHT * 0.2), run_time=0.4)
-            self.wait(0.2)
+        desc_St = Text("Trạng thái bộ nhớ tại thời điểm t", font=FONT, font_size=18, color=WHITE)
+        desc_St_prev = Text("Bộ nhớ từ bước thời gian trước", font=FONT, font_size=18, color=WHITE)
+        desc_It = Text("Khung hình video tại thời điểm t", font=FONT, font_size=18, color=WHITE)
+
+        desc_St.next_to(row_St[1], RIGHT, buff=0.3)
+        desc_St_prev.next_to(row_St_prev[1], RIGHT, buff=0.3)
+        desc_It.next_to(row_It[1], RIGHT, buff=0.3)
+
+        explain_group = VGroup(rows, desc_St, desc_St_prev, desc_It).move_to(DOWN * 1.2)
+
+        # 1. Nhân bản S_t
+        clone_St = formula_eq[0].copy()
+        self.play(Transform(clone_St, row_St[0]), run_time=0.8)
+        self.play(FadeIn(row_St[1]), FadeIn(desc_St), run_time=0.5)
+        self.wait(0.32)
+
+        # 2. Nhân bản S_{t-1}
+        clone_St_prev = formula_eq[4].copy()
+        self.play(Transform(clone_St_prev, row_St_prev[0]), run_time=0.8)
+        self.play(FadeIn(row_St_prev[1]), FadeIn(desc_St_prev), run_time=0.5)
+        self.wait(0.32)
+
+        # 3. Nhân bản I_t
+        clone_It = formula_eq[6].copy()
+        self.play(Transform(clone_It, row_It[0]), run_time=0.8)
+        self.play(FadeIn(row_It[1]), FadeIn(desc_It), run_time=0.5)
+        self.wait(0.32)
 
         # === Highlight: Real-time ===
         realtime_box = RoundedRectangle(
@@ -535,7 +554,7 @@ class Scene24_CUT3RFormula(Scene):
         ).move_to(realtime_box)
 
         self.play(FadeIn(realtime_box), FadeIn(realtime_text), run_time=0.8)
-        self.wait(2)
+        self.wait(3.60)
 
         self.play(*[FadeOut(m) for m in self.mobjects])
 
@@ -549,7 +568,7 @@ class Scene25_CUT3ROcclusion(Scene):
 
         title = make_title("CUT3R: Xử lý vật thể bị che khuất")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(4.14)
 
         # === 3 bước ===
         
@@ -601,7 +620,7 @@ class Scene25_CUT3ROcclusion(Scene):
             self.play(FadeIn(step, shift=UP * 0.2), run_time=0.5)
             if i < 2:
                 self.play(Create([arrow1, arrow2][i]), run_time=0.3)
-            self.wait(0.3)
+            self.wait(2.48)
 
         # === Highlight ===
         highlight = Text(
@@ -610,7 +629,7 @@ class Scene25_CUT3ROcclusion(Scene):
         ).to_edge(DOWN, buff=0.8)
 
         self.play(FadeIn(highlight, shift=UP * 0.3), run_time=0.8)
-        self.wait(2)
+        self.wait(16.55)
 
         self.play(*[FadeOut(m) for m in self.mobjects])
 
@@ -624,7 +643,7 @@ class Scene26_ST4rtrackProblem(Scene):
 
         title = make_title("ST4rtrack", "Vấn đề: 2 bước riêng biệt")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(5.66)
 
         # === Bước 1: Optical Flow ===
         step1_box = RoundedRectangle(
@@ -662,20 +681,20 @@ class Scene26_ST4rtrackProblem(Scene):
             FadeIn(step1_group, shift=LEFT * 0.2),
             run_time=0.6
         )
-        self.wait(0.3)
+        self.wait(3.39)
 
         self.play(
             Create(arrow),
             FadeIn(arrow_label),
             run_time=0.5
         )
-        self.wait(0.3)
+        self.wait(3.39)
 
         self.play(
             FadeIn(step2_group, shift=RIGHT * 0.2),
             run_time=0.6
         )
-        self.wait(1)
+        self.wait(11.32)
 
         # === Vấn đề: Error Amplification ===
         problem_box = RoundedRectangle(
@@ -689,7 +708,7 @@ class Scene26_ST4rtrackProblem(Scene):
         ).arrange(DOWN, buff=0.12).move_to(problem_box)
 
         self.play(FadeIn(problem_box), FadeIn(problem_text), run_time=0.8)
-        self.wait(2)
+        self.wait(25.00)
 
         self.play(*[FadeOut(m) for m in self.mobjects])
 
@@ -703,7 +722,7 @@ class Scene27_ST4rtrackSolution(Scene):
 
         title = make_title("ST4rtrack: Giải pháp")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(1.92)
 
         # === Vấn đề cũ ===
         old_box = RoundedRectangle(
@@ -746,7 +765,7 @@ class Scene27_ST4rtrackSolution(Scene):
             FadeIn(new_group, shift=RIGHT * 0.3),
             run_time=1.2
         )
-        self.wait(1)
+        self.wait(3.84)
 
         # === Benefit ===
         benefit_box = RoundedRectangle(
@@ -760,7 +779,7 @@ class Scene27_ST4rtrackSolution(Scene):
         ).move_to(benefit_box)
 
         self.play(FadeIn(benefit_box), FadeIn(benefit_text), run_time=0.8)
-        self.wait(2)
+        self.wait(7.68)
 
         self.play(*[FadeOut(m) for m in self.mobjects])
 
@@ -774,7 +793,7 @@ class Scene28_ST4rtrackFormula(Scene):
 
         title = make_title("ST4rtrack: Spatiotemporal Pointmap")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(2.13)
 
         # === Công thức chính ===
         formula_eq = MathTex(
@@ -783,7 +802,7 @@ class Scene28_ST4rtrackFormula(Scene):
         ).shift(UP * 1.2)
 
         self.play(Write(formula_eq), run_time=1.2)
-        self.wait(1)
+        self.wait(4.27)
 
         # === Giải thích ===
         explain_box = RoundedRectangle(
@@ -802,7 +821,7 @@ class Scene28_ST4rtrackFormula(Scene):
         self.play(FadeIn(explain_box), run_time=0.5)
         for line in explain_lines:
             self.play(FadeIn(line, shift=RIGHT * 0.2), run_time=0.4)
-            self.wait(0.2)
+            self.wait(0.85)
 
         # === Visualization: Quỹ đạo 3D ===
         trajectory_box = RoundedRectangle(
@@ -816,7 +835,7 @@ class Scene28_ST4rtrackFormula(Scene):
         ).move_to(trajectory_box)
 
         self.play(FadeIn(trajectory_box), FadeIn(trajectory_text), run_time=0.8)
-        self.wait(2)
+        self.wait(8.54)
 
         self.play(*[FadeOut(m) for m in self.mobjects])
 
@@ -830,7 +849,7 @@ class Scene29_ComparisonCUT3RST4rtrack(Scene):
 
         title = make_title("So sánh: CUT3R vs ST4rtrack")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(3.20)
 
         # === CUT3R ===
         cut3r_box = RoundedRectangle(
@@ -882,10 +901,10 @@ class Scene29_ComparisonCUT3RST4rtrack(Scene):
             FadeIn(st4r_group, shift=RIGHT * 0.3),
             run_time=1.2
         )
-        self.wait(1)
+        self.wait(6.40)
 
         self.play(FadeIn(common_box), FadeIn(common_text), run_time=0.8)
-        self.wait(2)
+        self.wait(12.80)
 
         self.play(*[FadeOut(m) for m in self.mobjects])
 
@@ -899,7 +918,7 @@ class Scene30_Part2Recap(Scene):
 
         title = make_title("Tổng kết phần 2")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(3.22)
 
         # === 3 keyword recap ===
         keywords = [
@@ -930,7 +949,7 @@ class Scene30_Part2Recap(Scene):
 
         for card in kw_cards:
             self.play(FadeIn(card, shift=UP * 0.2), run_time=0.5)
-            self.wait(0.3)
+            self.wait(1.93)
 
         # === Kết luận ===
         conclusion = Text(
@@ -939,7 +958,7 @@ class Scene30_Part2Recap(Scene):
         ).shift(DOWN * 1.2)
 
         self.play(FadeIn(conclusion, shift=UP * 0.2), run_time=0.8)
-        self.wait(1)
+        self.wait(6.44)
 
         # === Transition ===
         transition_box = RoundedRectangle(
@@ -953,65 +972,14 @@ class Scene30_Part2Recap(Scene):
         ).move_to(transition_box)
 
         self.play(FadeIn(transition_box), FadeIn(transition_q), run_time=0.8)
-        self.wait(2)
+        self.wait(12.86)
 
-        # === Transition effect ===
+        # Fade out all mobjects to end the scene
         self.play(
             *[FadeOut(card, shift=LEFT * 2) for card in kw_cards],
             FadeOut(title, shift=UP),
+            FadeOut(conclusion),
+            FadeOut(transition_box),
+            FadeOut(transition_q),
             run_time=0.8
         )
-
-        next_part = Text(
-            "Phần 3: Mô hình Thế giới cho Robot",
-            font=FONT, font_size=32, color=WHITE
-        ).move_to(ORIGIN)
-        
-        self.play(FadeOut(conclusion), FadeOut(transition_box), FadeOut(transition_q))
-        self.play(FadeIn(next_part), run_time=1)
-        self.wait(2)
-        self.play(FadeOut(next_part))
-
-
-# ╔══════════════════════════════════════════════════════════╗
-# ║  SCENE 31 — Outro Phần 2                                ║
-# ╚══════════════════════════════════════════════════════════╝
-class Scene31_Part2Outro(Scene):
-    def construct(self):
-        self.camera.background_color = BG
-
-        # === Recap hành trình ===
-        journey = VGroup(
-            Text("Phần 1: Tạo Video AI", font=FONT, font_size=24, color=C_BLUE),
-            Text("↓", font_size=28, color=C_SUB),
-            Text("Phần 2: Hiểu cấu trúc 3D", font=FONT, font_size=24, color=C_GREEN),
-            Text("↓", font_size=28, color=C_SUB),
-            Text("Phần 3: Mô hình Thế giới", font=FONT, font_size=24, color=C_YELLOW),
-        ).arrange(DOWN, buff=0.3).move_to(UP * 0.5)
-
-        self.play(Write(journey[0]), run_time=0.6)
-        self.wait(0.3)
-        self.play(Write(journey[1]), run_time=0.3)
-        self.wait(0.2)
-        self.play(Write(journey[2]), run_time=0.6)
-        self.wait(0.3)
-        self.play(Write(journey[3]), run_time=0.3)
-        self.wait(0.2)
-        self.play(Write(journey[4]), run_time=0.6)
-        self.wait(2)
-
-        # === Question box ===
-        question_box = RoundedRectangle(
-            width=9.0, height=1.5, corner_radius=0.15,
-            color=C_PURPLE, fill_opacity=0.1, stroke_width=2
-        ).to_edge(DOWN, buff=0.5)
-
-        question = Text(
-            "Khám phá tiếp: World Models & Robotics",
-            font=FONT, font_size=20, color=C_PURPLE, weight=BOLD
-        ).move_to(question_box)
-
-        self.play(FadeIn(question_box), FadeIn(question), run_time=1)
-        self.wait(2)
-
-        self.play(*[FadeOut(m) for m in self.mobjects])

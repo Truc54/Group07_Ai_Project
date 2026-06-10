@@ -51,7 +51,7 @@ class Scene32_Part3Intro(Scene):
 
         self.play(FadeIn(part_num, shift=DOWN * 0.3), run_time=0.8)
         self.play(FadeIn(part_title), run_time=1.2)
-        self.wait(1)
+        self.wait(1.98)
 
         # Chuyển sang nội dung tóm tắt
         self.play(FadeOut(part_group))
@@ -66,14 +66,14 @@ class Scene32_Part3Intro(Scene):
         video_icon = Text("🎬", font_size=60).shift(RIGHT * 3 + DOWN * 1.5)
 
         self.play(FadeIn(desc_group), run_time=1)
-        self.wait(0.5)
+        self.wait(0.99)
         self.play(
             FadeIn(robot_icon, shift=UP * 0.3),
             FadeIn(world_icon, shift=UP * 0.3),
             FadeIn(video_icon, shift=UP * 0.3),
             run_time=0.8
         )
-        self.wait(3)
+        self.wait(6.50)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -86,7 +86,7 @@ class Scene33_HistoricalContext(Scene):
 
         title = make_title("Bối cảnh lịch sử", "Từ RL đến World Models quy mô lớn")
         self.play(FadeIn(title), run_time=1)
-        self.wait(0.5)
+        self.wait(3.87)
 
         # Timeline
         line = Line(LEFT * 5.5, RIGHT * 5.5, color=C_SUB, stroke_width=2).shift(UP * 0.6)
@@ -145,7 +145,7 @@ class Scene33_HistoricalContext(Scene):
         factor_group = VGroup(combo_label, combo_row).arrange(DOWN, buff=0.25).to_edge(DOWN, buff=0.9)
 
         self.play(FadeIn(factor_group))
-        self.wait(3)
+        self.wait(23.20)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -158,7 +158,7 @@ class Scene34_DatasetOverview(Scene):
 
         title = make_title("Dữ liệu quy mô lớn cho World Model")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(1.94)
 
         # Con số ấn tượng - Trục dọc y = 1.2
         number_text = Text("21,000,000", font=FONT, font_size=72, color=C_YELLOW, weight=BOLD)
@@ -172,7 +172,7 @@ class Scene34_DatasetOverview(Scene):
 
         self.play(FadeIn(number_text, scale=0.5), run_time=1)
         self.play(FadeIn(sub_text), run_time=0.6)
-        self.wait(1)
+        self.wait(3.89)
 
         # "Time-Aligned" highlight - Rộng hơn, chi tiết hơn - Trục dọc y = -0.3
         aligned_box = RoundedRectangle(
@@ -184,14 +184,14 @@ class Scene34_DatasetOverview(Scene):
             font=FONT, font_size=15, color=WHITE
         ).move_to(aligned_box)
         self.play(FadeIn(aligned_box), FadeIn(aligned_text), run_time=0.8)
-        self.wait(0.5)
+        self.wait(1.94)
 
         core_idea = Text(
             "Video = Ngôn ngữ chung cho việc ra quyết định",
             font=FONT, font_size=24, color=WHITE
         ).to_edge(DOWN, buff=1.2)
         self.play(FadeIn(core_idea))
-        self.wait(3)
+        self.wait(12.20)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -204,7 +204,7 @@ class Scene35_FourDataTypes(Scene):
 
         title = make_title("4 nguồn dữ liệu chi tiết")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(3.65)
 
         data_types = [
             ("Text-Video", "Video + mô tả hành động", C_BLUE),
@@ -235,14 +235,14 @@ class Scene35_FourDataTypes(Scene):
 
         for card in cards:
             self.play(FadeIn(card, shift=UP * 0.3), run_time=0.6)
-            self.wait(0.3)
+            self.wait(2.19)
 
         conclusion = Text(
             "→ Sự đa dạng giúp mô hình học được quy luật vật lý tổng quát",
             font=FONT, font_size=22, color=WHITE
         ).to_edge(DOWN, buff=1.0)
         self.play(FadeIn(conclusion))
-        self.wait(3)
+        self.wait(21.89)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -255,7 +255,7 @@ class Scene36_ActionChallenge(Scene):
 
         title = make_white_title("Action Conditioning", "Đưa hành động robot vào mô hình video")
         self.play(FadeIn(title), run_time=1)
-        self.wait(0.5)
+        self.wait(1.47)
 
         # Câu hỏi trung tâm
         question = Text(
@@ -263,7 +263,7 @@ class Scene36_ActionChallenge(Scene):
             font=FONT, font_size=20, color=WHITE
         ).shift(UP * 1.4)
         self.play(FadeIn(question), run_time=0.8)
-        self.wait(0.5)
+        self.wait(1.47)
 
         # Phương pháp sai 1: Discretization
         wrong1_box = RoundedRectangle(
@@ -299,17 +299,17 @@ class Scene36_ActionChallenge(Scene):
 
         # Trình diễn hiệu ứng xuất hiện tuần tự cực kỳ mượt mà
         self.play(FadeIn(wrong1_group, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(1.47)
         
         self.play(FadeIn(wrong2_group, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(1.47)
 
         conclusion = Text(
             "→ Cả hai phương pháp đều làm robot di chuyển sai lệch nghiêm trọng!",
             font=FONT, font_size=22, color=WHITE
         ).to_edge(DOWN, buff=1.0)
         self.play(FadeIn(conclusion))
-        self.wait(3)
+        self.wait(9.30)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -322,7 +322,7 @@ class Scene37_LinearProjection(Scene):
 
         title = make_title("Giải pháp: Linear Projection")
         self.play(FadeIn(title, shift=UP * 0.3), run_time=0.8)
-        self.wait(0.3)
+        self.wait(1.28)
 
         # Khung màu cam lớn chứa cả công thức và định nghĩa
         middle_box = RoundedRectangle(
@@ -377,26 +377,26 @@ class Scene37_LinearProjection(Scene):
         
         # Viết công thức chính bên trái
         self.play(Write(formula), run_time=1.0)
-        self.wait(0.5)
+        self.wait(2.13)
 
         # Hiệu ứng nhân bản từng biến bay sang phải và hiện giải thích
         # 1. Nhân bản biến h_a
         clone_h = formula[0].copy()
         self.play(Transform(clone_h, row_h[0]), run_time=0.8)
         self.play(FadeIn(row_h[1]), FadeIn(desc_h), run_time=0.5)
-        self.wait(0.3)
+        self.wait(1.28)
 
         # 2. Nhân bản biến W
         clone_W = formula[2].copy()
         self.play(Transform(clone_W, row_W[0]), run_time=0.8)
         self.play(FadeIn(row_W[1]), FadeIn(desc_W), run_time=0.5)
-        self.wait(0.3)
+        self.wait(1.28)
 
         # 3. Nhân bản biến a
         clone_a = formula[4].copy()
         self.play(Transform(clone_a, row_a[0]), run_time=0.8)
         self.play(FadeIn(row_a[1]), FadeIn(desc_a), run_time=0.5)
-        self.wait(0.5)
+        self.wait(2.13)
 
         # So sánh kết quả bên dưới
         compare_box_width = 5.2
@@ -426,7 +426,7 @@ class Scene37_LinearProjection(Scene):
         
         self.play(FadeIn(compare, shift=UP * 0.4), run_time=1.0)
 
-        self.wait(3)
+        self.wait(13.50)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -439,7 +439,7 @@ class Scene38_VLP_Idea(Scene):
 
         title = make_title("Video Language Planning (VLP)", "Lập kế hoạch phân cấp cho robot")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.3)
+        self.wait(1.53)
 
         # Thẻ Nhiệm vụ (Màu xanh lam mờ)
         task_box = RoundedRectangle(
@@ -493,12 +493,12 @@ class Scene38_VLP_Idea(Scene):
 
         # Xuất hiện tuần tự, tạo điểm nhấn cho Giải pháp đột phá ở cuối
         self.play(FadeIn(task_card, shift=UP * 0.2), run_time=0.7)
-        self.wait(0.2)
+        self.wait(1.02)
         self.play(FadeIn(problem_card, shift=UP * 0.2), run_time=0.7)
-        self.wait(0.2)
+        self.wait(1.02)
         self.play(FadeIn(solution_card, scale=0.95), run_time=0.9)
 
-        self.wait(3)
+        self.wait(15.80)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -511,7 +511,7 @@ class Scene39_VLP_ThreeLevels(Scene):
 
         title = make_title("VLP: Lập kế hoạch 3 cấp")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.3)
+        self.wait(2.47)
 
         levels = [
             ("Cấp cao — LLM", "Phân rã nhiệm vụ thành hành động chữ",
@@ -565,9 +565,9 @@ class Scene39_VLP_ThreeLevels(Scene):
             self.play(FadeIn(lg, shift=RIGHT * 0.3), run_time=0.7)
             if i < 2:
                 self.play(Create(arrows[i]), run_time=0.3)
-            self.wait(0.2)
+            self.wait(1.65)
 
-        self.wait(3)
+        self.wait(24.74)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -581,7 +581,7 @@ class Scene40_EvalProblem(Scene):
         title = make_title("Đánh giá Robot Policy", "Vấn đề của phương pháp cũ")
         title[1].set_color(WHITE) # Đổi màu phụ đề thành màu trắng
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.3)
+        self.wait(0.89)
 
         # Phương pháp 1: Robot thật
         real_box = RoundedRectangle(
@@ -624,9 +624,9 @@ class Scene40_EvalProblem(Scene):
 
         # Hiện từng box
         self.play(FadeIn(real_card, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.3)
+        self.wait(0.89)
         self.play(FadeIn(sim_card, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.5)
+        self.wait(1.48)
 
         conclusion = Text(
             "→ Cần phương pháp đánh giá mới: rẻ, nhanh, sát thực tế!",
@@ -635,7 +635,7 @@ class Scene40_EvalProblem(Scene):
         
         self.play(FadeIn(conclusion, shift=UP * 0.3), run_time=0.8)
 
-        self.wait(3)
+        self.wait(9.40)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -648,7 +648,7 @@ class Scene41_EvalWorldModel(Scene):
 
         title = make_title("Đánh giá bằng Mô hình Thế giới")
         self.play(FadeIn(title, shift=UP * 0.2), run_time=0.8)
-        self.wait(0.3)
+        self.wait(1.11)
 
         # Pipeline: Robot Policy → World Model → Video → VLM → Score
         steps = [
@@ -685,7 +685,7 @@ class Scene41_EvalWorldModel(Scene):
                 run_time=0.4
             )
 
-        self.wait(0.5)
+        self.wait(1.85)
 
         # Thẻ giải thích tích hợp ở dưới đáy (màu xanh lá mờ, nhỏ gọn hơn)
         explain_box = RoundedRectangle(
@@ -725,11 +725,11 @@ class Scene41_EvalWorldModel(Scene):
         self.play(FadeIn(explain_title, shift=RIGHT * 0.2), run_time=0.4)
         for line in explain_lines:
             self.play(FadeIn(line, shift=RIGHT * 0.3), run_time=0.4)
-            self.wait(0.1)
+            self.wait(0.37)
         
         self.play(FadeIn(explain_line3, shift=UP * 0.2), run_time=0.6)
 
-        self.wait(2)
+        self.wait(7.40)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -742,7 +742,7 @@ class Scene42_FalseErrors(Scene):
 
         title = make_title("2 loại lỗi chí mạng")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(2.28)
 
         # === FALSE NEGATIVE ===
         fn_box = RoundedRectangle(
@@ -780,16 +780,16 @@ class Scene42_FalseErrors(Scene):
 
         # Animate
         self.play(FadeIn(fn_group, shift=RIGHT * 0.3), run_time=0.8)
-        self.wait(1)
+        self.wait(4.56)
         self.play(FadeIn(fp_group, shift=LEFT * 0.3), run_time=0.8)
-        self.wait(0.5)
+        self.wait(2.28)
 
         warning = Text(
             "→ Cả hai lỗi đều nguy hiểm, cần cơ chế tự cải tiến!",
             font=FONT, font_size=22, color=WHITE
         ).to_edge(DOWN, buff=1.0)
         self.play(FadeIn(warning))
-        self.wait(3)
+        self.wait(14.20)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -802,7 +802,7 @@ class Scene43_SelfImproving(Scene):
 
         title = make_title("Vòng lặp tự cải tiến")
         self.play(FadeIn(title), run_time=1)
-        self.wait(0.5)
+        self.wait(1.81)
 
         # Trung tâm: World Model
         center_box = RoundedRectangle(
@@ -815,7 +815,7 @@ class Scene43_SelfImproving(Scene):
         center_sub.next_to(center_box, DOWN, buff=0.1)
 
         self.play(FadeIn(center_box), FadeIn(center_label), FadeIn(center_sub), run_time=0.8)
-        self.wait(0.5)
+        self.wait(1.81)
 
         # === Nhánh 1: AI Feedback (bên trái) ===
         ai_title = Text("Cơ chế 1: AI Feedback", font=FONT, font_size=18, color=C_BLUE, weight=BOLD)
@@ -861,7 +861,7 @@ class Scene43_SelfImproving(Scene):
             if i < 2:
                 self.play(Create(ai_arrows[i]), run_time=0.2)
         self.play(Create(ai_return), run_time=0.5)
-        self.wait(0.5)
+        self.wait(1.81)
 
         # === Nhánh 2: Execution Feedback (bên phải) ===
         exec_title = Text("Cơ chế 2: Execution Feedback", font=FONT, font_size=18, color=C_YELLOW, weight=BOLD)
@@ -908,7 +908,7 @@ class Scene43_SelfImproving(Scene):
                 self.play(Create(exec_arrows[i]), run_time=0.2)
         self.play(Create(exec_return), run_time=0.5)
 
-        self.wait(3)
+        self.wait(10.86)
         self.play(*[FadeOut(m) for m in self.mobjects])
 
 
@@ -921,7 +921,7 @@ class Scene44_Part3Recap(Scene):
 
         title = make_title("Tổng kết phần 3")
         self.play(FadeIn(title), run_time=0.8)
-        self.wait(0.5)
+        self.wait(1.87)
 
         # 3 bullet points recap (tất cả màu trắng, công thức MathTex có subscript)
         bullet1 = Text("• Dữ liệu quy mô lớn: 21 triệu cặp time-aligned data", font=FONT, font_size=18, color=WHITE)
@@ -943,9 +943,9 @@ class Scene44_Part3Recap(Scene):
 
         for bullet in bullets:
             self.play(FadeIn(bullet, shift=UP * 0.2), run_time=0.7)
-            self.wait(0.3)
+            self.wait(1.12)
 
-        self.wait(1)
+        self.wait(3.75)
 
         # Sơ đồ tổng hợp nhỏ ở dưới - Nâng cao lên cho cân đối
         summary_box = RoundedRectangle(
@@ -959,7 +959,7 @@ class Scene44_Part3Recap(Scene):
         ).arrange(DOWN, buff=0.15).move_to(summary_box)
 
         self.play(FadeIn(summary_box), FadeIn(summary), run_time=1)
-        self.wait(2)
+        self.wait(7.50)
 
         # Transition
         self.play(
@@ -968,10 +968,10 @@ class Scene44_Part3Recap(Scene):
             run_time=0.8
         )
 
-        next_part = Text("Video sắp kết thúc — Tổng kết toàn bộ hành trình!",
+        next_part = Text("Tổng kết toàn bộ hành trình!",
                          font=FONT, font_size=28, color=WHITE)
         next_part.move_to(ORIGIN)
         self.play(FadeOut(summary_box), FadeOut(summary))
         self.play(FadeIn(next_part), run_time=1)
-        self.wait(2)
+        self.wait(7.50)
         self.play(FadeOut(next_part))
