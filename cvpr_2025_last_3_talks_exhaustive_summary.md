@@ -160,10 +160,15 @@ Sherry Yang đề xuất hai cơ chế phản hồi để mô hình thế giới
 ---
 
 ### Tóm tắt các công trình nghiên cứu và liên kết quan trọng được đề cập:
-1.  **Awesome-From-Video-Generation-to-World-Model:** Danh sách tổng hợp nghiên cứu [https://github.com/ziqihuangg/Awesome-From-Video-Generation-to-World-Model](https://github.com/ziqihuangg/Awesome-From-Video-Generation-to-World-Model)
-2.  **Inductive Moment Matching (IMM):** Mã nguồn Luma AI [https://github.com/lumalabs/imm](https://github.com/lumalabs/imm)
-3.  **Inference-First Position Paper:** [https://arxiv.org/abs/2503.07154](https://arxiv.org/abs/2503.07154)
-4.  **Universal Simulator:** Dự án thử nghiệm [https://universal-simulator.github.io](https://universal-simulator.github.io)
-5.  **World Model Policy Evaluation:** Đánh giá robot [https://world-model-eval.github.io](https://world-model-eval.github.io)
-6.  **CUT3R Project Page:** [https://cut3r.github.io/](https://cut3r.github.io/)
-7.  **ST4rtrack Project Page:** [https://st4rtrack.github.io/](https://st4rtrack.github.io/)
+
+#### Các bài báo chính được nghiên cứu trong video:
+1.  **CUT3R — Continuous 3D Perception Model with Persistent State:** arXiv [https://arxiv.org/abs/2501.12387](https://arxiv.org/abs/2501.12387) | Trang dự án [https://cut3r.github.io/](https://cut3r.github.io/) | CVPR 2025
+2.  **St4RTrack — Simultaneous 4D Reconstruction and Tracking in the World:** arXiv [https://arxiv.org/abs/2504.13152](https://arxiv.org/abs/2504.13152) | Trang dự án [https://st4rtrack.github.io/](https://st4rtrack.github.io/) | ICCV 2025
+3.  **Video as the New Language for Real-World Decision Making:** arXiv [https://arxiv.org/abs/2402.17139](https://arxiv.org/abs/2402.17139) | ICML 2024
+
+#### Các liên kết tham khảo khác:
+4.  **Awesome-From-Video-Generation-to-World-Model:** Danh sách tổng hợp nghiên cứu [https://github.com/ziqihuangg/Awesome-From-Video-Generation-to-World-Model](https://github.com/ziqihuangg/Awesome-From-Video-Generation-to-World-Model)
+5.  **Inductive Moment Matching (IMM):** Mã nguồn Luma AI [https://github.com/lumalabs/imm](https://github.com/lumalabs/imm)
+6.  **Ideas in Inference-time Scaling:** [https://arxiv.org/abs/2503.07154](https://arxiv.org/abs/2503.07154)
+7.  **Universal Simulator:** Dự án thử nghiệm [https://universal-simulator.github.io](https://universal-simulator.github.io)
+8.  **World Model Policy Evaluation:** Đánh giá robot [https://world-model-eval.github.io](https://world-model-eval.github.io)
