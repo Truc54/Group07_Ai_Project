@@ -1,6 +1,41 @@
 # Đồ án AI: Từ Tạo Video đến Mô hình Thế giới (World Model)
 
-Dự án sử dụng thư viện **Manim** để tạo video cung cấp kiến thức trực quan sinh động về hành trình từ Video AI đến mô hình thế giới và ứng dụng trong Robotics. Video dài khoảng 32-35 phút, hỗ trợ giọng nói lồng tiếng tiếng Việt tự động tạo bằng công nghệ TTS của Microsoft.
+Dự án sử dụng thư viện **Manim** để tạo video cung cấp kiến thức trực quan sinh động về hành trình từ Video AI đến mô hình thế giới và ứng dụng trong Robotics. Video dài khoảng 19 phút, hỗ trợ giọng nói lồng tiếng tiếng Việt tự động tạo bằng công nghệ TTS của Microsoft.
+
+---
+
+## 🏛️ Thông tin môn học & Giảng viên
+* **Môn học:** Cơ sở Trí tuệ Nhân tạo (Khóa 2023)
+* **Lớp:** 23_3
+* **Giảng viên lý thuyết (GVLT):** Thầy Bùi Duy Đăng
+* **Trợ giảng (TG):** Thầy Nguyễn Ngọc Đức, Cô Nguyễn Thị Thu Hằng, Thầy Nguyễn Thanh Tình
+* **Giảng viên thực hành (GVTH):** Thầy Huỳnh Lâm Hải Đăng
+* **Mã nguồn dự án:** [Group07_Ai_Project](https://github.com/Truc54/Group07_Ai_Project)
+
+---
+
+## 👥 Thành viên thực hiện & Phân công công việc
+
+| Thành viên | MSSV | Vai trò & Công việc đảm nhiệm | Đóng góp |
+|---|---|---|---|
+| **Trần Lê Trung Trực** | 23120180 | - Thiết kế cấu hình chung (`scenes/config.py`) và xây dựng các script tự động hóa (`scripts/`).<br>- Biên soạn kịch bản và thiết kế hoạt cảnh **Phần 1: Kiến trúc tạo video AI** (`scenes/part1_video_generation.py`).<br>- Biên soạn kịch bản và thiết kế hoạt cảnh **Phần 3: Mô hình thế giới cho robot** (`scenes/part3_world_models.py`). | 50% |
+| **Nguyễn Ngọc Minh Tuấn** | 23120102 | - Thiết kế hoạt cảnh **Mở đầu** (`scenes/part0_intro.py`) và **Kết thúc & Credits** (`scenes/part4_credits.py`).<br>- Biên soạn kịch bản và thiết kế hoạt cảnh **Phần 2: Nhận thức 3D từ video** (`scenes/part2_3d_perception.py`). | 50% |
+
+---
+
+## 📚 Thông tin các bài báo được chọn nghiên cứu
+
+1. **CUT3R: Continuous 3D Perception Model with Persistent State**
+   * **Link toàn văn:** https://arxiv.org/abs/2501.12387
+   * **Hội nghị:** CVPR 2025 | **Năm xuất bản:** 2025
+
+2. **ST4rtrack: Simultaneous 4D Reconstruction and Tracking in the World**
+   * **Link toàn văn:** https://arxiv.org/abs/2504.13152
+   * **Hội nghị:** ICCV 2025 | **Năm xuất bản:** 2025
+
+3. **Video as the New Language for Real-World Decision Making**
+   * **Link toàn văn:** https://arxiv.org/abs/2402.17139
+   * **Hội nghị:** ICML 2024 | **Năm xuất bản:** 2024
 
 ---
 
@@ -13,7 +48,7 @@ CSAI/
 │   ├── config.py                       # CẤU HÌNH CHUNG — màu, font, helper (DÙNG CHUNG)
 │   ├── part0_intro.py                  # Mở đầu (Scene 01 - 03)
 │   ├── part1_video_generation.py       # Phần 1: Kiến trúc tạo video AI (Scene 04 - 17)
-│   ├── part2_3d_perception.py          # Phần 2: Nhận thức 3D từ video (Scene 18 - 31)
+│   ├── part2_3d_perception.py          # Phần 2: Nhận thức 3D từ video (Scene 18 - 30)
 │   ├── part3_world_models.py           # Phần 3: Mô hình thế giới cho robot (Scene 32 - 44)
 │   └── part4_credits.py                # Phần kết & Credits (Scene 45 - 46)
 │
@@ -92,7 +127,7 @@ manim -qh scenes/part1_video_generation.py -a
 # 1. Ghép tiếng khớp từng scene
 python scripts/merge_audio_video.py
 
-# 2. Ghép nối tất cả các scene thành video 30 phút hoàn chỉnh
+# 2. Ghép nối tất cả các scene thành video hoàn chỉnh
 python scripts/concat_final.py
 ```
 Video cuối cùng sẽ nằm tại `output/merged/FINAL_VIDEO.mp4`.
