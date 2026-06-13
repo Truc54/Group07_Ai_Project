@@ -14,14 +14,6 @@ Dự án sử dụng thư viện **Manim** để tạo video cung cấp kiến t
 
 ---
 
-## 👥 Thành viên thực hiện & Phân công công việc
-
-| Thành viên | MSSV | Vai trò & Công việc đảm nhiệm | Đóng góp |
-|---|---|---|---|
-| **Trần Lê Trung Trực** | 23120180 | - Thiết kế cấu hình chung (`scenes/config.py`) và xây dựng các script tự động hóa (`scripts/`).<br>- Biên soạn kịch bản và thiết kế hoạt cảnh **Phần 1: Kiến trúc tạo video AI** (`scenes/part1_video_generation.py`).<br>- Biên soạn kịch bản và thiết kế hoạt cảnh **Phần 3: Mô hình thế giới cho robot** (`scenes/part3_world_models.py`). | 50% |
-| **Nguyễn Ngọc Minh Tuấn** | 23120102 | - Thiết kế hoạt cảnh **Mở đầu** (`scenes/part0_intro.py`) và **Kết thúc & Credits** (`scenes/part4_credits.py`).<br>- Biên soạn kịch bản và thiết kế hoạt cảnh **Phần 2: Nhận thức 3D từ video** (`scenes/part2_3d_perception.py`). | 50% |
-
----
 
 ## 📚 Thông tin các bài báo được chọn nghiên cứu
 
